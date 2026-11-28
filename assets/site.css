@@ -1,0 +1,136 @@
+/* JustDry – shared styles for all customer pages (cached once, used by every language) */
+:root{color-scheme:dark; /* hele siden: dyb navy med guld som eneste accent */
+--bg:light-dark(#F7F4EE,#071D32);--ink:light-dark(#12243A,#EEF1F4);--soft:light-dark(#4E5D6C,#AFBCC9);
+--card:light-dark(#FFFFFF,#0C2A45);--line:light-dark(#E3DED4,#1C4060);--tint:light-dark(#F1EDE5,#0A2540);--field:light-dark(#C9C2B5,#5E83A4);
+--navy:#0F2A44;--navy2:#0B1F33;--teal:#C9A45A;--tealBtn:#C9A45A;--tealInk:light-dark(#8A6A2B,#E9CC88);--mint:#E9CC88;--onGold:#071D32;
+--err:light-dark(#B3261E,#FF8A80);--r-sm:10px;--r-md:16px;--r-lg:22px;
+--shadow:0 1px 2px rgba(11,31,51,.06),0 18px 40px -22px rgba(11,31,51,.35)}
+*{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;font-weight:600;line-height:1.05;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(32px,4.4vw,50px)}h3{font-size:26px}
+p{margin:0}a{color:inherit}
+img,svg{max-width:100%}
+.wrap{max-width:1200px;margin:0 auto}
+.band{padding:clamp(40px,7vw,96px) max(5vw,18px)}
+@media(max-width:600px){.band{padding-top:36px;padding-bottom:36px}}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:600 12.5px/1.2 Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--tealInk)}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+.lead{color:var(--soft);font-size:17.5px;max-width:60ch;margin-top:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 26px;border-radius:3px;font:600 16px/1 Inter,sans-serif;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.btn.main{background:linear-gradient(180deg,#D9B76E,#C9A45A);color:var(--onGold);box-shadow:0 10px 24px -14px rgba(201,164,90,.55)}
+.btn.main:hover{background:#E3C47F}.btn.main:active{transform:translateY(1px)}
+.btn.big{min-height:58px;padding:0 32px;font-size:17px}
+.btn.ghost{border-color:rgba(255,255,255,.4);color:#fff}.btn.ghost:hover{border-color:#fff}
+.btn.line{border-color:var(--line);color:var(--ink);background:transparent}.btn.line:hover{border-color:var(--tealInk)}
+.btn[disabled]{opacity:.55;cursor:progress;box-shadow:none}
+.btn .arr{transition:transform .2s}.btn:hover .arr{transform:translateX(3px)}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.skip{position:absolute;left:12px;top:-60px;z-index:50;background:#fff;color:#0F2A44;padding:10px 14px;border-radius:10px;font-weight:600}
+.skip:focus{top:12px}
+
+/* header */
+.site-h{position:sticky;top:0;z-index:30;background:rgba(7,29,50,.88);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);color:#fff;border-bottom:1px solid rgba(255,255,255,.06)}
+.site-h .in{display:flex;align-items:center;gap:18px;padding:10px max(5vw,18px);max-width:1200px;margin:0 auto;min-height:68px}
+.logo{display:flex;align-items:center;text-decoration:none;color:#fff;font:italic 700 32px/1 "Cormorant Garamond",Georgia,serif;letter-spacing:-.01em;min-height:44px}
+.logo .lm{width:34px;height:34px;flex:none;margin-right:10px}
+.site-h nav.main{display:flex;gap:4px 20px;margin-inline-start:auto;flex-wrap:wrap}
+.site-h nav.main a{text-decoration:none;color:#DCE4EC;font-size:15px;padding:6px 0;border-bottom:1px solid transparent}
+.site-h nav.main a:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.acc{display:inline-flex;align-items:center;gap:7px}.acc svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8}
+.site-h nav.main .acc{margin-inline-start:8px;padding-inline-start:20px;border-inline-start:1px solid rgba(255,255,255,.18)}
+.site-h .acts{display:flex;align-items:center;gap:14px}
+.site-h .btn{min-height:44px;padding:0 20px;font-size:15px}
+.langs{display:flex;flex-wrap:wrap;gap:4px 14px}
+.langs a{display:inline-flex;align-items:center;gap:8px;font:500 13.5px/1 Inter,sans-serif;color:#C9D4DF;text-decoration:none;padding:8px 2px;min-height:36px}
+.langs a[aria-current=true]{color:#fff}
+.langs a:hover{color:#fff}
+.flag{width:20px;height:14px;flex:none;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+.lpick{position:relative}
+.lp-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;min-width:44px;padding:0 6px;background:transparent;color:#fff;border:0;border-radius:3px;font:600 13px/1 Inter,sans-serif;letter-spacing:.06em;cursor:pointer}
+.lp-btn:hover span,.lp-btn[aria-expanded=true] span{color:#E9CC88}
+.lp-btn .car{width:12px;height:12px;fill:none;stroke:#E9CC88;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.lp-btn[aria-expanded=true] .car{transform:rotate(180deg)}
+.lp-menu{position:absolute;top:calc(100% + 8px);inset-inline-end:0;z-index:40;min-width:200px;display:grid;gap:0;padding:6px;background:#0C2A45;border:1px solid rgba(201,164,90,.45);border-radius:4px;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.lp-menu[hidden]{display:none}
+.lp-menu a{min-height:46px;padding:0 12px;border-radius:3px;font-size:15px;color:#DCE5EE}
+.lp-menu a span{flex:1}
+.lp-menu a:hover,.lp-menu a:focus-visible{background:rgba(255,255,255,.07);color:#fff;outline:none}
+.lp-menu a[aria-current=true]{color:#E9CC88}
+.lp-menu .ok{width:16px;height:16px;color:#E9CC88}
+@media(prefers-reduced-motion:reduce){.lp-btn .car{transition:none}}
+.menu-btn{display:none;background:transparent;border:0;color:#fff;border-radius:3px;min-height:44px;padding:0 14px;font:600 14px Inter,sans-serif;cursor:pointer}
+.mnav,.mnav-bg{display:none}
+@media(max-width:980px){.site-h nav.main{display:none}.site-h .acts{margin-inline-start:auto}.menu-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;padding:0;margin-inline-end:-8px}
+ .menu-btn svg{width:26px;height:26px;fill:none;stroke:#E9CC88;stroke-width:1.8;stroke-linecap:round}
+ html.mopen{overflow:hidden}
+ .mnav-bg:not([hidden]){display:block;position:fixed;inset:0;z-index:60;background:rgba(3,10,18,.55);opacity:0;transition:opacity .25s}
+ .mnav-bg.on{opacity:1}
+ .mnav:not([hidden]){display:flex;flex-direction:column;position:fixed;inset:0 auto 0 0;z-index:61;width:min(82vw,380px);overflow-y:auto;background:#0B1826;
+   padding:22px 26px 34px;box-shadow:20px 0 60px rgba(0,0,0,.45);transform:translateX(-100%);transition:transform .26s cubic-bezier(.2,.8,.2,1)}
+ .mnav.on{transform:none}
+ .mclose{align-self:flex-end;background:none;border:0;color:#DCE4EC;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;margin:-6px -10px 6px 0}
+ .mclose svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+ .mmain{display:grid}
+ .mmain a{display:flex;align-items:center;gap:18px;color:#F2F5F8;text-decoration:none;font:600 21px/1.2 Inter,sans-serif;padding:15px 0}
+ .mmain svg{width:26px;height:26px;flex:none;fill:none;stroke:#C9A45A;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+ .mnav .mcta{margin:18px 0 6px;width:100%}
+ .msec{display:grid;gap:2px;margin-top:26px}
+ .msec a,.msec .mh{color:#8E9BAA;text-decoration:none;font:500 17px/1.3 Inter,sans-serif;padding:8px 0}
+ .msec .mh{color:#C9A45A;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding-bottom:2px}
+ .msec a:hover,.mmain a:hover{color:#fff}}
+@media(prefers-reduced-motion:reduce){.mnav:not([hidden]),.mnav-bg:not([hidden]){transition:none}}
+@media(max-width:560px){.site-h .acts .btn{display:none}.logo{font-size:28px}}
+
+
+/* forms (light surfaces) */
+.field{display:grid;gap:6px;font-size:14px;color:var(--soft)}
+.field input,.field select,.field textarea{font:16px Inter,system-ui,sans-serif;min-height:50px;padding:12px 14px;border-radius:4px;border:1px solid var(--field);background:var(--bg);color:var(--ink);width:100%;transition:border-color .15s,box-shadow .15s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(201,164,90,.22)}
+.field textarea{min-height:92px;resize:vertical}
+.field [aria-invalid=true]{border-color:var(--err);box-shadow:0 0 0 3px color-mix(in srgb,var(--err) 18%,transparent)}
+.field .msg{color:var(--err);font-size:13.5px;min-height:0}
+.field .hint{color:var(--soft);font-size:13px}
+
+/* footer */
+.site-f{background:#051626;border-top:1px solid var(--line);color:#AFBCC9;padding:48px max(5vw,18px);font-size:15px}
+.site-f .wrap{display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between;align-items:center}
+.site-f .logo{font-size:28px}
+.site-f a{color:#DCE4EC}
+.site-f .langs{gap:4px 18px}
+@media(max-width:600px){.site-f .langs{display:grid;grid-template-columns:repeat(2,max-content)}}
+
+.reveal{transition:opacity .7s ease,transform .7s ease}
+.js .reveal{opacity:0;transform:translateY(14px)}
+.js .reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}.btn,.btn .arr{transition:none}}
+
+.site-f .co{font-style:normal;color:var(--soft);font-size:14px;line-height:1.8}.site-f .co a{color:inherit}
+
+/* Fast bestil-knap (kun mobil): flydende "pille" med næste afhentning og kundens by */
+.scta{display:none}
+@media(max-width:980px){
+ .scta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:0 max(4vw,12px) calc(14px + env(safe-area-inset-bottom));
+   transform:translateY(130%);transition:transform .3s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+ .scta.on{transform:none;pointer-events:auto}
+ .spill{display:flex;align-items:center;gap:0;min-height:64px;padding:8px 8px 8px 22px;border-radius:999px;background:#0C2A45;border:1px solid rgba(201,164,90,.55);
+   box-shadow:0 14px 34px -10px rgba(0,0,0,.7);text-decoration:none;color:#fff}
+ .spill .sp{display:grid;gap:2px;min-width:0;padding-right:14px}
+ .spill .sp2{flex:1;padding-left:14px;border-left:1px solid rgba(255,255,255,.16)}
+ .spill small{font:600 11px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#C9A45A}
+ .spill b{font:600 15px/1.2 Inter,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .spill .sgo{flex:none;width:48px;height:48px;border-radius:50%;background:var(--tealBtn);display:grid;place-items:center;margin-left:auto}
+ .spill .sgo svg{width:22px;height:22px;fill:none;stroke:var(--onGold);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+ .spill:active .sgo{transform:scale(.96)}}
+@media(prefers-reduced-motion:reduce){.scta{transition:none}}
+
+
+.menu-btn:hover svg{stroke:#F3DDA6}
+.acc-ico{display:none;align-items:center;justify-content:center;width:44px;height:44px;color:#E9CC88}
+.acc-ico svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.acc-ico:hover{color:#F3DDA6}
+.jd-in .acc-ico svg,.jd-in .acc svg{fill:currentColor}
+@media(max-width:980px){.acc-ico{display:inline-flex}.site-h .acts{gap:6px}}
+@media(max-width:370px){.site-h .logo{font-size:24px}}

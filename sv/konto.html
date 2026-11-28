@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mitt konto – JustDry</title>
+<meta name="description" content="Logga in med din e-post. Vi skickar en kod – inget lösenord att komma ihåg.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JustDry">
+<meta property="og:title" content="Mitt konto – JustDry">
+<meta property="og:description" content="Logga in med din e-post. Vi skickar en kod – inget lösenord att komma ihåg.">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:url" content="https://justdry.dk/sv/konto.html">
+<meta name="theme-color" content="#0F2A44">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,700&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<script>
+document.documentElement.classList.add('js');
+/* Keep the visitor's chosen language: if they picked another language earlier and arrive here from outside the site, send them to the same page in that language. */
+(function(){try{var p=localStorage.getItem('jd_lang'),a={"da": "../min-konto.html", "de": "../de/konto.html", "en": "../en/account.html", "sv": "konto.html"};var same=document.referrer&&new URL(document.referrer).origin===location.origin;if(p&&p!=='sv'&&a[p]&&!same&&!/[?&]lang=/.test(location.search))location.replace(a[p]+location.search+location.hash)}catch(e){}})();
+</script>
+
+<style>
+/* Kundekonto: login med e-mail-kode (ingen adgangskode), egne bestillinger og gemte oplysninger */
+.top{background:radial-gradient(120% 100% at 85% 0%,#0F3550 0%,#0A2540 50%,#071D32 100%);color:#fff;padding:clamp(28px,5vw,52px) max(5vw,18px) 64px}
+.top .in{max-width:760px;margin:0 auto}
+.top h1{font-size:clamp(36px,5vw,56px);font-weight:500}
+.top p{color:#C9D4DF;margin-top:8px}
+.page{max-width:760px;margin:-36px auto 0;padding:0 max(5vw,18px) 70px;display:grid;gap:18px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(18px,3vw,30px);box-shadow:var(--shadow)}
+.panel h2{font-size:28px}
+.form{display:grid;gap:12px;margin-top:14px}
+.form label{display:grid;gap:6px;font-weight:600;font-size:15px}
+.form input{font:16px Inter,system-ui,sans-serif;min-height:50px;padding:12px 14px;border-radius:4px;border:1px solid var(--field);background:var(--bg);color:var(--ink);width:100%}
+.form input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(201,164,90,.22)}
+.form input[aria-invalid=true]{border-color:var(--err)}
+.panel h3{font:500 22px/1.2 "Cormorant Garamond",Georgia,serif}
+.r2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+@media(max-width:560px){.r2{grid-template-columns:1fr}}
+.form .code-in{font:600 26px/1 ui-monospace,Menlo,monospace;letter-spacing:.35em;text-align:center}
+.msg{min-height:1.4em;margin:0;font-size:15px}
+.msg.err{color:var(--err)}
+.msg.ok{color:var(--tealInk);font-weight:600}
+.link{background:none;border:0;padding:0;color:var(--tealInk);text-decoration:underline;font:inherit;cursor:pointer;justify-self:start}
+.ords{margin-top:10px}
+.ords a{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:14px 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit}
+.ords a:last-child{border-bottom:0}
+.ords small{color:var(--soft)}
+.ords .st{justify-self:end;font-weight:600;color:var(--tealInk);font-size:14px}
+.ords .st.x{color:var(--err)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.hint{color:var(--soft);font-size:14px;margin:10px 0 0}
+#acct:not([hidden]){display:grid;gap:18px}
+</style>
+
+</head>
+<body>
+<a class="skip" href="#main">Hoppa till innehållet</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="hanger" viewBox="0 0 72 56"><path d="M30 12a6 6 0 1 1 6 6v6" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 24L6 46h60L36 24z" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="jdmark" viewBox="0 0 128 128"><circle cx="64" cy="64" r="64" fill="#0C2A45"/><circle cx="64" cy="64" r="56" fill="none" stroke="#C9A45A" stroke-width="5"/><path d="M56 39a8 8 0 1 1 8 8v8" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M64 55 L34 78 h60 z" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round"/></symbol>
+  <symbol id="fl-da" viewBox="0 0 37 28"><rect width="37" height="28" fill="#C8102E"/><path d="M12 0h4v28h-4zM0 12h37v4H0z" fill="#fff"/></symbol>
+  <symbol id="fl-de" viewBox="0 0 5 3"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#DD0000" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></symbol>
+  <symbol id="fl-sv" viewBox="0 0 16 10"><rect width="16" height="10" fill="#006AA7"/><path d="M5 0h2v10H5zM0 4h16v2H0z" fill="#FECC02"/></symbol>
+  <symbol id="fl-en" viewBox="0 0 60 30"><clipPath id="flc"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="flt"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#flc)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#flt)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></symbol>
+  <symbol id="check" viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="arrow" viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+
+<header class="site-h">
+  <div class="in">
+    <a class="logo" href="index.html" aria-label="JustDry startsida"><svg class="lm" viewBox="0 0 128 128" aria-hidden="true"><use href="#jdmark"/></svg>JustDry</a>
+    
+    <nav class="main" aria-label="Huvudmeny">
+      <a href="index.html#saadan">Så fungerar det</a>
+      <a href="index.html#priser">Priser</a>
+      <a href="index.html#omraade">Område</a>
+      <a href="index.html#faq">Frågor</a>
+      <a class="acc" href="konto.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Mitt konto</a>
+    </nav>
+    <div class="acts">
+      <div class="lpick">
+  <button class="lp-btn" type="button" aria-expanded="false" aria-controls="lpm" aria-label="Språk: Svenska"><svg class="flag" aria-hidden="true"><use href="#fl-sv"/></svg><span>SV</span><svg class="car" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button>
+  <div class="lp-menu langs" id="lpm" hidden><a href="../min-konto.html" hreflang="da" lang="da" data-lang="da" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-da"/></svg><span>Dansk</span></a><a href="../en/account.html" hreflang="en" lang="en" data-lang="en" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-en"/></svg><span>English</span></a><a href="../de/konto.html" hreflang="de" lang="de" data-lang="de" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-de"/></svg><span>Deutsch</span></a><a href="konto.html" hreflang="sv" lang="sv" data-lang="sv" aria-current="true"><svg class="flag" aria-hidden="true"><use href="#fl-sv"/></svg><span>Svenska</span><svg class="ok" aria-hidden="true"><use href="#check"/></svg></a></div>
+</div>
+      <a class="btn main" href="bestall.html">Boka hämtning</a>
+      <a class="acc-ico" href="konto.html" aria-label="Mitt konto"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Meny"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h12"/></svg></button>
+    </div>
+  </div>
+</header>
+  <div class="mnav-bg" hidden></div>
+  <nav class="mnav" id="mnav" hidden aria-label="Huvudmeny">
+    <button class="mclose" type="button" aria-label="Stäng"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
+    <div class="mmain">
+      <a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-5h4v5"/></svg>Start</a>
+      <a href="index.html#saadan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a2.2 2.2 0 1 1 2.2 2.2c-1 0-2.2.6-2.2 1.8v1"/><path d="M12 8 3 15h18z"/><path d="M6 19h12"/></svg>Så fungerar det</a>
+      <a href="index.html#priser"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg>Priser</a>
+      <a href="index.html#omraade"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.6"/></svg>Område</a>
+      <a href="konto.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14"/><path d="M4 12h11"/><path d="m11 8 4 4-4 4"/></svg>Mitt konto</a>
+    </div>
+    <a class="btn main big mcta" href="bestall.html">Boka hämtning</a>
+    <div class="msec">
+      <a href="index.html#faq">Frågor</a>
+      <a href="index.html#garanti">Nöjd-garanti</a>
+      <a href="villkor.html">Villkor</a>
+      <a href="integritet.html">Integritet</a>
+    </div>
+    <div class="msec">
+      <span class="mh">Kontakt</span>
+      <a href="tel:+4553256770">Tel. +45 53 25 67 70</a>
+      <a href="mailto:info@justdry.dk">info@justdry.dk</a>
+    </div>
+  </nav>
+
+<main id="main">
+
+<div class="top"><div class="in"><h1>Mitt konto</h1><p id="sub">Logga in med din e-post. Vi skickar en kod – inget lösenord att komma ihåg.</p></div></div>
+<div class="page" id="page" aria-live="polite">
+  <section class="panel" id="login" hidden>
+    <form class="form" id="f1" novalidate>
+      <label for="em">E-post<input id="em" type="email" autocomplete="email" inputmode="email" required></label>
+      <button class="btn main" type="submit" id="b1">Skicka kod</button>
+      <p class="msg" id="m1" role="status"></p>
+    </form>
+    <form class="form" id="f2" novalidate hidden>
+      <p class="msg ok" id="sent"></p>
+      <label for="otp">Kod från e-postmeddelandet<input id="otp" class="code-in" inputmode="numeric" autocomplete="one-time-code" maxlength="8" pattern="[0-9]*" required></label>
+      <button class="btn main" type="submit" id="b2">Logga in</button>
+      <button class="link" type="button" id="again">Använd en annan e-post</button>
+      <p class="msg" id="m2" role="status"></p>
+    </form>
+    <p class="hint">Vi använder bara din e-post för att logga in dig och visa dina beställningar.</p>
+  </section>
+  <div id="acct" hidden>
+    <section class="panel">
+      <div class="row"><h2 id="hello"></h2><button class="link" type="button" id="out">Logga ut</button></div>
+      <p class="msg ok" id="bag" hidden>✓ Du har en JustDry-påse – du kan beställa &#34;Fyll påsen&#34;.</p>
+      <h3 style="margin-top:14px">Mina beställningar</h3>
+      <div class="ords" id="ords"></div>
+      <a class="btn line" style="margin-top:16px" href="bestall.html">Boka hämtning</a>
+    </section>
+    <section class="panel">
+      <p id="mine" hidden style="margin:0 0 14px;padding:12px 14px;border:1px solid #C9A45A;border-radius:12px;color:#E9CC88"></p>
+      <h2>Mina uppgifter</h2>
+      <p class="hint" style="margin-top:4px">Sparas så att nästa beställning fylls i automatiskt.</p>
+      <form class="form" id="f3" novalidate>
+        <div class="r2"><label for="pn">Namn<input id="pn" autocomplete="name" maxlength="120"></label>
+        <label for="pt">Telefon<input id="pt" type="tel" autocomplete="tel" maxlength="40"></label></div>
+        <div class="r2"><label for="pa">Adress<input id="pa" autocomplete="street-address" maxlength="300"></label>
+        <label for="pp">Postnummer<input id="pp" inputmode="numeric" autocomplete="postal-code" maxlength="4"></label></div>
+        <label for="po" style="display:flex;gap:10px;align-items:flex-start;font-weight:400"><input id="po" type="checkbox" style="width:20px;height:20px;min-height:0;margin-top:2px;flex:none"> <span>Ja tack till personliga erbjudanden via mejl och sms</span></label>
+        <button class="btn main" type="submit" id="b3">Spara</button>
+        <p class="msg" id="m3" role="status"></p>
+      </form>
+    </section>
+  </div>
+  <section class="panel" id="off" hidden><p>Inloggning är inte aktiverad ännu.</p></section>
+</div>
+
+</main>
+
+
+<footer class="site-f">
+  <div class="wrap">
+    <a class="logo" href="index.html"><svg class="lm" viewBox="0 0 128 128" aria-hidden="true"><use href="#jdmark"/></svg>JustDry</a>
+    <span>Kemtvätt med hämtning och leverans · Nordsjälland, Danmark</span>
+    <address class="co">Drivs av Stjerne Skrædderi · Stjernegade 16F, 3000 Helsingør, Danmark · CVR 46637771<br>
+      <a href="tel:+4553256770">Tel. +45 53 25 67 70</a> · <a href="mailto:info@justdry.dk">info@justdry.dk</a><br>
+      <a href="villkor.html">Köpvillkor</a> · <a href="integritet.html">Integritetspolicy</a></address>
+    <div class="langs" role="group" aria-label="Språk"><a href="../min-konto.html" hreflang="da" lang="da" data-lang="da" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-da"/></svg>Dansk</a><a href="../en/account.html" hreflang="en" lang="en" data-lang="en" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-en"/></svg>English</a><a href="../de/konto.html" hreflang="de" lang="de" data-lang="de" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-de"/></svg>Deutsch</a><a href="konto.html" hreflang="sv" lang="sv" data-lang="sv" aria-current="true"><svg class="flag" aria-hidden="true"><use href="#fl-sv"/></svg>Svenska</a></div>
+  </div>
+</footer>
+<script src="../config.js"></script>
+<script src="../assets/js/dkdays.js"></script>
+<script>
+{
+  /* Hvor kom kunden fra? Læses fra linket (utm_*, gclid, fbclid) eller den henvisende side – og føres videre i
+     sidens egne links (?jd_src=…), så den kan gemmes med bestillingen. Ingen cookies, intet gemt på enheden. */
+  (()=>{const q=new URLSearchParams(location.search);let a=null;const ok=s=>String(s||'').toLowerCase().replace(/[^a-z0-9._-]/g,'').slice(0,60);
+    const jd=q.get('jd_src');
+    if(jd){const [s,m,c,r]=jd.split('~');a={source:ok(s),medium:ok(m),campaign:(c||'').slice(0,80),ref:(r||'').slice(0,120)}}
+    else if(q.get('utm_source'))a={source:ok(q.get('utm_source')),medium:ok(q.get('utm_medium')),campaign:(q.get('utm_campaign')||'').slice(0,80)};
+    else if(q.get('gclid'))a={source:'google',medium:'cpc'};
+    else if(q.get('fbclid'))a={source:'facebook',medium:'social'};
+    if(document.referrer&&!jd){try{const h=new URL(document.referrer).hostname.replace(/^www\./,'');if(h&&h!==location.hostname){
+      const m=[[/(^|\.)google\./,'google','organic'],[/(^|\.)bing\.com$/,'bing','organic'],[/duckduckgo\.com$/,'duckduckgo','organic'],[/(^|\.)facebook\.com$|^fb\.me$/,'facebook','social'],[/(^|\.)instagram\.com$/,'instagram','social'],[/^(t\.co|x\.com|twitter\.com)$/,'x','social'],[/linkedin\.com$/,'linkedin','social'],[/tiktok\.com$/,'tiktok','social']].find(([r])=>r.test(h));
+      if(!a)a=m?{source:m[1],medium:m[2]}:{source:ok(h.replace(/\./g,'-')),medium:'referral'};a.ref=h.slice(0,120)}}catch(_){}}
+    if(!a||!a.source)return;window.JD_ATTR=a;
+    const enc=encodeURIComponent([a.source,a.medium,a.campaign,a.ref].map(x=>String(x||'').replace(/~/g,'')).join('~'));
+    window.JD_SRC_PARAM='jd_src='+enc;
+    const tag=h=>{if(!h||/^(#|tel:|mailto:|[a-z]+:)/i.test(h)||h.includes('jd_src='))return h;const [p,hash]=h.split('#');return p+(p.includes('?')?'&':'?')+'jd_src='+enc+(hash!==undefined?'#'+hash:'')};
+    window.JD_TAG=tag;document.querySelectorAll('a[href]').forEach(el=>{const h=el.getAttribute('href');if(h&&!h.startsWith('#'))el.setAttribute('href',tag(h))});
+  })();
+  const b=document.querySelector('.menu-btn'),m=document.getElementById('mnav'),bg=document.querySelector('.mnav-bg');
+  const open=()=>{m.hidden=false;bg.hidden=false;document.documentElement.classList.add('mopen');requestAnimationFrame(()=>requestAnimationFrame(()=>{m.classList.add('on');bg.classList.add('on')}));b.setAttribute('aria-expanded','true');m.querySelector('.mclose').focus()};
+  const close=(back)=>{if(m.hidden)return;m.classList.remove('on');bg.classList.remove('on');document.documentElement.classList.remove('mopen');b.setAttribute('aria-expanded','false');
+    const done=()=>{m.hidden=true;bg.hidden=true};matchMedia('(prefers-reduced-motion: reduce)').matches?done():setTimeout(done,260);if(back)b.focus()};
+  b.addEventListener('click',()=>m.hidden?open():close(true));
+  m.querySelector('.mclose').addEventListener('click',()=>close(true));bg.addEventListener('click',()=>close(true));
+  m.addEventListener('click',e=>{if(e.target.closest('a'))close(false)});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close(true)});
+  /* Fast "Bestil"-knap på mobil: vises kun, når sidens egen bestil-knap er ude af syne, og skjules ved footeren og når menuen er åben */
+  const sc=document.getElementById('scta');
+  if(sc&&'IntersectionObserver' in window){
+    const a=sc.querySelector('a'),hero=document.querySelector('#heroCta, main .btn.main.big'),foot=document.querySelector('.site-f');
+    let heroOut=!hero,footIn=false,typing=false;
+    const upd=()=>{const on=heroOut&&!footIn&&!typing&&!document.documentElement.classList.contains('mopen');sc.classList.toggle('on',on);sc.setAttribute('aria-hidden',String(!on));a.tabIndex=on?0:-1};
+    if(hero)new IntersectionObserver(es=>{heroOut=!es[0].isIntersecting&&es[0].boundingClientRect.top<0;upd()}).observe(hero);
+    else addEventListener('scroll',()=>{heroOut=scrollY>500;upd()},{passive:true});
+    if(foot)new IntersectionObserver(es=>{footIn=es[0].isIntersecting;upd()}).observe(foot);
+    addEventListener('focusin',e=>{typing=/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);upd()});addEventListener('focusout',()=>{typing=false;upd()});
+    new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+  }
+  /* Indhold i den faste knap: næste mulige afhentning + kundens by */
+  if(sc){
+    const ST={"aria": "Boka h\u00e4mtning", "pickup": "H\u00e4mtning", "today": "I dag", "tomorrow": "I morgon", "where": "Var", "your_pc": "Ditt postnummer"},DAYS=[1, 2, 3, 4, 5],SL=["10.00\u201312.00", "12.00\u201314.00", "14.00\u201316.00", "16.00\u201318.00"],LOC=Object.fromEntries(["2765", "2800", "2820", "2830", "2840", "2850", "2870", "2900", "2920", "2930", "2942", "2950", "2960", "2970", "2980", "2990", "3000", "3050", "3060", "3070", "3080", "3100", "3120", "3140", "3150", "3200", "3210", "3220", "3230", "3250", "3300", "3310", "3320", "3330", "3360", "3370", "3390", "3400", "3450", "3460", "3480", "3490", "3500", "3520", "3540", "3550", "3600", "3630", "3650", "3660", "3670", "4050"].map((p,i)=>[p,["Sm\u00f8rum", "Kongens Lyngby", "Gentofte", "Virum", "Holte", "N\u00e6rum", "Dysseg\u00e5rd", "Hellerup", "Charlottenlund", "Klampenborg", "Skodsborg", "Vedb\u00e6k", "Rungsted Kyst", "H\u00f8rsholm", "Kokkedal", "Niv\u00e5", "Helsing\u00f8r", "Humleb\u00e6k", "Esperg\u00e6rde", "Snekkersten", "Tik\u00f8b", "Hornb\u00e6k", "Dronningm\u00f8lle", "\u00c5lsg\u00e5rde", "Helleb\u00e6k", "Helsinge", "Vejby", "Tisvildeleje", "Gr\u00e6sted", "Gilleleje", "Frederiksv\u00e6rk", "\u00d8lsted", "Sk\u00e6vinge", "G\u00f8rl\u00f8se", "Liseleje", "Melby", "Hundested", "Hiller\u00f8d", "Aller\u00f8d", "Birker\u00f8d", "Fredensborg", "Kvistg\u00e5rd", "V\u00e6rl\u00f8se", "Farum", "Lynge", "Slangerup", "Frederikssund", "J\u00e6gerspris", "\u00d8lstykke", "Stenl\u00f8se", "Veks\u00f8 Sj\u00e6lland", "Skibby"][i]])),LOCALE="sv-SE",ORDER="bestall.html";
+    const fillSticky=()=>{
+      JDDays.setOpenDays(DAYS);const n=JDDays.now();let day=null,slot=null,k=0;
+      for(;k<30;k++){const d=JDDays.addDays(n.iso,k);if(JDDays.isClosed(d))continue;
+        if(k===0){const s=SL.find(x=>n.hour<parseInt(x,10)-1);if(!s)continue;slot=s}else slot=SL[0];day=d;break}
+      let pc=null;try{pc=localStorage.getItem('jd_post')||(JSON.parse(localStorage.getItem('jd_account')||'null')||{}).post||null}catch(_){}
+      if(!pc&&document.body.dataset.pc)pc=document.body.dataset.pc; /* byside: brug byens postnummer */
+      if(pc&&!LOC[pc])pc=null;
+      if(day){const iso=day,dd=new Date(day+'T12:00:00Z'),lbl=k===0?ST.today:k===1?ST.tomorrow:k<7?dd.toLocaleDateString(LOCALE,{weekday:'long',timeZone:'UTC'}):dd.toLocaleDateString(LOCALE,{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'});
+        document.getElementById('spDay').textContent=lbl.charAt(0).toUpperCase()+lbl.slice(1)+' '+slot.replace(/\.00/g,'');
+        sc.querySelector('a').href=ORDER+'?dato='+iso+(pc?'&post='+pc:'')+(window.JD_SRC_PARAM?'&'+window.JD_SRC_PARAM:'')}
+      document.getElementById('spWhere').textContent=pc?LOC[pc]+' '+pc:ST.your_pc};
+    fillSticky();addEventListener('storage',fillSticky);addEventListener('pageshow',fillSticky);
+  }
+  { const lb=document.querySelector('.lp-btn'),lm=document.getElementById('lpm');
+    if(lb&&lm){const set=o=>{lm.hidden=!o;lb.setAttribute('aria-expanded',String(o))};
+      lb.addEventListener('click',e=>{e.stopPropagation();const o=lm.hidden;set(o);if(o){const c=lm.querySelector('[aria-current=true]')||lm.querySelector('a');c&&c.focus()}});
+      document.addEventListener('click',e=>{if(!lm.hidden&&!e.target.closest('.lpick'))set(false)});
+      document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lm.hidden){set(false);lb.focus()}});
+      lm.addEventListener('keydown',e=>{if(e.key!=='ArrowDown'&&e.key!=='ArrowUp')return;e.preventDefault();const L=[...lm.querySelectorAll('a')],i=L.indexOf(document.activeElement);L[(i+(e.key==='ArrowDown'?1:L.length-1))%L.length].focus()});
+      lm.addEventListener('focusout',e=>{if(!e.relatedTarget||!e.relatedTarget.closest('.lpick'))set(false)});}}
+  /* Logget ind? Supabase gemmer sessionen i browseren (sb-…-auth-token). Så bliver ikonet udfyldt. */
+  try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^sb-.*-auth-token$/.test(k)){const v=JSON.parse(localStorage.getItem(k)||'null');if(v&&(v.refresh_token||(v.currentSession&&v.currentSession.refresh_token))){document.documentElement.classList.add('jd-in');break}}}}catch(e){}
+  document.querySelectorAll('.langs a').forEach(a=>a.addEventListener('click',()=>{try{localStorage.setItem('jd_lang',a.dataset.lang)}catch(e){}}));
+  const io='IntersectionObserver' in window?new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}},{threshold:.08}):null;
+  document.querySelectorAll('.reveal').forEach(el=>io?io.observe(el):el.classList.add('in'));
+}
+</script>
+
+<script src="../config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>window.supabase||document.write('<script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"><\/script>')/* reserve-CDN hvis jsDelivr er nede */</script>
+<script>
+{
+const T={"address": "Adress", "bad_code": "Koden \u00e4r fel eller har g\u00e5tt ut. F\u00f6rs\u00f6k igen.", "bad_email": "Skriv en giltig e-postadress.", "bag": "Du har en JustDry-p\u00e5se \u2013 du kan best\u00e4lla \"Fyll p\u00e5sen\".", "cancelled": "Avbokad", "code": "Kod fr\u00e5n e-postmeddelandet", "email": "E-post", "err": "N\u00e5got gick fel. F\u00f6rs\u00f6k igen om en stund.", "h1": "Mitt konto", "hello": "Hej {name}", "hello_anon": "Du \u00e4r inloggad", "lead": "Logga in med din e-post. Vi skickar en kod \u2013 inget l\u00f6senord att komma ih\u00e5g.", "logout": "Logga ut", "mine": "Din personliga rabatt: {value} \u2013 dras av automatiskt n\u00e4r du best\u00e4ller{until}.", "name": "Namn", "nav": "Mitt konto", "nodb": "Inloggning \u00e4r inte aktiverad \u00e4nnu.", "none": "Du har inga best\u00e4llningar med den h\u00e4r e-posten \u00e4nnu.", "offers": "Ja tack till personliga erbjudanden via mejl och sms", "order_cta": "Boka h\u00e4mtning", "order_no": "Best\u00e4llning nr {id}", "orders_h": "Mina best\u00e4llningar", "phone": "Telefon", "postcode": "Postnummer", "privacy": "Vi anv\u00e4nder bara din e-post f\u00f6r att logga in dig och visa dina best\u00e4llningar.", "profile_h": "Mina uppgifter", "profile_lead": "Sparas s\u00e5 att n\u00e4sta best\u00e4llning fylls i automatiskt.", "resend": "Anv\u00e4nd en annan e-post", "save": "Spara", "saved": "Sparat \u2713", "see": "Visa best\u00e4llning", "send": "Skicka kod", "sending": "Skickar \u2026", "sent": "Vi har skickat en kod till {email}. Kolla \u00e4ven skr\u00e4pposten.", "steps": ["Mottagen", "Bekr\u00e4ftad", "H\u00e4mtad", "Reng\u00f6rs", "Klar", "Levererad"], "until": " (g\u00e4ller till {date})", "verify": "Logga in"},LANG='sv',LOCALE='sv-SE',STATUS_URL="ordre.html";
+const $=id=>document.getElementById(id);
+const fill=(s,o)=>s.replace(/\{(\w+)\}/g,(m,k)=>k in o?o[k]:m);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=v=>new Intl.NumberFormat(LOCALE,{style:'currency',currency:'DKK',currencyDisplay:LOCALE.startsWith('sv')?'code':'symbol',maximumFractionDigits:0}).format(v);
+const day=d=>d?new Date(d+'T12:00:00').toLocaleDateString(LOCALE,{weekday:'short',day:'numeric',month:'long'}):'';
+const STEPS=['ny','bekræftet','hentet','i rens','klar','leveret'];
+const cfg=window.JUSTDRY||{};
+const db=(cfg.supabaseUrl&&cfg.supabaseAnonKey&&window.supabase)?window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey):null;
+let email='';
+const msg=(id,t,cls)=>{const e=$(id);e.textContent=t||'';e.className='msg'+(cls?' '+cls:'')};
+
+async function show(){
+  const {data}=await db.auth.getSession();
+  if(!data||!data.session){$('login').hidden=false;$('acct').hidden=true;return}
+  const r=await db.rpc('my_account');
+  if(r.error||!r.data){$('login').hidden=false;$('acct').hidden=true;msg('m1',T.err,'err');return}
+  const p=r.data.profile||{},o=r.data.orders||[];
+  $('login').hidden=true;$('acct').hidden=false;
+  $('hello').textContent=p.name?fill(T.hello,{name:p.name.split(' ')[0]}):T.hello_anon;
+  $('bag').hidden=!p.has_bag;
+  $('sub').textContent=p.email||'';
+  $('pn').value=p.name||'';$('pt').value=p.phone||'';$('pa').value=p.address||'';$('pp').value=p.postcode||'';$('po').checked=!!p.offers_ok;
+  {const k=(r.data.offers||[])[0];$('mine').hidden=!k;if(k){const val=k.kind==='percent'?k.value+' %':money(k.value);
+   $('mine').textContent=fill(T.mine,{value:val,until:k.expires?fill(T.until,{date:day(k.expires)}):''})}}
+  try{const c={navn:p.name||'',tlf:p.phone||'',adr:p.address||'',post:p.postcode||'',email:p.email||'',has_bag:!!p.has_bag};localStorage.setItem('jd_account',JSON.stringify(c))}catch(e){}
+  $('ords').innerHTML=o.length?o.map(x=>{const i=STEPS.indexOf(x.status),st=x.status==='annulleret'?T.cancelled:(T.steps[i]||x.status);
+    return `<a href="${STATUS_URL}?t=${encodeURIComponent(x.token)}"><b>${esc(fill(T.order_no,{id:x.id}))}</b><span class="st${x.status==='annulleret'?' x':''}">${esc(st)}</span><small>${esc(day(x.pickup_date))}${x.pickup_slot?' · '+esc(LANG==='da'?x.pickup_slot:x.pickup_slot.replace(/\./g,':')):''}</small><small style="justify-self:end">${x.total?esc(money(x.total)):''}</small></a>`}).join(''):`<p class="hint">${esc(T.none)}</p>`;
+}
+
+if(!db){$('off').hidden=false}
+else{
+  $('f1').addEventListener('submit',async e=>{e.preventDefault();email=$('em').value.trim().toLowerCase();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){msg('m1',T.bad_email,'err');$('em').setAttribute('aria-invalid','true');$('em').focus();return}
+    $('em').removeAttribute('aria-invalid');$('b1').disabled=true;$('b1').textContent=T.sending;msg('m1','');
+    const {error}=await db.auth.signInWithOtp({email,options:{shouldCreateUser:true}});
+    $('b1').disabled=false;$('b1').textContent=T.send;
+    if(error){msg('m1',T.err,'err');return}
+    $('f1').hidden=true;$('f2').hidden=false;$('sent').textContent=fill(T.sent,{email});$('otp').value='';$('otp').focus()});
+  $('again').addEventListener('click',()=>{$('f2').hidden=true;$('f1').hidden=false;msg('m2','');$('em').focus()});
+  $('f2').addEventListener('submit',async e=>{e.preventDefault();const token=$('otp').value.replace(/\D/g,'');
+    if(token.length<6){msg('m2',T.bad_code,'err');return}
+    $('b2').disabled=true;const {error}=await db.auth.verifyOtp({email,token,type:'email'});$('b2').disabled=false;
+    if(error){msg('m2',T.bad_code,'err');$('otp').select();return}
+    msg('m2','');await show()});
+  $('f3').addEventListener('submit',async e=>{e.preventDefault();const pc=$('pp').value.trim();
+    if(pc&&!/^\d{4}$/.test(pc)){msg('m3',T.postcode+'?','err');$('pp').focus();return}
+    $('b3').disabled=true;const {error}=await db.rpc('my_profile_save',{p:{name:$('pn').value,phone:$('pt').value,address:$('pa').value,postcode:pc,offers:$('po').checked}});$('b3').disabled=false;
+    if(error){msg('m3',T.err,'err');return}
+    msg('m3',T.saved,'ok');await show()});
+  $('out').addEventListener('click',async()=>{await db.auth.signOut();try{localStorage.removeItem('jd_account')}catch(e){}$('sub').textContent=T.lead;$('f2').hidden=true;$('f1').hidden=false;await show()});
+  show();
+}
+}
+</script>
+
+</body>
+</html>

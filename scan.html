@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#071D32">
+<title>JustDry – Scan tøj</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<style>
+/* Renseriets scanner-skærm: store knapper, tydelig grøn/rød besked, virker med håndscanner, kamera eller tastatur */
+:root{color-scheme:dark;--bg:#071D32;--card:#0C2A45;--line:#1C4060;--ink:#EEF1F4;--soft:#AFBCC9;--teal:#087F73;--ok:#1E9E6A;--bad:#C4362B;--warn:#C98A12}
+*{box-sizing:border-box;min-width:0}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 system-ui,-apple-system,"Segoe UI",Inter,sans-serif}
+h1,h2,p{margin:0}button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #4CC3B4;outline-offset:2px}
+.bar{position:sticky;top:0;z-index:5;background:#051626;padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.bar b{flex:1;font-size:19px}.bar a,.bar button{color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:10px;min-height:44px;padding:0 12px;text-decoration:none;display:inline-flex;align-items:center}
+main{max-width:760px;margin:0 auto;padding:16px 14px 60px;display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.modes button{min-height:56px;border-radius:12px;border:1px solid var(--line);background:transparent;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}
+.jds{display:grid;gap:10px}.jds-l{display:grid;gap:6px;color:var(--soft);font-size:15px}
+.jds-in{min-height:60px;border-radius:12px;border:2px solid #5E83A4;background:#051626;padding:0 14px;font:600 22px ui-monospace,Menlo,monospace;letter-spacing:.05em;text-transform:uppercase}
+.jds-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.jds-row button,.jds-stop{min-height:54px;border-radius:12px;border:1px solid var(--line);background:transparent;font-weight:700;cursor:pointer}
+.jds-ok{background:var(--teal)!important;border-color:var(--teal)!important}
+.jds-video{display:grid;gap:8px}.jds-video video{width:100%;max-height:50vh;border-radius:12px;background:#000;object-fit:cover}
+.jds-msg{color:#FFB4A9}
+.result{border-radius:16px;padding:18px;font-size:19px;font-weight:600;display:grid;gap:6px}
+.result small{font-weight:400;font-size:15px;opacity:.9}
+.result.ok{background:color-mix(in srgb,var(--ok) 35%,var(--card));border:2px solid var(--ok)}
+.result.bad{background:color-mix(in srgb,var(--bad) 40%,var(--card));border:2px solid var(--bad);font-size:22px}
+.result.warn{background:color-mix(in srgb,var(--warn) 35%,var(--card));border:2px solid var(--warn)}
+.order h2{font-size:20px}.order ul{list-style:none;padding:0;margin:10px 0 0}
+.order li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:16px}
+.order li.done{color:#7FE0B0}.order li span:last-child{white-space:nowrap}
+.prog{height:10px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:10px}.prog i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.log{list-style:none;padding:0;margin:0;font-size:15px}.log li{padding:6px 0;border-bottom:1px solid var(--line);color:var(--soft)}
+.big{min-height:54px;border-radius:12px;border:1px solid var(--line);background:transparent;font-weight:700;padding:0 16px;cursor:pointer}
+.box{max-width:420px;margin:50px auto;padding:0 16px;display:grid;gap:12px}
+.box input{min-height:52px;border-radius:12px;border:1px solid #5E83A4;background:var(--card);padding:0 14px;width:100%}
+.box button{min-height:54px;border-radius:12px;border:0;background:var(--teal);color:#fff;font-weight:700}
+.msg{color:#FFB4A9}
+textarea{width:100%;min-height:70px;border-radius:12px;border:1px solid #5E83A4;background:#051626;padding:10px}
+</style>
+</head>
+<body>
+<div class="box" id="noCfg" hidden><h1>Ikke forbundet</h1><p>Udfyld config.js med Supabase-oplysningerne.</p></div>
+<form class="box" id="login" hidden>
+  <h1 style="display:flex;align-items:center;gap:10px"><svg width="34" height="34" viewBox="0 0 128 128" aria-hidden="true"><circle cx="64" cy="64" r="64" fill="#0C2A45"/><circle cx="64" cy="64" r="56" fill="none" stroke="#C9A45A" stroke-width="5"/><path d="M56 39a8 8 0 1 1 8 8v8" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M64 55 L34 78 h60 z" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round"/></svg>JustDry Scanner</h1>
+  <input id="em" type="email" autocomplete="username" placeholder="E-mail" required aria-label="E-mail">
+  <input id="pw" type="password" autocomplete="current-password" placeholder="Adgangskode" required aria-label="Adgangskode">
+  <p class="msg" id="lmsg" role="alert"></p>
+  <button type="submit" id="lbtn">Log ind</button>
+</form>
+<div id="app" hidden>
+  <div class="bar"><b id="who">Scanner</b><a href="admin.html">Admin</a><button type="button" id="out">Log ud</button></div>
+  <main>
+    <section class="card"><h2 style="font-size:17px;margin-bottom:10px">Hvad sker der med tøjet nu?</h2><div class="modes" id="modes" role="group" aria-label="Trin"></div>
+      <div id="issueBox" hidden style="margin-top:10px"><label for="note" style="color:var(--soft);font-size:15px">Beskriv problemet (gemmes ved næste scanning)</label><textarea id="note" maxlength="1000"></textarea></div></section>
+    <section class="card" id="scanCard"><div id="scanner"></div></section>
+    <div id="result" aria-live="assertive"></div>
+    <section class="card order" id="order" hidden></section>
+    <section class="card"><h2 style="font-size:17px;margin-bottom:6px">Seneste scanninger</h2><ul class="log" id="log"><li>Ingen endnu.</li></ul></section>
+  </main>
+</div>
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>window.supabase||document.write('<script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"><\/script>')/* reserve-CDN hvis jsDelivr er nede */</script>
+<script src="assets/js/scanner.js"></script>
+<script>
+(()=>{
+const $=id=>document.getElementById(id),cfg=window.JUSTDRY||{};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const MODES=[['received','Modtaget på renseriet'],['inspection','Gennemgået'],['cleaning_started','Rens startet'],['cleaning_completed','Renset'],['pressing_completed','Presset'],['quality_control','Kvalitetskontrol OK'],['packed','Pak til kunde'],['issue','Problem']];
+const STATUS={collected:'hentet',received:'modtaget',inspection:'gennemgået',cleaning:'renses',pressing:'presset',quality_control:'kontrolleret',packed:'pakket',out_for_delivery:'på vej',delivered:'leveret',issue:'problem'};
+const CAT={coat:'Frakke',suit:'Jakkesæt / blazer',shirt:'Skjorte',trousers:'Bukser',dress:'Kjole',knitwear:'Strik',bag:'Pose – vask & fold',home:'Dyne / boligtekstil',other:'Andet'};
+if(!cfg.supabaseUrl||!cfg.supabaseAnonKey||!window.supabase){$('noCfg').hidden=false;return}
+const db=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
+let mode=new URLSearchParams(location.search).get('mode')||'received',packOrder=null,me=null;const log=[];
+function beep(ok){try{const a=new (window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.value=ok?880:220;g.gain.value=.08;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+(ok?.12:.5))}catch(_){}if(!ok&&navigator.vibrate)navigator.vibrate([200,100,200])}
+function drawModes(){$('modes').innerHTML=MODES.map(([k,n])=>`<button type="button" data-m="${k}" aria-pressed="${k===mode}">${esc(n)}</button>`).join('');$('issueBox').hidden=mode!=='issue';if(mode!=='packed'){packOrder=null;$('order').hidden=true}}
+$('modes').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;mode=b.dataset.m;drawModes();$('result').innerHTML='';sc.focus()});
+async function drawOrder(){
+  if(!packOrder){$('order').hidden=true;return}
+  const {data}=await db.from('garments').select('garment_code,category,color,status').eq('order_id',packOrder.id).order('id');
+  const list=data||[],done=list.filter(g=>['packed','out_for_delivery','delivered'].includes(g.status)).length;
+  $('order').hidden=false;
+  $('order').innerHTML=`<h2>Pakker ordre ${esc(packOrder.tracking)} – ${esc(packOrder.customer)}</h2><p style="color:var(--soft);margin-top:4px">${done} af ${list.length} stykker pakket</p><div class="prog"><i style="width:${list.length?done/list.length*100:0}%"></i></div>
+   <ul>${list.map(g=>{const d=['packed','out_for_delivery','delivered'].includes(g.status);return `<li class="${d?'done':''}"><span>${d?'✓':'○'} ${esc(g.garment_code)} · ${esc(CAT[g.category]||g.category)}${g.color?' · '+esc(g.color):''}</span><span>${esc(STATUS[g.status]||g.status)}</span></li>`}).join('')}</ul>
+   ${done===list.length&&list.length?'<p class="result ok" style="margin-top:12px">✓ Ordren er komplet. Sæt den til "klar" i admin, så chaufføren kan køre den ud.</p>':''}
+   <button class="big" type="button" id="nextOrder" style="margin-top:12px;width:100%">Færdig – næste ordre</button>`;
+  $('nextOrder').onclick=()=>{packOrder=null;$('order').hidden=true;$('result').innerHTML='';sc.focus()};
+}
+function show(cls,html){$('result').innerHTML=`<div class="result ${cls}" role="${cls==='bad'?'alert':'status'}">${html}</div>`}
+async function onCode(code){
+  const note=mode==='issue'?$('note').value.trim():null;
+  if(mode==='issue'&&!note){show('warn','Skriv først, hvad problemet er.');beep(false);return}
+  const {data,error}=await db.rpc('scan_garment',{p_code:code,p_event:mode,p_order_id:mode==='packed'&&packOrder?packOrder.id:null,p_note:note});
+  if(error){show('bad','Fejl: '+esc(error.message));beep(false);return}
+  const r=data||{};
+  if(!r.ok){beep(false);
+    if(r.reason==='wrong_order')show('bad',`✋ FORKERT ORDRE!<small>${esc(r.code)} tilhører ${esc(r.tracking)} (${esc(r.customer)}) – ikke den ordre du pakker. Læg stykket til side.</small>`);
+    else if(r.reason==='unknown')show('bad',`Ukendt kode: ${esc(r.code)}<small>Tjek mærket, eller skriv koden igen.</small>`);
+    else if(r.reason==='forbidden')show('bad','Du har ikke adgang til at scanne dette.');
+    else show('warn',esc(r.reason));
+    log.unshift(`✗ ${r.code} – ${r.reason==='wrong_order'?'forkert ordre':r.reason}`);drawLog();return}
+  beep(true);
+  if(mode==='packed'&&!packOrder){packOrder={id:r.order_id,tracking:r.tracking,customer:r.customer}}
+  show('ok',`✓ ${esc(r.code)} · ${esc(CAT[r.category]||r.category)}${r.color?' · '+esc(r.color):''}<small>${esc(r.tracking)} · ${esc(r.customer)} · status: ${esc(STATUS[r.status]||r.status)} · ${r.order_done}/${r.order_total} i ordren</small>`);
+  log.unshift(`✓ ${r.code} – ${STATUS[r.status]||r.status} (${r.tracking})`);drawLog();
+  if(mode==='issue')$('note').value='';
+  if(mode==='packed')await drawOrder();
+}
+function drawLog(){$('log').innerHTML=log.slice(0,15).map(x=>`<li>${esc(x)}</li>`).join('')}
+let sc=null;
+async function start(){
+  const {data:{session}}=await db.auth.getSession();
+  if(!session){$('login').hidden=false;$('app').hidden=true;return}
+  const {data:st}=await db.from('staff').select('user_id,name,role,active').eq('user_id',session.user.id);
+  me=(st||[]).find(s=>s.active);
+  if(!me){$('lmsg').textContent='Din bruger er ikke medarbejder.';await db.auth.signOut();$('login').hidden=false;return}
+  if(me.role==='driver'){location.replace('driver.html');return}
+  $('login').hidden=true;$('app').hidden=false;$('who').textContent='Scanner · '+me.name;
+  drawModes();sc=JDScan.attach($('scanner'),onCode);
+}
+$('out').addEventListener('click',async()=>{await db.auth.signOut();location.reload()});
+$('login').addEventListener('submit',async e=>{e.preventDefault();$('lmsg').textContent='';const {error}=await db.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(error){$('lmsg').textContent='Forkert e-mail eller adgangskode.';return}start()});
+start();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>JustDry – Admin</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: rolig arbejdsskærm – hurtig at læse mellem to afhentninger
+   IDEA: et renseris ordrebog, kassebog og køreseddel i ét
+   LAYOUT: navy sidemenu (skuffe på mobil), søgefelt øverst, indhold i kort */
+:root{color-scheme:light dark;--bg:light-dark(#F3F1EC,#0B1F33);--ink:light-dark(#12243A,#EEF1F4);--soft:light-dark(#566574,#AFBCC9);--card:light-dark(#FFFFFF,#12304C);--line:light-dark(#E1DCD2,#21405F);--tint:light-dark(#F6F3EC,#0E2740);--teal:#1F9E8F;--tealBtn:#137468;--tealInk:light-dark(#137468,#4CC3B4);--warn:light-dark(#B4541A,#F2A46B);--err:light-dark(#B3261E,#FF8A80);--navy:#0F2A44}
+*{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,p{margin:0}h1{font-size:24px;letter-spacing:-.01em}h2{font-size:17px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--tealInk)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:0 16px;border-radius:11px;border:0;background:var(--tealBtn);color:#fff;font-weight:600;cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn:hover{background:#0F5F55}
+.btn.line{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn.sm{min-height:36px;padding:0 12px;font-size:14px}
+.btn.del{background:transparent;color:var(--err);border:1px solid var(--line)}
+.btn:disabled{opacity:.5;cursor:progress}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+input,select,textarea{min-height:42px;padding:8px 11px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-size:16px;width:100%}
+textarea{min-height:60px;resize:vertical}
+label{display:grid;gap:4px;font-size:13px;color:var(--soft)}
+.chk{display:flex;align-items:center;gap:8px;color:var(--ink);font-size:14px;min-height:42px}
+.chk input{width:20px;height:20px;min-height:20px;accent-color:var(--tealBtn)}
+.layout{display:grid;grid-template-columns:244px minmax(0,1fr);min-height:100vh}
+aside{background:var(--navy);color:#fff;padding:16px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;padding:4px 8px 18px;letter-spacing:-.03em}
+.brand i{width:34px;height:34px;border-radius:50%;background:var(--teal);display:grid;place-items:center}
+nav button{display:flex;align-items:center;gap:10px;width:100%;min-height:42px;padding:0 12px;border:0;border-radius:10px;background:transparent;color:#C9D4DF;cursor:pointer;text-align:left;font-weight:500}
+nav button:hover{background:rgba(255,255,255,.06);color:#fff}
+nav button[aria-current=page]{background:var(--tealBtn);color:#fff}
+nav .badge{margin-left:auto;background:#fff;color:var(--navy);font-size:12px;font-weight:700;border-radius:99px;padding:1px 8px}
+nav hr{border:0;border-top:1px solid rgba(255,255,255,.1);margin:10px 4px}
+nav small{display:block;color:#7F93A8;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px 4px}
+.top{display:flex;align-items:center;gap:10px;padding:10px max(3vw,14px);border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:0;z-index:5}
+.top .search{flex:1;max-width:460px;position:relative}
+.top .search input{padding-left:36px}
+.top .search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--soft)}
+.top .sp{flex:1}
+.who{font-weight:600;font-size:14px;text-align:right;line-height:1.2}.who small{display:block;color:var(--soft);font-weight:500}
+#menuBtn{display:none}
+main{padding:18px max(3vw,14px) 60px;max-width:1240px}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.head p{color:var(--soft);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stat{display:grid;gap:2px}
+.stat span{font-size:13px;color:var(--soft)}
+.stat b{font-size:clamp(20px,2.4vw,28px);font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.02em}
+.stat small{font-size:12.5px;color:var(--soft)}
+.stat.go{cursor:pointer;text-align:left;font:inherit;color:inherit}
+.stat.go:hover{border-color:var(--teal)}
+.stack{display:grid;gap:12px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.tabs button{flex:none;min-height:38px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font-weight:500}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.ord{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:14px}
+.ord h3{font-size:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:light-dark(#E8F5F3,#173E4E);color:var(--tealInk);white-space:nowrap}
+.pill.new{background:light-dark(#FDEBDD,#4A2E1C);color:var(--warn)}
+.pill.ok{background:light-dark(#E7F4E7,#1F3D2A);color:light-dark(#2E7D32,#7FD38A)}
+.pill.off{background:light-dark(#EEE,#24384D);color:var(--soft)}
+.meta{color:var(--soft);font-size:14px;margin-top:4px;display:grid;gap:2px}
+.lines{margin-top:8px;font-size:14px}
+.lines div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding:3px 0}
+.lines div span:last-child,.num{white-space:nowrap;font-variant-numeric:tabular-nums}
+.tot{font-weight:700}
+.note{margin-top:8px;font-size:14px;background:var(--tint);border-radius:10px;padding:7px 10px}
+.ctl{display:grid;gap:8px;align-content:start}
+.r2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.saved{font-size:13px;color:var(--tealInk);min-height:18px}
+.empty{text-align:center;color:var(--soft);padding:34px 10px;border:1px dashed var(--line);border-radius:16px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-weight:600;color:var(--soft);font-size:13px;padding:8px 6px;border-bottom:1px solid var(--line)}
+td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.n,th.n{text-align:right}
+tr.click{cursor:pointer}tr.click:hover td{background:var(--tint)}
+.scroll{overflow-x:auto}
+.bars{display:grid;gap:6px;margin-top:10px}
+.bar{display:grid;grid-template-columns:70px minmax(0,1fr) 96px;gap:8px;align-items:center;font-size:13px}
+.bar i{display:block;height:14px;border-radius:6px;background:var(--teal);min-width:2px}
+.bar span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .dn{font-size:12px;color:var(--soft);text-align:center;padding:4px 0}
+.cal button{min-height:64px;border:1px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;padding:6px;gap:3px;text-align:left}
+.cal button.out{opacity:.4}.cal button.today{border-color:var(--teal);border-width:2px}
+.cal button[aria-pressed=true]{background:light-dark(#E8F5F3,#173E4E)}
+.cal b{font-size:13px}.cal small{font-size:11px;font-weight:600;color:#fff;background:var(--teal);border-radius:99px;padding:0 6px}
+.cal small.d{background:var(--navy)}
+.stop{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.stop .k{flex:none;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.stop .k.d{background:var(--navy)}
+.stars{color:#E0A100;letter-spacing:1px;white-space:nowrap}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;align-items:end}
+.msg{font-size:14px;color:var(--err);min-height:1px}
+.box{max-width:420px;margin:60px auto;display:grid;gap:12px}
+.hint{font-size:13px;color:var(--soft);margin-top:8px}
+.zone{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin:16px 0 6px}
+.toast{position:fixed;right:16px;bottom:16px;z-index:40;background:var(--navy);color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.3);max-width:360px}
+.toast.err{background:#7A1F18}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}aside{position:fixed;inset:0 auto 0 0;width:264px;z-index:20;transform:translateX(-100%);transition:transform .2s}aside.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.4)}#menuBtn{display:inline-flex}.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.ord,.grid2{grid-template-columns:1fr}.who small{display:none}}
+@media(max-width:600px){.top{flex-wrap:wrap}.top .search{order:5;flex-basis:100%;max-width:none}.stackt thead{display:none}.stackt tr{display:grid;padding:8px 0;border-bottom:1px solid var(--line)}.stackt td{border:0;padding:2px 0;display:flow-root}.stackt td::before{content:attr(data-l);float:left;width:8.5em;color:var(--soft);font-size:13px}.stackt td.n{text-align:left}}
+@media(prefers-reduced-motion:reduce){aside{transition:none}}
+
+/* Stykker & pris (assets/js/items.js) */
+.items-ed{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:14px}
+.items-ed h3{font-size:17px;margin:0 0 4px}.items-ed .hint{color:var(--soft);font-size:14px;margin:0}
+.it-list{list-style:none;padding:0;margin:8px 0}
+.it-list li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+.it-list li.empty{color:var(--soft)}
+.it-list small{color:var(--soft)}
+.it-list .qty{display:flex;align-items:center;gap:10px;flex:none}
+.it-list .qty button{width:42px;height:42px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:20px;cursor:pointer}
+.it-list .qty b{min-width:20px;text-align:center}
+.it-add{display:grid;grid-template-columns:1fr auto;gap:8px}
+.it-add select{min-height:46px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 8px;min-width:0}
+.it-add button,.it-save{min-height:46px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);font-weight:700;padding:0 14px;cursor:pointer}
+.it-sum{margin:10px 0 0;font-size:15px}.it-sum small{color:var(--soft)}
+.it-save{width:100%;margin-top:10px;border:0;background:var(--tealBtn);color:#fff;min-height:50px}
+.it-save:disabled{opacity:.45;cursor:default}
+</style>
+</head>
+<body>
+<div id="noCfg" class="box card" hidden>
+  <h1>Databasen er ikke forbundet endnu</h1>
+  <p>Indsæt Supabase-adressen og "anon public"-nøglen i filen <b>config.js</b>.</p>
+</div>
+
+<form id="login" class="box card" hidden>
+  <h1>JustDry Admin</h1>
+  <label for="em">E-mail<input id="em" type="email" autocomplete="username" required></label>
+  <label for="pw">Adgangskode<input id="pw" type="password" autocomplete="current-password" required></label>
+  <p class="msg" id="lmsg" role="alert"></p>
+  <button class="btn" type="submit" id="lbtn">Log ind</button>
+</form>
+
+<div class="layout" id="app" hidden>
+  <aside id="side">
+    <div class="brand"><svg width="34" height="34" viewBox="0 0 128 128" aria-hidden="true"><circle cx="64" cy="64" r="64" fill="#0C2A45"/><circle cx="64" cy="64" r="56" fill="none" stroke="#C9A45A" stroke-width="5"/><path d="M56 39a8 8 0 1 1 8 8v8" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M64 55 L34 78 h60 z" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round"/></svg><span style="font:italic 700 24px/1 'Cormorant Garamond',Georgia,serif;letter-spacing:-.01em">JustDry</span></div>
+    <nav id="nav" aria-label="Admin-menu"></nav>
+  </aside>
+  <div>
+    <div class="top">
+      <button class="btn line sm" id="menuBtn" type="button" aria-label="Åbn menu">☰</button>
+      <div class="search"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg><input type="search" id="gsearch" placeholder="Søg sporingsnr. (JD-…), ordre-nr., navn eller telefon" aria-label="Søg ordre"></div>
+      <span class="sp"></span>
+      <span class="who" id="who"></span>
+      <button class="btn line sm" id="refresh" type="button">Opdater</button>
+      <button class="btn line sm" id="logout" type="button">Log ud</button>
+    </div>
+    <main id="main"></main>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>window.supabase||document.write('<script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"><\/script>')/* reserve-CDN hvis jsDelivr er nede */</script>
+<script src="assets/js/items.js"></script>
+<script src="assets/js/dkdays.js"></script>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const cfg=window.JUSTDRY||{};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const kr=v=>(Number(v)||0).toLocaleString('da-DK')+' kr.';
+const iso=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const today=()=>iso(new Date());
+const dk=d=>d?new Date(d+'T12:00:00').toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'}):'';
+const dt=d=>d?new Date(d).toLocaleString('da-DK',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+const F_NEW=o=>o.status!=='annulleret'&&(o.status==='ny'||(o.created_at&&Date.now()-new Date(o.created_at)<864e5));
+const STATUS=['ny','bekræftet','hentet','i rens','klar','leveret','annulleret'];
+const SLOTS=['10.00–12.00','12.00–14.00','14.00–16.00','16.00–18.00'];
+const PAY=[['','– vælg –'],['mobilepay','MobilePay'],['kort','Kort'],['kontant','Kontant'],['faktura','Faktura']];
+const PSTAT={unpaid:'ikke betalt',pending:'link sendt',paid:'betalt',refunded:'refunderet',partially_refunded:'delvist refunderet',failed:'fejlet'};
+const ROLES={admin:'Admin',staff:'Kontor',driver:'Chauffør'};
+const isOpen=o=>!['leveret','annulleret'].includes(o.status);
+const amt=o=>o.final_amount??o.total??0;
+const SECTIONS=[['~Overblik'],['dashboard','Dashboard'],['ordrer','Ordrer'],['kalender','Kalender'],['rute','Ruter & chauffører'],['betalinger','Betalinger'],['rapporter','Rapporter'],['kunder','Kunder'],['klager','Klager & feedback'],['marketing','Marketing',1],['~Indstillinger',1],['services','Priser & services',1],['kuponer','Rabatkoder'],['anmeldelser','Anmeldelser'],['lokationer','Postnumre & zoner',1],['medarbejdere','Medarbejdere',1],['log','Revisionslog',1]];
+
+if(!cfg.supabaseUrl||!cfg.supabaseAnonKey||!window.supabase){$('noCfg').hidden=false;return}
+const db=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
+const D={custs:[],spend:[],closed:[],settings:[],orders:[],staff:[],services:[],coupons:[],reviews:[],locations:[],payments:[],complaints:[],audit:[],garments:[],gphotos:[]};
+let me=null,sec=(location.hash||'#dashboard').slice(1);
+const ui={mk:today().slice(0,7),view:'today',q:'',month:today().slice(0,7),day:today(),routeDay:today(),routeType:'pickup',zone:'',rep:today().slice(0,7),open:null};
+if(!SECTIONS.some(s=>s[0]===sec))sec='dashboard';
+const isAdmin=()=>me&&me.role==='admin';
+const isOffice=()=>me&&['admin','staff'].includes(me.role);
+
+async function start(){
+  const {data:{session}}=await db.auth.getSession();
+  if(!session){$('login').hidden=false;$('app').hidden=true;return}
+  const {data:st}=await db.from('staff').select('user_id,name,role,active,phone');
+  D.staff=st||[];me=D.staff.find(s=>s.user_id===session.user.id&&s.active);
+  if(!me){$('lmsg').textContent='Din bruger er ikke tilføjet som medarbejder.';await db.auth.signOut();$('login').hidden=false;$('app').hidden=true;return}
+  if(me.role==='driver'){location.replace('driver.html');return}
+  $('login').hidden=true;$('app').hidden=false;$('who').innerHTML=esc(me.name)+'<small>'+esc(ROLES[me.role])+'</small>';
+  await loadAll();
+}
+async function loadAll(){
+  const q=await Promise.all([
+    db.from('orders').select('*').order('pickup_date',{ascending:true}).order('id').limit(5000),
+    db.from('staff').select('user_id,name,role,active,phone'),
+    db.from('services').select('*').order('sort'),
+    db.from('coupons').select('*').order('code'),
+    db.from('reviews').select('*').order('created_at',{ascending:false}),
+    db.from('locations').select('*').order('postcode'),
+    db.from('payments').select('*').order('id',{ascending:false}).limit(2000),
+    db.from('complaints').select('*').order('id',{ascending:false}).limit(1000),
+    isAdmin()?db.from('audit_log').select('*').order('id',{ascending:false}).limit(500):Promise.resolve({data:[]}),
+    db.from('garments').select('*').order('id').limit(5000),
+    db.from('garment_photos').select('id,garment_id,storage_path,photo_type').limit(20000),
+    db.from('settings').select('key,value'),
+    db.from('closed_days').select('*').order('day'),
+    db.from('ad_spend').select('*'),
+    db.from('customers').select('email,phone,name,offers_ok,offers_at')]);
+  const err=q.find(r=>r.error);
+  ['orders','staff','services','coupons','reviews','locations','payments','complaints','audit','garments','gphotos','settings','closed','spend','custs'].forEach((k,i)=>D[k]=q[i].data||[]);
+  render(err?('Noget kunne ikke hentes: '+err.error.message):'');
+}
+const setting=(k,d)=>((D.settings.find(x=>x.key===k)||{}).value??d);
+const zoneOf=o=>(D.locations.find(l=>l.postcode===o.postcode)||{}).zone||'Øvrige';
+const townOf=o=>(D.locations.find(l=>l.postcode===o.postcode)||{}).town||'';
+const staffName=id=>(D.staff.find(s=>s.user_id===id)||{}).name||'';
+const drivers=()=>D.staff.filter(s=>s.active);
+/* Samtykke til tilbud: det nyeste svar gælder – fra kontoen (Min konto) eller fra seneste bestilling */
+const offersOk=c=>{const acc=D.custs.find(x=>(c.email&&x.email&&x.email.toLowerCase()===String(c.email).toLowerCase()));if(acc&&acc.offers_at&&acc.offers_at>(c.at||''))return !!acc.offers_ok;return !!c.ok};
+const GIFT_TXT={da:['Hej {navn}! Tak fordi du bruger JustDry. Her er en personlig rabat på {rabat} til din næste bestilling: {link}','Kode: {kode} · gælder til {dato}. Vil du ikke have flere tilbud, så svar bare nej tak.','Din personlige rabat fra JustDry'],
+ en:['Hi {navn}! Thank you for using JustDry. Here is a personal discount of {rabat} for your next order: {link}','Code: {kode} · valid until {dato}. If you do not want more offers, just reply no thanks.','Your personal discount from JustDry'],
+ de:['Hallo {navn}! Danke, dass Sie JustDry nutzen. Hier ist ein persönlicher Rabatt von {rabat} für Ihre nächste Bestellung: {link}','Code: {kode} · gültig bis {dato}. Wenn Sie keine Angebote mehr möchten, antworten Sie einfach mit nein danke.','Ihr persönlicher Rabatt von JustDry'],
+ sv:['Hej {navn}! Tack för att du använder JustDry. Här är en personlig rabatt på {rabat} till din nästa beställning: {link}','Kod: {kode} · gäller till {dato}. Vill du inte ha fler erbjudanden, svara bara nej tack.','Din personliga rabatt från JustDry']};
+const ORDER_PATH={da:'bestil.html',en:'en/order.html',de:'de/bestellen.html',sv:'sv/bestall.html'};
+function giftMsg(c,k){const L=GIFT_TXT[c.lang]||GIFT_TXT.da,p=ORDER_PATH[c.lang]||ORDER_PATH.da;
+  const link=new URL(p+'?kode='+encodeURIComponent(k.code),location.href).href,f=t=>t.replace(/\{(\w+)\}/g,(_,x)=>({navn:String(c.name||'').split(' ')[0],rabat:k.kind==='percent'?k.value+' %':k.value+' kr.',link,kode:k.code,dato:k.expires?new Date(k.expires+'T12:00:00').toLocaleDateString({da:'da-DK',en:'en-GB',de:'de-DE',sv:'sv-SE'}[c.lang]||'da-DK',{day:'numeric',month:'long'}):''})[x]??'');
+  return {text:f(L[0])+'\n'+f(L[1]),subject:L[2]}}
+function giftCard(c){const ok=offersOk(c),k=ui.giftDone&&ui.giftDone.k===String(c.phone).replace(/\s/g,'')?ui.giftDone.c:null;
+  if(k){const mm=giftMsg(c,k),ph=String(c.phone).replace(/\s/g,'');
+    return `<div class="card" id="giftCard" style="margin-bottom:12px;border:1px solid #C9A45A"><h2>Rabatkoden ${esc(k.code)} er klar til ${esc(c.name)}</h2><p class="hint">Virker kun for denne kunde (${esc(c.phone)}${c.email?' / '+esc(c.email):''}), én gang, til ${esc(new Date(k.expires+'T12:00:00').toLocaleDateString('da-DK',{day:'numeric',month:'long'}))} · bruges automatisk, når kunden er logget ind.</p>
+    <pre class="note" id="giftTxt" style="white-space:pre-wrap">${esc(mm.text)}</pre>
+    <div class="acts" style="display:flex;gap:8px;flex-wrap:wrap">${ok?`<a class="btn" id="giftSms" href="sms:${esc(ph)}?&body=${encodeURIComponent(mm.text)}">Send SMS</a>${c.email?`<a class="btn line" id="giftMail" href="mailto:${esc(c.email)}?subject=${encodeURIComponent(mm.subject)}&body=${encodeURIComponent(mm.text)}">Send mail</a>`:''}`:`<p class="hint" style="margin:0">Kunden har ikke sagt ja tak til tilbud på mail/SMS – giv koden personligt, fx ved levering eller i telefonen.</p>`}<button class="btn line" type="button" data-act="giftCopy">Kopiér tekst</button><button class="btn line" type="button" data-act="giftClose">Luk</button></div></div>`}
+  const exp=new Date(Date.now()+30*864e5).toISOString().slice(0,10);
+  return `<form class="card form" data-form="gift" style="margin-bottom:12px;border:1px solid #C9A45A"><h2 style="grid-column:1/-1">Personlig rabat til ${esc(c.name)}</h2><p class="hint" style="grid-column:1/-1">Koden virker kun for denne kunde og kun én gang.${ok?'':' Kunden har ikke sagt ja tak til tilbud – du kan stadig give koden personligt.'}</p>
+  <label>Type<select name="kind"><option value="percent">Procent</option><option value="amount">Kroner</option></select></label><label>Værdi<input name="value" type="number" min="1" required placeholder="15"></label><label>Gælder til<input name="expires" type="date" required value="${exp}"></label><button class="btn" type="submit">Lav koden</button><button class="btn line" type="button" data-act="giftClose">Luk</button></form>`}
+
+function navHtml(){
+  const nNew=D.orders.filter(F_NEW).length,nRev=D.reviews.filter(r=>!r.visible).length,nC=D.complaints.filter(c=>c.status!=='resolved').length;
+  return '<button type="button" data-href="scan.html">📷 Scan tøj</button>'+SECTIONS.filter(s=>!(s[2]&&!isAdmin())).map(([k,n])=>k.startsWith('~')?`<small>${esc(k.slice(1))}</small>`:`<button type="button" data-sec="${k}" ${k===sec?'aria-current="page"':''}>${n}${k==='ordrer'&&nNew?`<span class="badge">${nNew}</span>`:''}${k==='anmeldelser'&&nRev?`<span class="badge">${nRev}</span>`:''}${k==='klager'&&nC?`<span class="badge">${nC}</span>`:''}</button>`).join('');
+}
+function lbUpdate(){const o=$('lbOut');if(!o)return;const s=$('lbSrc').value,c=($('lbCmp').value||'').trim().toLowerCase().replace(/[^a-z0-9æøå-]+/g,'-').replace(/^-|-$/g,'');
+  const med={facebook:'paid',instagram:'paid',google:'cpc',tiktok:'paid',qr:'print',newsletter:'email'}[s]||'referral';
+  o.textContent='https://justdry.dk/?utm_source='+s+'&utm_medium='+med+(c?'&utm_campaign='+encodeURIComponent(c):'')}
+let justSent=null,submitting=null; /* formularen der lige er gemt nulstilles; andre beholder det man har skrevet */
+function render(msg=''){
+  if(SECTIONS.find(s=>s[0]===sec)?.[2]&&!isAdmin())sec='dashboard';
+  /* Bevar det, man er ved at skrive i en formular, hvis siden tegnes igen (fx når "Opdater" bliver færdig i baggrunden) */
+  const keep=[...$('main').querySelectorAll('form[data-form]')].filter(f=>f.dataset.form!==justSent).map(f=>({k:f.dataset.form,v:[...f.elements].filter(x=>x.name).map(x=>[x.name,x.type==='checkbox'?x.checked:x.value,x.defaultValue,x.defaultChecked])})),act=document.activeElement,focusName=act&&act.closest&&act.closest('#main form[data-form]')&&act.name?[act.closest('form').dataset.form,act.name]:null;
+  $('nav').innerHTML=navHtml();
+  $('main').innerHTML=(msg?`<p class="msg" style="margin-bottom:10px">${esc(msg)}</p>`:'')+(V[sec]||V.dashboard)();
+  for(const {k,v} of keep){const f=$('main').querySelector(`form[data-form="${k}"]`);if(!f)continue;for(const [n,val,dv,dc] of v){const x=f.elements[n];if(!x||x.length)continue;if(x.type==='checkbox'){if(val!==dc)x.checked=val}else if(val!==dv)x.value=val}}
+  justSent=null;
+  if(focusName){const f=$('main').querySelector(`form[data-form="${focusName[0]}"]`),x=f&&f.elements[focusName[1]];if(x&&x.focus)x.focus()}
+  lbUpdate();
+  JDItems.attach($('main'),db,async id=>{JDItems.reset(id);const r=await db.from('orders').select('*').eq('id',id).single();if(r.data){const k=D.orders.findIndex(x=>x.id===id);if(k>=0)D.orders[k]=r.data}render()},toast);
+}
+function head(t,sub,extra=''){return `<div class="head"><div><h1>${t}</h1>${sub?`<p>${sub}</p>`:''}</div>${extra}</div>`}
+const tabs=(items,cur,act)=>`<div class="tabs" role="group">${items.map(([k,n])=>`<button type="button" data-act="${act}" data-v="${k}" aria-pressed="${k===cur}">${n}</button>`).join('')}</div>`;
+const pills=o=>`<span class="pill ${o.status==='ny'?'new':''}">${esc(o.status)}</span>${o.paid?'<span class="pill ok">betalt</span>':o.payment_status==='pending'?'<span class="pill">link sendt</span>':''}${['refunded','partially_refunded'].includes(o.payment_status)?`<span class="pill off">${esc(PSTAT[o.payment_status])}</span>`:''}`;
+const sel=(f,opts,v)=>`<select data-f="${f}">${opts.map(([k,n])=>`<option value="${esc(k)}" ${String(k)===String(v??'')?'selected':''}>${esc(n)}</option>`).join('')}</select>`;
+
+function orderCard(o){
+  const items=Array.isArray(o.items)?o.items:[];
+  const maps='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((o.address||'')+' '+(o.postcode||''));
+  const link=(location.origin+location.pathname).replace(/admin\.html$/,'')+(o.lang&&o.lang!=='da'?o.lang+'/':'')+'ordre.html?t='+o.public_token;
+  const pays=D.payments.filter(p=>p.order_id===o.id);
+  const canPay=cfg.paymentsEnabled&&!o.paid&&o.status!=='annulleret';
+  return `<article class="card ord" data-id="${Number(o.id)}">
+    <div>
+      <h3>${esc(o.tracking_code||'#'+o.id)} · ${esc(o.name)} ${pills(o)}${D.complaints.some(c=>c.order_id===o.id&&c.status!=='resolved')?'<span class="pill new">klage</span>':''}${o.expert?'<span class="pill">ekspert</span>':''}${o.donate?'<span class="pill">donation</span>':''}${o.want_bag?'<span class="pill new">medbring pose</span>':''}${o.src?`<span class="pill off">${esc(o.src)}</span>`:''}${o.lang&&o.lang!=='da'?`<span class="pill off">${esc(o.lang.toUpperCase())}</span>`:''}</h3>
+      <div class="meta">
+        <span>Afhentning: <b>${esc(dk(o.pickup_date))}</b> · ${esc(o.pickup_slot)}${o.picked_up_at?` · hentet ${esc(dt(o.picked_up_at))}${o.picked_up_by?' af '+esc(staffName(o.picked_up_by)):''}`:''}</span>
+        <span>Levering: <b>${o.delivery_date?esc(dk(o.delivery_date))+' · '+esc(o.delivery_slot||''):'ikke planlagt'}</b>${o.delivered_at?` · leveret ${esc(dt(o.delivered_at))}${o.delivered_by?' af '+esc(staffName(o.delivered_by)):''}`:''}</span>
+        <span>Tlf.: <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a>${o.email?' · '+esc(o.email):''}</span>
+        <span>Adresse: <a href="${esc(maps)}" target="_blank" rel="noopener">${esc(o.address)}${o.postcode?', '+esc(o.postcode)+' '+esc(townOf(o)):''}</a> · zone ${esc(zoneOf(o))}</span>
+        ${o.referred_by?`<span>Anbefalet af: ${esc(o.referred_by)}</span>`:''}
+      </div>
+      <div class="lines">${items.length?items.map(x=>`<div><span>${Number(x.qty)||0} × ${esc(x.name)}</span><span>${kr((Number(x.qty)||0)*(Number(x.price)||0))}</span></div>`).join(''):'<div><span>Tælles ved afhentning</span><span></span></div>'}
+        ${o.discount?`<div><span>Rabat${o.coupon_code?' ('+esc(o.coupon_code)+')':''}</span><span>−${kr(o.discount)}</span></div>`:(o.coupon_code?`<div><span>Rabatkode ${esc(o.coupon_code)} (trækkes fra ved optælling)</span><span></span></div>`:'')}
+        <div><span>Levering</span><span>${o.delivery_fee?kr(o.delivery_fee):'Gratis'}</span></div>
+        <div class="tot"><span>I alt ved bestilling</span><span>${kr(o.total)}</span></div>
+        ${o.final_amount!=null?`<div class="tot"><span>Endeligt beløb</span><span>${kr(o.final_amount)}</span></div>`:''}
+      </div>
+      ${o.note?`<p class="note">${esc(o.note)}</p>`:''}
+      ${pays.length?`<div class="lines">${pays.map(p=>`<div><span>Betaling ${esc(p.method||'')} · ${esc(p.status)}${p.refunded_amount?' · refunderet '+kr(p.refunded_amount/100):''}</span><span>${kr(p.amount/100)}</span></div>`).join('')}</div>`:''}
+      ${!['leveret','annulleret'].includes(o.status)&&!o.paid&&o.payment_status==='unpaid'?JDItems.html(o,D.services.filter(s=>s.active!==false)):''}
+      ${garmentsHtml(o)}
+      <p class="hint"><a href="${esc(link)}" target="_blank" rel="noopener">Kundens ordreside</a> · <button class="btn line sm" type="button" data-act="copyLink" data-link="${esc(link)}">Kopiér link</button></p>
+    </div>
+    <div class="ctl">
+      <div class="r2">
+        <label>Status${sel('status',STATUS.map(s=>[s,s]),o.status)}</label>
+        <label>Chauffør${sel('driver_id',[['','– ingen –']].concat(drivers().map(s=>[s.user_id,s.name+(s.role==='driver'?'':' ('+ROLES[s.role]+')')])),o.driver_id)}</label>
+      </div>
+      <div class="r2">
+        <label>Leveringsdag<input type="date" data-f="delivery_date" value="${esc(o.delivery_date||'')}"></label>
+        <label>Tidsrum${sel('delivery_slot',[['','–']].concat(SLOTS.map(s=>[s,s])),o.delivery_slot)}</label>
+      </div>
+      <div class="r2">
+        <label>Endeligt beløb efter optælling (kr.)<input type="number" min="0" step="1" data-f="final_amount" value="${o.final_amount??''}" placeholder="${Number(o.total)||0}"></label>
+        <label class="chk"><input type="checkbox" data-f="amount_confirmed" ${o.amount_confirmed?'checked':''}>Beløb bekræftet – kunden kan betale</label>
+      </div>
+      <div class="r2">
+        <label class="chk"><input type="checkbox" data-f="paid" ${o.paid?'checked':''}>Betalt</label>
+        <label>Betaling${sel('payment_method',PAY,o.payment_method)}</label>
+      </div>
+      <label>Intern note<textarea data-f="staff_note">${esc(o.staff_note)}</textarea></label>
+      <div class="tools" style="margin:0"><button class="btn" type="button" data-act="saveOrder">Gem</button>
+        ${canPay&&o.amount_confirmed?'<button class="btn line" type="button" data-act="payLink">Lav betalingslink</button>':''}
+        ${cfg.paymentsEnabled&&isAdmin()&&['paid','partially_refunded'].includes(o.payment_status)&&pays.some(p=>['paid','partially_refunded'].includes(p.status))?'<button class="btn del" type="button" data-act="refund">Refundér</button>':''}</div>
+      <span class="saved" aria-live="polite"></span>
+    </div>
+  </article>`;
+}
+const GST={collected:'hentet',received:'modtaget',inspection:'gennemgået',cleaning:'renses',pressing:'presset',quality_control:'kontrolleret',packed:'pakket',out_for_delivery:'på vej',delivered:'leveret',issue:'problem'};
+const GCAT={coat:'Frakke',suit:'Jakkesæt / blazer',shirt:'Skjorte',trousers:'Bukser',dress:'Kjole',knitwear:'Strik',bag:'Pose – vask & fold',home:'Dyne / boligtekstil',other:'Andet'};
+function garmentsHtml(o){const g=D.garments.filter(x=>x.order_id===o.id);if(!g.length)return ['hentet','i rens','klar','leveret'].includes(o.status)?'<p class="note">Intet tøj registreret med foto ved afhentning.</p>':'';
+  return `<div class="note"><b>Tøj registreret ved afhentning: ${g.length} stk.</b>${g.map(x=>`<div style="margin-top:6px"><b>${esc(x.garment_code)}</b> · ${esc(GCAT[x.category]||x.category)}${x.color?' · '+esc(x.color):''}${x.brand?' · '+esc(x.brand):''} · ${D.gphotos.filter(p=>p.garment_id===x.id).length} foto · <span class="pill ${x.status==='issue'?'new':x.status==='packed'||x.status==='delivered'?'ok':''}">${esc(GST[x.status]||x.status)}</span>${x.intake_condition?`<br><span class="hint" style="margin:0">${esc(x.intake_condition)}</span>`:''}</div>`).join('')}
+  <div class="tools" style="margin:8px 0 0"><button class="btn line sm" type="button" data-act="showPhotos">Vis fotos</button><a class="btn line sm" href="labels.html?order=${Number(o.id)}" target="_blank" rel="noopener">Print QR-mærker</a><a class="btn line sm" href="scan.html?mode=packed">Scan / pak</a></div><div class="gimgs" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px"></div></div>`}
+function orderRow(o){return `<tr class="click" data-open="${Number(o.id)}"><td data-l="Ordre">${esc(o.tracking_code||'#'+o.id)}</td><td data-l="Kunde">${esc(o.name)}<br><span class="hint" style="margin:0">${esc(o.phone)}</span></td><td data-l="Afhentning">${esc(dk(o.pickup_date))}</td><td data-l="Status">${pills(o)}</td><td data-l="Beløb" class="n">${kr(amt(o))}</td></tr>`}
+function search(q){q=q.trim().toLowerCase().replace(/^#/,'');if(!q)return [];const digits=q.replace(/[\s+]/g,'');
+  return D.orders.filter(o=>String(o.id)===q||(o.tracking_code||'').toLowerCase()===q||(o.tracking_code||'').toLowerCase()==='jd-'+q||(o.name||'').toLowerCase().includes(q)||(digits.length>=3&&/^\d+$/.test(digits)&&String(o.phone||'').replace(/\D/g,'').includes(digits))||(o.email||'').toLowerCase().includes(q)).sort((a,b)=>b.id-a.id)}
+
+const V={
+dashboard(){
+  const t=today(),m=t.slice(0,7),live=D.orders.filter(o=>o.status!=='annulleret');
+  const sum=a=>a.reduce((x,o)=>x+amt(o),0);
+  const dayO=live.filter(o=>o.pickup_date===t),monO=live.filter(o=>(o.pickup_date||'').startsWith(m));
+  const c=s=>D.orders.filter(o=>s.includes(o.status)).length;
+  const days=[];for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const k=iso(d);days.push([k.slice(8)+'/'+k.slice(5,7),sum(live.filter(o=>o.pickup_date===k))])}
+  const mx=Math.max(1,...days.map(w=>w[1]));
+  const latest=D.orders.slice().sort((a,b)=>b.id-a.id).slice(0,8);
+  return head('Dashboard','Overblik over JustDry · '+esc(new Date().toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'})))+
+  `<div class="grid4">
+    <div class="card stat"><span>Salg i dag</span><b>${kr(sum(dayO))}</b><small>${dayO.length} ordrer</small></div>
+    <div class="card stat"><span>Salg denne måned</span><b>${kr(sum(monO))}</b><small>${monO.length} ordrer</small></div>
+    <div class="card stat"><span>Indbetalt denne måned</span><b>${kr(sum(monO.filter(o=>o.paid)))}</b><small>efter afhentningsdag</small></div>
+    <div class="card stat"><span>Mangler betaling</span><b>${kr(sum(live.filter(o=>!o.paid&&['hentet','i rens','klar','leveret'].includes(o.status))))}</b><small>hentede ordrer</small></div>
+  </div>
+  <div class="grid4" style="margin-top:12px">
+    <button class="card stat go" type="button" data-act="gov" data-v="new"><span>Nye ordrer</span><b>${D.orders.filter(F_NEW).length}</b><small>seneste 24 timer · bekræftet automatisk</small></button>
+    <button class="card stat go" type="button" data-act="gov" data-v="progress"><span>I gang</span><b>${c(['bekræftet','hentet','i rens'])}</b><small>bekræftet · hentet · i rens</small></button>
+    <button class="card stat go" type="button" data-act="gov" data-v="ready"><span>Klar til levering</span><b>${c(['klar'])}</b><small>skal køres ud</small></button>
+    <button class="card stat go" type="button" data-act="gov" data-v="done"><span>Afsluttet</span><b>${c(['leveret'])}</b><small>leveret i alt</small></button>
+  </div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card"><h2>Salg pr. dag – seneste 14 dage</h2><p class="hint" style="margin:2px 0 0">Efter afhentningsdag · endeligt beløb når det findes</p>
+      <div class="bars">${days.map(([l,v])=>`<div class="bar"><span>${l}</span><i style="width:${v/mx*100}%"></i><span>${kr(v)}</span></div>`).join('')}</div></div>
+    <div class="card"><h2>Seneste ordrer</h2>${latest.length?`<div class="scroll"><table class="stackt"><tbody>${latest.map(orderRow).join('')}</tbody></table></div>`:'<p class="hint">Ingen ordrer endnu.</p>'}</div>
+  </div>`;
+},
+ordrer(){
+  const t=today();
+  if(ui.open){const o=D.orders.find(x=>x.id===ui.open);if(o)return head('Ordre #'+Number(o.id),'',`<button class="btn line sm" type="button" data-act="closeOrder">‹ Tilbage</button>`)+orderCard(o)}
+  const F={today:o=>o.pickup_date===t&&isOpen(o),new:F_NEW,progress:o=>['bekræftet','hentet','i rens'].includes(o.status),ready:o=>o.status==='klar',next:o=>o.pickup_date>t&&isOpen(o),open:isOpen,done:o=>!isOpen(o),all:()=>true};
+  let r=ui.q?search(ui.q):D.orders.filter(F[ui.view]||F.all);
+  if(!ui.q&&['done','all'].includes(ui.view))r=r.slice().reverse();
+  return head('Ordrer',r.length+' ordrer'+(ui.q?' · søgning: '+esc(ui.q):''))+`<div class="tools">${tabs([['today','I dag'],['new','Nye'],['progress','I gang'],['ready','Klar'],['next','Kommende'],['open','Alle aktive'],['done','Afsluttede'],['all','Alle']],ui.q?'':ui.view,'view')}</div><div class="stack">${r.length?r.slice(0,100).map(orderCard).join(''):'<div class="empty">Ingen ordrer her.</div>'}${r.length>100?'<p class="hint">Viser de første 100. Brug søgningen for at finde en bestemt ordre.</p>':''}</div>`;
+},
+kalender(){
+  const [y,m]=ui.month.split('-').map(Number),first=new Date(y,m-1,1),start=new Date(first);start.setDate(1-((first.getDay()+6)%7));
+  const cells=[];for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);cells.push(d)}
+  const pc={},dc={};D.orders.filter(o=>o.status!=='annulleret').forEach(o=>{pc[o.pickup_date]=(pc[o.pickup_date]||0)+1;if(o.delivery_date)dc[o.delivery_date]=(dc[o.delivery_date]||0)+1});
+  const title=first.toLocaleDateString('da-DK',{month:'long',year:'numeric'});
+  const pick=D.orders.filter(o=>o.pickup_date===ui.day&&o.status!=='annulleret'),del=D.orders.filter(o=>o.delivery_date===ui.day&&o.status!=='annulleret');
+  return head('Kalender',esc(title)+' · <span class="pill">afhentning</span> <span class="pill" style="background:var(--navy);color:#fff">levering</span>',`<div class="tools" style="margin:0"><button class="btn line sm" type="button" data-act="mon" data-v="-1">‹ Forrige</button><button class="btn line sm" type="button" data-act="mon" data-v="0">I dag</button><button class="btn line sm" type="button" data-act="mon" data-v="1">Næste ›</button></div>`)+
+  `<div class="card"><div class="cal">${['Man','Tir','Ons','Tor','Fre','Lør','Søn'].map(d=>`<div class="dn">${d}</div>`).join('')}${cells.map(d=>{const k=iso(d);return `<button type="button" data-act="day" data-v="${k}" class="${d.getMonth()!==m-1?'out':''} ${k===today()?'today':''}" aria-pressed="${k===ui.day}"><b>${d.getDate()}</b>${pc[k]?`<small title="afhentninger">${pc[k]} ↑</small>`:''}${dc[k]?`<small class="d" title="leveringer">${dc[k]} ↓</small>`:''}</button>`}).join('')}</div></div>
+  <h2 style="margin:18px 0 10px">${esc(dk(ui.day))} · ${pick.length} afhentninger · ${del.length} leveringer</h2>
+  <div class="card scroll"><table class="stackt"><thead><tr><th>Ordre</th><th>Kunde</th><th>Afhentning</th><th>Status</th><th class="n">Beløb</th></tr></thead><tbody>${pick.concat(del.filter(o=>!pick.includes(o))).map(orderRow).join('')||'<tr><td colspan="5">Intet denne dag.</td></tr>'}</tbody></table></div>`;
+},
+rute(){
+  let base='Helsingør';try{base=localStorage.getItem('jd_base')||base}catch(_){}
+  const isP=ui.routeType==='pickup';
+  let stops=D.orders.filter(o=>o.status!=='annulleret'&&(isP?(o.pickup_date===ui.routeDay&&['ny','bekræftet'].includes(o.status)):(o.delivery_date===ui.routeDay&&o.status==='klar')));
+  const zones=[...new Set(stops.map(zoneOf))].sort();
+  if(ui.zone)stops=stops.filter(o=>zoneOf(o)===ui.zone);
+  const sl=o=>SLOTS.indexOf(isP?o.pickup_slot:o.delivery_slot);
+  stops.sort((a,b)=>zoneOf(a).localeCompare(zoneOf(b))||sl(a)-sl(b)||String(a.postcode).localeCompare(String(b.postcode)));
+  const addr=o=>(o.address||'')+(o.postcode?', '+o.postcode+' '+townOf(o):'');
+  const byDriver={};stops.forEach(o=>{const k=o.driver_id||'';(byDriver[k]=byDriver[k]||[]).push(o)});
+  const link=list=>{const w=list.slice(0,9).map(addr);return 'https://www.google.com/maps/dir/?api=1&travelmode=driving&origin='+encodeURIComponent(base)+'&destination='+encodeURIComponent(base)+'&waypoints='+encodeURIComponent(w.join('|'))};
+  const groups=Object.entries(byDriver).map(([d,list])=>`<div class="card" style="margin-top:12px"><div class="head" style="margin:0 0 6px"><h2>${d?esc(staffName(d)):'Ingen chauffør valgt'} · ${list.length} stop</h2><a class="btn sm" href="${esc(link(list))}" target="_blank" rel="noopener">Åbn rute i Google Maps</a></div>${list.length>9?'<p class="hint">Google Maps tager højst 9 stop ad gangen – resten køres som tur 2.</p>':''}
+    ${list.map((o,i)=>`${i===0||zoneOf(o)!==zoneOf(list[i-1])?`<p class="zone">${esc(zoneOf(o))}</p>`:''}<div class="stop" data-id="${Number(o.id)}"><span class="k ${isP?'':'d'}">${i+1}</span><div style="flex:1"><b>#${Number(o.id)} ${esc(o.name)}</b> · ${esc(isP?o.pickup_slot:(o.delivery_slot||''))}<div class="meta"><span>${esc(addr(o))}</span><span><a href="tel:${esc(o.phone)}">${esc(o.phone)}</a> · ${esc(o.status)}</span></div></div>
+    <label style="min-width:150px">Chauffør${sel('driver_id',[['','– ingen –']].concat(drivers().map(s=>[s.user_id,s.name])),o.driver_id)}</label></div>`).join('')}</div>`).join('');
+  const cap=+setting('slot_capacity',5),used={};D.orders.filter(o=>o.status!=='annulleret').forEach(o=>{if(o.pickup_date===ui.routeDay)used[o.pickup_slot]=(used[o.pickup_slot]||0)+1;if(o.delivery_date===ui.routeDay&&o.delivery_slot)used[o.delivery_slot]=(used[o.delivery_slot]||0)+1});
+  const mins=+setting('slot_minutes',120),stopm=+setting('stop_minutes',8),dis=isAdmin()?'':'disabled';
+  const capHtml=`<form class="card form" data-form="capacity" style="margin-bottom:12px"><label>Minutter pr. tidsrum<input name="mins" type="number" min="30" max="240" value="${mins}" ${dis}></label><label>Minutter ved døren pr. stop<input name="stopm" type="number" min="1" max="60" value="${stopm}" ${dis}></label><label>Loft: højst stop pr. tidsrum<input name="cap" type="number" min="1" max="50" value="${cap}" ${dis}></label>${isAdmin()?'<button class="btn" type="submit">Gem</button>':''}<p class="hint" style="margin:0;grid-column:1/-1;flex-basis:100%">Systemet regner selv ruten ud: tid ved døren + køretid mellem postnumrene. Stop tæt på hinanden fylder lidt, stop langt væk fylder meget. Et tidsrum er fuldt, når ruten ikke kan nås på ${mins} min, eller når loftet er nået.<br>${['10.00–12.00','12.00–14.00','14.00–16.00','16.00–18.00'].map(s=>`${s}: <b>${used[s]||0} stop</b>`).join(' · ')}</p></form>`;
+  const t0=today(),hol=[];for(const y of [+t0.slice(0,4),+t0.slice(0,4)+1])for(const [d,n] of JDDays.holidays(y))if(d>=t0&&hol.length<14)hol.push([d,n]);
+  const fmtD=d=>new Date(d+'T12:00:00').toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  const upc=D.closed.filter(c=>c.day>=t0);
+  const closedHtml=`<div class="card" style="margin-bottom:12px"><h2>Lukkedage</h2><p class="hint">Kunderne kan ikke bestille på lukkedage. Weekender og helligdage er altid lukket. Her kan du lukke ekstra dage – fx ferie eller sygdom.</p>
+    ${isOffice()?`<form class="form" data-form="closed" style="margin-top:10px"><div class="r2"><label>Dato<input name="day" type="date" min="${t0}" required></label><label>Note (kun synlig her)<input name="note" maxlength="200" placeholder="Fx sommerferie"></label></div><button class="btn" type="submit">Luk dagen</button></form>`:''}
+    ${upc.length?`<table class="stackt" style="margin-top:12px"><tbody>${upc.map(c=>`<tr><td>${esc(fmtD(c.day))}</td><td>${esc(c.note||'')}</td><td class="n">${isOffice()?`<button class="btn line sm" type="button" data-act="delClosed" data-day="${esc(c.day)}">Åbn igen</button>`:''}</td></tr>`).join('')}</tbody></table>`:'<p class="hint" style="margin-top:10px">Ingen ekstra lukkedage.</p>'}
+    <details style="margin-top:10px"><summary>Kommende helligdage (altid lukket)</summary><ul style="margin:8px 0 0;padding-left:18px">${hol.map(([d,n])=>`<li>${esc(fmtD(d))} – ${esc(n)}</li>`).join('')}</ul></details></div>`;
+  return head('Ruter & chauffører','Dagens stop pr. chauffør, sorteret efter zone og tidsrum')+capHtml+closedHtml+
+  `<div class="card"><div class="form">
+    <label>Dag<input type="date" data-act="routeDay" value="${esc(ui.routeDay)}"></label>
+    <label>Type<select data-act="routeType"><option value="pickup" ${isP?'selected':''}>Afhentninger</option><option value="delivery" ${isP?'':'selected'}>Leveringer</option></select></label>
+    <label>Zone<select data-act="zone"><option value="">Alle zoner</option>${zones.map(z=>`<option ${z===ui.zone?'selected':''}>${esc(z)}</option>`).join('')}</select></label>
+    <label>Start og slut<input data-act="base" value="${esc(base)}" placeholder="Jeres adresse"></label>
+  </div><p class="hint">Vælg chauffør ud for hvert stop – det gemmes med det samme, og chaufføren ser stoppet i driver.html.</p></div>
+  ${stops.length?groups:'<div class="empty" style="margin-top:12px">Ingen stop denne dag.</div>'}`;
+},
+betalinger(){
+  const live=D.orders.filter(o=>o.status!=='annulleret'),paid=live.filter(o=>o.paid),unpaid=live.filter(o=>!o.paid);
+  const by={};paid.forEach(o=>{const k=o.payment_method||'ukendt';by[k]=(by[k]||0)+amt(o)});
+  return head('Betalinger','Hvad er betalt, og hvad mangler'+(cfg.paymentsEnabled?'':' · online betaling er ikke slået til endnu (se README)'))+
+  `<div class="grid4"><div class="card stat"><span>Betalt i alt</span><b>${kr(paid.reduce((a,o)=>a+amt(o),0))}</b></div><div class="card stat"><span>Mangler betaling</span><b>${kr(unpaid.reduce((a,o)=>a+amt(o),0))}</b></div>${Object.entries(by).slice(0,2).map(([k,v])=>`<div class="card stat"><span>${esc(k)}</span><b>${kr(v)}</b></div>`).join('')}</div>
+  <div class="card" style="margin-top:12px"><h2>Ikke betalt (${unpaid.length})</h2><div class="scroll"><table class="stackt"><thead><tr><th>Ordre</th><th>Kunde</th><th>Dag</th><th class="n">Beløb</th><th>Betaling</th><th></th></tr></thead><tbody>${unpaid.map(o=>`<tr data-id="${Number(o.id)}"><td data-l="Ordre">#${Number(o.id)}</td><td data-l="Kunde">${esc(o.name)}<br><a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></td><td data-l="Dag">${esc(dk(o.pickup_date))}</td><td data-l="Beløb" class="n">${kr(amt(o))}${o.amount_confirmed?'':'<br><span class="hint" style="margin:0">ikke bekræftet</span>'}</td><td data-l="Betaling"><select data-f="pm">${PAY.map(([v,n])=>`<option value="${v}">${n}</option>`).join('')}</select></td><td><button class="btn sm" type="button" data-act="markPaid">Marker betalt</button></td></tr>`).join('')||'<tr><td colspan="6">Alt er betalt.</td></tr>'}</tbody></table></div></div>
+  <div class="card" style="margin-top:12px"><h2>Online betalinger (${D.payments.length})</h2><div class="scroll"><table class="stackt"><thead><tr><th>Ordre</th><th>Oprettet</th><th>Status</th><th>Metode</th><th class="n">Beløb</th><th class="n">Refunderet</th><th>Kvittering</th></tr></thead><tbody>${D.payments.map(p=>`<tr><td data-l="Ordre">#${Number(p.order_id)}</td><td data-l="Oprettet">${esc(dt(p.created_at))}</td><td data-l="Status">${esc(p.status)}</td><td data-l="Metode">${esc(p.method||'–')}</td><td data-l="Beløb" class="n">${kr(p.amount/100)}</td><td data-l="Refunderet" class="n">${p.refunded_amount?kr(p.refunded_amount/100):'–'}</td><td data-l="Kvittering">${p.receipt_url&&/^https:\/\//.test(p.receipt_url)?`<a href="${esc(p.receipt_url)}" target="_blank" rel="noopener">Åbn</a>`:'–'}</td></tr>`).join('')||'<tr><td colspan="7">Ingen online betalinger endnu.</td></tr>'}</tbody></table></div></div>`;
+},
+rapporter(){
+  const [y,m]=ui.rep.split('-').map(Number),from=iso(new Date(y,m-1,1)),to=iso(new Date(y,m,0));
+  const live=D.orders.filter(o=>o.status!=='annulleret'&&o.pickup_date>=from&&o.pickup_date<=to);
+  const sum=a=>a.reduce((x,o)=>x+amt(o),0);
+  const days=[];for(let d=new Date(y,m-1,1);d<=new Date(y,m,0);d.setDate(d.getDate()+1)){const k=iso(d);const l=live.filter(o=>o.pickup_date===k);if(l.length)days.push([k,l.length,sum(l),sum(l.filter(o=>o.paid))])}
+  const months=[];for(let i=11;i>=0;i--){const d=new Date(y,m-1-i,1),k=iso(d).slice(0,7);const l=D.orders.filter(o=>o.status!=='annulleret'&&(o.pickup_date||'').startsWith(k));months.push([k,sum(l),l.length])}
+  const mx=Math.max(1,...months.map(x=>x[1]));
+  const st={};D.staff.forEach(s=>st[s.user_id]={name:s.name,role:s.role,p:0,d:0});
+  D.orders.forEach(o=>{if(o.picked_up_by&&st[o.picked_up_by]&&(o.picked_up_at||'').slice(0,7)===ui.rep)st[o.picked_up_by].p++;if(o.delivered_by&&st[o.delivered_by]&&(o.delivered_at||'').slice(0,7)===ui.rep)st[o.delivered_by].d++});
+  const svc={};live.forEach(o=>(o.items||[]).forEach(x=>{const k=x.name;svc[k]=svc[k]||{q:0,v:0};svc[k].q+=Number(x.qty)||0;svc[k].v+=(Number(x.qty)||0)*(Number(x.price)||0)}));
+  const top=Object.entries(svc).sort((a,b)=>b[1].v-a[1].v).slice(0,10);
+  const csv='data:text/csv;charset=utf-8,'+encodeURIComponent('dag;ordrer;omsætning;betalt\n'+days.map(d=>d.join(';')).join('\n'));
+  return head('Rapporter','Omsætning efter afhentningsdag · endeligt beløb når det findes',`<div class="tools" style="margin:0"><input type="month" data-act="rep" value="${esc(ui.rep)}" style="width:auto"><a class="btn line sm" href="${csv}" download="justdry-${esc(ui.rep)}.csv">Hent CSV</a></div>`)+
+  `<div class="grid4"><div class="card stat"><span>Omsætning</span><b>${kr(sum(live))}</b></div><div class="card stat"><span>Ordrer</span><b>${live.length}</b></div><div class="card stat"><span>Gns. ordre</span><b>${kr(live.length?Math.round(sum(live)/live.length):0)}</b></div><div class="card stat"><span>Rabatter givet</span><b>${kr(live.reduce((a,o)=>a+(o.discount||0),0))}</b></div></div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card"><h2>Omsætning pr. måned</h2><div class="bars">${months.map(([k,v])=>`<div class="bar"><span>${k.slice(5)}/${k.slice(2,4)}</span><i style="width:${v/mx*100}%"></i><span>${kr(v)}</span></div>`).join('')}</div></div>
+    <div class="card"><h2>Chauffører – ${esc(ui.rep)}</h2><table><thead><tr><th>Navn</th><th class="n">Afhentet</th><th class="n">Leveret</th></tr></thead><tbody>${Object.values(st).filter(s=>s.p||s.d||s.role==='driver').map(s=>`<tr><td>${esc(s.name)}</td><td class="n">${s.p}</td><td class="n">${s.d}</td></tr>`).join('')||'<tr><td colspan="3">Ingen kørsler registreret.</td></tr>'}</tbody></table></div>
+  </div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card scroll"><h2>Pr. dag</h2><table class="stackt"><thead><tr><th>Dag</th><th class="n">Ordrer</th><th class="n">Omsætning</th><th class="n">Betalt</th></tr></thead><tbody>${days.map(([k,n,v,p])=>`<tr><td data-l="Dag">${esc(dk(k))}</td><td data-l="Ordrer" class="n">${n}</td><td data-l="Omsætning" class="n">${kr(v)}</td><td data-l="Betalt" class="n">${kr(p)}</td></tr>`).join('')||'<tr><td colspan="4">Ingen ordrer i måneden.</td></tr>'}</tbody></table></div>
+    <div class="card scroll"><h2>Mest solgte (bestilt online)</h2><table><thead><tr><th>Ydelse</th><th class="n">Stk.</th><th class="n">Beløb</th></tr></thead><tbody>${top.map(([n,x])=>`<tr><td>${esc(n)}</td><td class="n">${x.q}</td><td class="n">${kr(x.v)}</td></tr>`).join('')||'<tr><td colspan="3">–</td></tr>'}</tbody></table></div>
+  </div>`;
+},
+kunder(){
+  const m={};D.orders.forEach(o=>{const k=String(o.phone||'').replace(/\s/g,'');if(!k)return;const c=m[k]||(m[k]={name:o.name,phone:o.phone,email:o.email,address:o.address,n:0,sum:0,last:'',ids:[],at:'',ok:false,lang:'da'});c.n++;c.ids.push(o.id);if(o.status!=='annulleret')c.sum+=amt(o);if((o.pickup_date||'')>c.last){c.last=o.pickup_date;c.name=o.name;c.address=o.address;c.email=o.email||c.email}if((o.created_at||'')>c.at){c.at=o.created_at||'';c.ok=!!o.offers_ok;c.lang=o.lang||'da'}});
+  let list=Object.values(m).sort((a,b)=>b.sum-a.sum);const q=ui.cq||'';
+  if(q)list=list.filter(c=>[c.name,c.phone,c.email,c.address].join(' ').toLowerCase().includes(q.toLowerCase()));
+  const g=ui.gift&&m[ui.gift];
+  return head('Kunder',list.length+' kunder – samlet efter telefonnummer')+(g?giftCard(g):'')+`<div class="tools"><input type="search" data-act="cq" value="${esc(q)}" placeholder="Søg kunde" aria-label="Søg kunde" style="max-width:320px"></div>
+  <div class="card scroll"><table class="stackt"><thead><tr><th>Navn</th><th>Kontakt</th><th>Adresse</th><th class="n">Ordrer</th><th class="n">Omsætning</th><th>Seneste</th><th>Tilbud</th><th></th></tr></thead><tbody>${list.map(c=>`<tr class="click" data-search="${esc(c.phone)}"><td data-l="Navn"><b>${esc(c.name)}</b></td><td data-l="Kontakt"><a href="tel:${esc(c.phone)}">${esc(c.phone)}</a>${c.email?'<br>'+esc(c.email):''}</td><td data-l="Adresse">${esc(c.address)}</td><td data-l="Ordrer" class="n">${c.n}</td><td data-l="Omsætning" class="n">${kr(c.sum)}</td><td data-l="Seneste">${esc(dk(c.last))}</td><td data-l="Tilbud">${offersOk(c)?'<span class="pill">Ja tak</span>':'<span class="hint" style="margin:0">–</span>'}</td><td>${isAdmin()?`<button class="btn line sm" type="button" data-act="gift" data-k="${esc(String(c.phone).replace(/\s/g,''))}">Giv rabat</button>`:''}</td></tr>`).join('')||'<tr><td colspan="8">Ingen kunder endnu.</td></tr>'}</tbody></table></div><p class="hint">Tryk på en kunde for at se alle kundens ordrer. "Ja tak" betyder, at kunden har sagt ja til personlige tilbud på mail/SMS.</p>`;
+},
+kuponer(){
+  return head('Rabatkoder','Koder til kampagner – send dem som link: '+esc(new URL('bestil.html?kode=KODE',location.href).href)+' · Personlige koder laves under Kunder'+(isAdmin()?'':' · kun admin kan oprette og ændre'))+
+  (isAdmin()?`<form class="card form" data-form="coupon"><label>Kode<input name="code" required minlength="3" maxlength="40" placeholder="VELKOMMEN" style="text-transform:uppercase"></label><label>Type<select name="kind"><option value="percent">Procent</option><option value="amount">Kroner</option></select></label><label>Værdi<input name="value" type="number" min="1" required placeholder="15"></label><label>Udløber (valgfri)<input name="expires" type="date"></label><label>Maks. brug (valgfri)<input name="max_uses" type="number" min="1"></label><button class="btn" type="submit">Opret kode</button></form>`:'')+
+  `<div class="card scroll" style="margin-top:12px"><table class="stackt"><thead><tr><th>Kode</th><th>Rabat</th><th>Udløber</th><th class="n">Brugt</th><th>Aktiv</th><th></th></tr></thead><tbody>${D.coupons.map(c=>`<tr data-code="${esc(c.code)}"><td data-l="Kode"><b>${esc(c.code)}</b>${c.for_name||c.for_phone?`<br><small class="hint" style="margin:0">Personlig: ${esc(c.for_name||c.for_phone)}</small>`:''}</td><td data-l="Rabat">${c.kind==='percent'?Number(c.value)+' %':kr(c.value)}</td><td data-l="Udløber">${c.expires?esc(dk(c.expires)):'–'}</td><td data-l="Brugt" class="n">${Number(c.uses)}${c.max_uses?' / '+Number(c.max_uses):''}</td><td data-l="Aktiv"><label class="chk"><input type="checkbox" data-act="couponActive" ${c.active?'checked':''} ${isAdmin()?'':'disabled'}>${c.active?'Aktiv':'Slået fra'}</label></td><td>${isAdmin()?'<button class="btn del sm" type="button" data-act="couponDel">Slet</button>':''}</td></tr>`).join('')||'<tr><td colspan="6">Ingen koder endnu. Prøv fx VELKOMMEN med 15 %.</td></tr>'}</tbody></table></div>`;
+},
+services(){
+  const cats=[...new Set(D.services.map(s=>s.category))];
+  return head('Priser & services','Priserne her bruges på bestillingssiden og i prisberegningen. Navne på engelsk, tysk og svensk vises på de sprog.')+
+  `<form class="card form" data-form="service"><label>Kategori<input name="category" list="catlist" required></label><datalist id="catlist">${cats.map(c=>`<option value="${esc(c)}">`).join('')}</datalist><label>Navn (dansk)<input name="name" required></label><label>Engelsk<input name="en"></label><label>Tysk<input name="de"></label><label>Svensk<input name="sv"></label><label>Pris (kr.)<input name="price" type="number" min="0" required></label><button class="btn" type="submit">Tilføj</button></form>
+  ${cats.map(c=>`<div class="card scroll" style="margin-top:12px"><h2>${esc(c)}</h2><table class="stackt"><thead><tr><th>Dansk</th><th>Engelsk</th><th>Tysk</th><th>Svensk</th><th class="n">Pris</th><th>Populær</th><th>Aktiv</th><th></th></tr></thead><tbody>${D.services.filter(s=>s.category===c).map(s=>`<tr data-sid="${Number(s.id)}"><td data-l="Dansk"><input data-f="name" value="${esc(s.name)}" aria-label="Navn"></td><td data-l="Engelsk"><input data-f="en" value="${esc((s.names||{}).en||'')}" aria-label="Engelsk navn"></td><td data-l="Tysk"><input data-f="de" value="${esc((s.names||{}).de||'')}" aria-label="Tysk navn"></td><td data-l="Svensk"><input data-f="sv" value="${esc((s.names||{}).sv||'')}" aria-label="Svensk navn"></td><td data-l="Pris" class="n"><input data-f="price" type="number" min="0" value="${Number(s.price)}" style="max-width:100px" aria-label="Pris"></td><td data-l="Populær"><input type="checkbox" data-f="popular" ${s.popular?'checked':''} aria-label="Populær" style="width:20px;min-height:20px"></td><td data-l="Aktiv"><input type="checkbox" data-f="active" ${s.active?'checked':''} aria-label="Aktiv" style="width:20px;min-height:20px"></td><td><button class="btn sm" type="button" data-act="saveService">Gem</button> <span class="saved"></span></td></tr>`).join('')}</tbody></table></div>`).join('')}
+  <p class="hint">Husk: priserne på forsiden (index.html) er bygget fra data/services.json. Ændrer du en pris her, så ret den også dér og kør gen/build.py – ellers viser forsiden den gamle pris.</p>`;
+},
+anmeldelser(){
+  return head('Anmeldelser','Kun synlige anmeldelser vises på hjemmesiden')+
+  `<form class="card form" data-form="review"><label>Navn<input name="name" required></label><label>By<input name="town"></label><label>Stjerner<select name="rating">${[5,4,3,2,1].map(n=>`<option>${n}</option>`).join('')}</select></label><label>Kilde<select name="source"><option value="google">Google</option><option value="facebook">Facebook</option><option value="trustpilot">Trustpilot</option><option value="justdry">JustDry</option></select></label><label style="grid-column:1/-1">Tekst<textarea name="text" required minlength="3"></textarea></label><button class="btn" type="submit">Tilføj anmeldelse</button></form>
+  <p class="hint">Tilføj kun rigtige anmeldelser fra rigtige kunder – opdigtede anmeldelser er ulovlige i Danmark.</p>
+  <div class="stack" style="margin-top:12px">${D.reviews.map(r=>`<article class="card" data-rid="${Number(r.id)}"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><div><b>${esc(r.name)}</b>${r.town?' · '+esc(r.town):''} <span class="stars" aria-label="${Number(r.rating)} stjerner">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span> <span class="pill ${r.visible?'ok':'off'}">${r.visible?'Vises':'Skjult'}</span> <span class="pill off">${esc(r.source)}</span></div><span class="hint" style="margin:0">${esc(new Date(r.created_at).toLocaleDateString('da-DK'))}</span></div><p style="margin-top:6px">${esc(r.text)}</p><div class="tools" style="margin:10px 0 0"><button class="btn sm ${r.visible?'line':''}" type="button" data-act="revToggle">${r.visible?'Skjul':'Vis på hjemmesiden'}</button><button class="btn del sm" type="button" data-act="revDel">Slet</button></div></article>`).join('')||'<div class="empty">Ingen anmeldelser endnu.</div>'}</div>`;
+},
+marketing(){
+  const SRC={facebook:'Facebook',instagram:'Instagram',google:'Google',bing:'Bing',qr:'QR / folder',flyer:'Folder',newsletter:'Nyhedsbrev',tiktok:'TikTok',x:'X / Twitter',linkedin:'LinkedIn',direct:'Direkte / ukendt'};
+  const HEARD={facebook:'Facebook',instagram:'Instagram',google:'Google',friend:'Ven eller familie',flyer:'Folder / plakat / QR',other:'Andet','':'Ikke svaret'};
+  const nm=s=>SRC[s]||s;
+  const m=ui.mk,live=D.orders.filter(o=>o.status!=='annulleret'),inM=live.filter(o=>(o.created_at||'').slice(0,7)===m);
+  const ph=o=>String(o.phone||'').replace(/\D/g,'');
+  const first=new Map();[...live].sort((x,y)=>x.created_at<y.created_at?-1:1).forEach(o=>{if(!first.has(ph(o)))first.set(ph(o),o.id)});
+  const group=(key)=>{const g=new Map();for(const o of inM){const k=key(o);const r=g.get(k)||{n:0,sum:0,nw:0};r.n++;r.sum+=amt(o);if(first.get(ph(o))===o.id)r.nw++;g.set(k,r)}return [...g].sort((x,y)=>y[1].n-x[1].n)};
+  const bySrc=group(o=>o.src||'direct'),byHeard=group(o=>o.heard||'');
+  const sp=s=>(D.spend.find(x=>x.month.slice(0,7)===m&&x.source===s)||{}).amount;
+  const srcKeys=[...new Set(bySrc.map(([k])=>k).concat(D.spend.filter(x=>x.month.slice(0,7)===m).map(x=>x.source)))].filter(k=>k!=='direct');
+  const tot=inM.reduce((x,o)=>x+amt(o),0),spendTot=D.spend.filter(x=>x.month.slice(0,7)===m).reduce((x,s)=>x+s.amount,0);
+  const site='https://justdry.dk/';
+  return head('Marketing','Hvor kommer kunderne fra? Alt måles uden cookies: fra annoncelinks, Google og kundens eget svar.',`<input type="month" data-act="mk" value="${esc(m)}">`)+
+  `<div class="grid4"><div class="card stat"><span>Ordrer</span><b>${inM.length}</b></div><div class="card stat"><span>Omsætning</span><b>${kr(tot)}</b></div><div class="card stat"><span>Annoncekroner</span><b>${kr(spendTot)}</b></div><div class="card stat"><span>Nye kunder</span><b>${inM.filter(o=>first.get(ph(o))===o.id).length}</b></div></div>
+  <div class="card scroll" style="margin-top:12px"><h2>Fra links og annoncer</h2><p class="hint">Skriv, hvad du har brugt på annoncer i måneden, så regnes prisen pr. kunde ud.</p>
+   <form data-form="spend"><table class="stackt"><thead><tr><th>Kilde</th><th class="n">Ordrer</th><th class="n">Omsætning</th><th class="n">Nye kunder</th><th class="n">Annoncekroner</th><th class="n">Kr. pr. ny kunde</th></tr></thead><tbody>
+   ${bySrc.map(([k,r])=>`<tr><td>${esc(nm(k))}</td><td class="n">${r.n}</td><td class="n">${kr(r.sum)}</td><td class="n">${r.nw}</td><td class="n">${k==='direct'?'–':`<input type="number" min="0" step="1" name="sp_${esc(k)}" value="${sp(k)??''}" style="width:110px">`}</td><td class="n">${k!=='direct'&&sp(k)&&r.nw?kr(Math.round(sp(k)/r.nw)):'–'}</td></tr>`).join('')}
+   ${srcKeys.filter(k=>!bySrc.some(([x])=>x===k)).map(k=>`<tr><td>${esc(nm(k))}</td><td class="n">0</td><td class="n">${kr(0)}</td><td class="n">0</td><td class="n"><input type="number" min="0" step="1" name="sp_${esc(k)}" value="${sp(k)??''}" style="width:110px"></td><td class="n">–</td></tr>`).join('')}
+   <tr><td><select name="new_src"><option value="">+ Tilføj kilde …</option>${['facebook','instagram','google','tiktok','qr','newsletter'].filter(k=>!srcKeys.includes(k)).map(k=>`<option value="${k}">${esc(nm(k))}</option>`).join('')}</select></td><td></td><td></td><td></td><td class="n"><input type="number" min="0" step="1" name="new_amt" style="width:110px"></td><td></td></tr>
+   </tbody></table><button class="btn" type="submit" style="margin-top:10px">Gem annoncekroner</button></form></div>
+${D.orders.some(o=>o.heard)?`  <div class="card scroll" style="margin-top:12px"><h2>Kunden svarede: "Hvordan hørte du om os?"</h2><table class="stackt"><thead><tr><th>Svar</th><th class="n">Ordrer</th><th class="n">Omsætning</th><th class="n">Nye kunder</th></tr></thead><tbody>
+   ${byHeard.map(([k,r])=>`<tr><td>${esc(HEARD[k]||k)}</td><td class="n">${r.n}</td><td class="n">${kr(r.sum)}</td><td class="n">${r.nw}</td></tr>`).join('')||'<tr><td colspan="4" class="hint">Ingen ordrer i måneden.</td></tr>'}</tbody></table></div>`:''}
+  <div class="card" style="margin-top:12px"><h2>Lav et annoncelink</h2><p class="hint">Brug dette link i din annonce, opslag eller QR-kode – så kan du se her, hvor mange kunder den gav.</p>
+   <div class="r2"><label>Hvor bruges linket?<select id="lbSrc">${[['facebook','Facebook-annonce'],['instagram','Instagram-annonce'],['google','Google-annonce'],['tiktok','TikTok'],['qr','QR-kode / folder'],['newsletter','Nyhedsbrev / e-mail']].map(([k,n])=>`<option value="${k}">${n}</option>`).join('')}</select></label>
+   <label>Kampagnens navn<input id="lbCmp" maxlength="60" placeholder="Fx jul-2026"></label></div>
+   <p style="margin-top:10px"><code id="lbOut" style="word-break:break-all"></code></p><button class="btn line" type="button" data-act="lbCopy">Kopiér link</button></div>`;
+},
+lokationer(){
+  const zones=[...new Set(D.locations.map(l=>l.zone))];
+  return head('Postnumre & zoner','Bestillingen tjekker kundens postnummer. Zonen bruges til at gruppere ruter.')+
+  `<form class="card form" data-form="location"><label>Postnummer<input name="postcode" inputmode="numeric" pattern="[0-9]{4}" required></label><label>By<input name="town" required></label><label>Zone<input name="zone" list="zlist" required></label><datalist id="zlist">${zones.map(z=>`<option value="${esc(z)}">`).join('')}</datalist><button class="btn" type="submit">Tilføj</button></form>
+  <div class="card scroll" style="margin-top:12px"><table class="stackt"><thead><tr><th>Postnr.</th><th>By</th><th>Zone</th><th class="n">Ordrer</th><th>Aktiv</th></tr></thead><tbody>${D.locations.map(l=>`<tr data-pc="${esc(l.postcode)}"><td data-l="Postnr.">${esc(l.postcode)}</td><td data-l="By">${esc(l.town)}</td><td data-l="Zone"><input data-act="locZone" list="zlist" value="${esc(l.zone)}" style="max-width:180px"></td><td data-l="Ordrer" class="n">${D.orders.filter(o=>o.postcode===l.postcode).length}</td><td data-l="Aktiv"><label class="chk"><input type="checkbox" data-act="locActive" ${l.active?'checked':''}>${l.active?'Aktiv':'Slået fra'}</label></td></tr>`).join('')}</tbody></table></div>`;
+},
+klager(){
+  const open=D.complaints.filter(c=>c.status!=='resolved'),done=D.complaints.filter(c=>c.status==='resolved');
+  const card=c=>{const o=D.orders.find(x=>x.id===c.order_id)||{};return `<article class="card" data-cid="${Number(c.id)}"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><div><b>${c.kind==='complaint'?'Klage':'Feedback'}</b> · <a href="#" data-open="${Number(c.order_id)}">${esc(o.tracking_code||'#'+c.order_id)}</a> · ${esc(o.name||'')} ${o.phone?`· <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a>`:''} ${c.rating?`<span class="stars">${'★'.repeat(c.rating)}${'☆'.repeat(5-c.rating)}</span>`:''}</div><span class="hint" style="margin:0">${esc(dt(c.created_at))}</span></div>
+    <p class="note">${esc(c.message)}</p>
+    <div class="form" style="margin-top:10px"><label>Status${sel('cstatus',[['open','Ny'],['in_progress','I gang'],['resolved','Løst']],c.status)}</label><label style="grid-column:span 2">Hvad gjorde vi? (vises ikke for kunden)<input data-f="resolution" value="${esc(c.resolution||'')}" placeholder="Fx renset igen gratis, 100 kr. rabat"></label><button class="btn sm" type="button" data-act="saveComplaint">Gem</button></div>
+    ${c.handled_by?`<p class="hint">Håndteret af ${esc(staffName(c.handled_by))}${c.resolved_at?' · løst '+esc(dt(c.resolved_at)):''}</p>`:''}</article>`};
+  return head('Klager & feedback','Fra kundernes ordreside. Svar hurtigt – en godt løst klage giver en loyal kunde.')+
+  `<div class="grid4"><div class="card stat"><span>Åbne</span><b>${open.length}</b></div><div class="card stat"><span>Løst</span><b>${done.length}</b></div><div class="card stat"><span>Gns. bedømmelse</span><b>${(()=>{const r=D.complaints.filter(c=>c.rating);return r.length?(r.reduce((a,c)=>a+c.rating,0)/r.length).toFixed(1).replace('.',','):'–'})()}</b></div></div>
+  <h2 style="margin:18px 0 10px">Åbne (${open.length})</h2><div class="stack">${open.map(card).join('')||'<div class="empty">Ingen åbne klager. 👍</div>'}</div>
+  <h2 style="margin:18px 0 10px">Løst</h2><div class="stack">${done.slice(0,30).map(card).join('')||'<div class="empty">Ingen endnu.</div>'}</div>`;
+},
+log(){
+  const T={orders:'Ordre',services:'Pris/service',coupons:'Rabatkode',staff:'Medarbejder',locations:'Postnummer',settings:'Indstilling',payments:'Betaling',complaints:'Klage'};
+  const f=ui.logf||'';const list=D.audit.filter(a=>!f||a.table_name===f);
+  const show=v=>esc(typeof v==='object'&&v!==null?JSON.stringify(v):String(v??'–')).slice(0,120);
+  return head('Revisionslog','Hvem ændrede hvad – de seneste 500 handlinger. Loggen kan ikke ændres eller slettes.',`<select data-act="logf" style="width:auto"><option value="">Alt</option>${Object.entries(T).map(([k,n])=>`<option value="${k}" ${k===f?'selected':''}>${n}</option>`).join('')}</select>`)+
+  `<div class="card scroll"><table class="stackt"><thead><tr><th>Tid</th><th>Hvem</th><th>Hvad</th><th>Ændring</th></tr></thead><tbody>${list.map(a=>`<tr><td data-l="Tid">${esc(dt(a.at))}</td><td data-l="Hvem">${esc(a.actor_name||'system')}</td><td data-l="Hvad">${esc(T[a.table_name]||a.table_name)} ${esc(a.row_id||'')} · ${esc({insert:'oprettet',update:'ændret',delete:'slettet'}[a.action]||a.action)}</td><td data-l="Ændring" style="font-size:13px">${a.action==='update'?Object.entries(a.changes||{}).map(([k,v])=>`<b>${esc(k)}</b>: ${show(v[0])} → ${show(v[1])}`).join('<br>'):''}</td></tr>`).join('')||'<tr><td colspan="4">Intet endnu.</td></tr>'}</tbody></table></div>`;
+},
+medarbejdere(){
+  return head('Medarbejdere','Hvem kan logge ind, og hvad de må')+
+  `<form class="card form" data-form="staff"><label>E-mail<input name="email" type="email" required></label><label>Navn<input name="name" required></label><label>Rolle<select name="role"><option value="staff">Kontor</option><option value="driver">Chauffør</option><option value="admin">Admin</option></select></label><button class="btn" type="submit">Tilføj medarbejder</button></form>
+  <p class="hint">Opret først brugeren i Supabase under Authentication → Users (e-mail og adgangskode), og tilføj den så her. <b>Admin</b>: alt. <b>Kontor</b>: ordrer, kunder, betalinger, anmeldelser – ikke priser, koder eller medarbejdere. <b>Chauffør</b>: kun egne stop i driver.html. Rettighederne håndhæves i databasen.</p>
+  <div class="card scroll" style="margin-top:12px"><table class="stackt"><thead><tr><th>Navn</th><th>Rolle</th><th>Aktiv</th><th class="n">Aktive ordrer</th><th></th></tr></thead><tbody>${D.staff.map(s=>{const self=s.user_id===me.user_id;return `<tr data-uid="${esc(s.user_id)}"><td data-l="Navn"><b>${esc(s.name)}</b>${self?' (dig)':''}</td><td data-l="Rolle">${self?esc(ROLES[s.role]):sel('role',Object.entries(ROLES),s.role)}</td><td data-l="Aktiv">${self?'ja':`<input type="checkbox" data-f="active" ${s.active?'checked':''} style="width:20px;min-height:20px" aria-label="Aktiv">`}</td><td data-l="Aktive ordrer" class="n">${D.orders.filter(o=>o.driver_id===s.user_id&&isOpen(o)).length}</td><td class="n">${self?'':'<button class="btn sm" type="button" data-act="staffSave">Gem</button> <button class="btn del sm" type="button" data-act="staffDel">Fjern</button>'}</td></tr>`}).join('')}</tbody></table></div>`;
+}
+};
+
+function go(s){sec=s;ui.open=null;try{history.replaceState(null,'','#'+s)}catch(_){}$('side').classList.remove('open');render();window.scrollTo(0,0)}
+$('nav').addEventListener('click',e=>{const h=e.target.closest('[data-href]');if(h){location.href=h.dataset.href;return}const b=e.target.closest('[data-sec]');if(b){ui.q='';$('gsearch').value='';go(b.dataset.sec)}});
+$('menuBtn').addEventListener('click',()=>$('side').classList.toggle('open'));
+$('refresh').addEventListener('click',loadAll);
+$('logout').addEventListener('click',async()=>{await db.auth.signOut();location.reload()});
+$('login').addEventListener('submit',async e=>{e.preventDefault();$('lmsg').textContent='';$('lbtn').disabled=true;const {error}=await db.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});$('lbtn').disabled=false;if(error){$('lmsg').textContent='Forkert e-mail eller adgangskode.';return}$('pw').value='';start()});
+let st=0;$('gsearch').addEventListener('input',e=>{clearTimeout(st);st=setTimeout(()=>{ui.q=e.target.value.trim();ui.open=null;if(sec!=='ordrer'){sec='ordrer';try{history.replaceState(null,'','#ordrer')}catch(_){}}render()},200)});
+
+const main=$('main');
+function toast(m,bad){const t=document.createElement('div');t.className='toast'+(bad?' err':'');t.setAttribute('role',bad?'alert':'status');t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),4000)}
+const friendly=m=>/JD:forbidden|row-level|permission/.test(m)?'Du har ikke adgang til det. Kun admin kan gøre dette.':/JD:self/.test(m)?'Du kan ikke ændre eller fjerne din egen admin-adgang.':/duplicate key/.test(m)?'Findes allerede.':/check constraint/.test(m)?'Værdien er ikke gyldig.':m;
+async function act(fn,out,ok='Gemt'){if(out)out.textContent='Gemmer …';let r;try{r=await fn()}catch(e){r={error:{message:e.message||'Netværksfejl'}}}if(r.error){const m=friendly(r.error.message);if(out)out.textContent='Fejl: '+m;else toast('Fejl: '+m,true);return null}if(submitting){justSent=submitting;submitting=null}if(out)out.textContent=ok;return r.data??true}
+async function fn(name,body){
+  const {data:{session}}=await db.auth.getSession();
+  const r=await fetch(cfg.supabaseUrl.replace(/\/$/,'')+'/functions/v1/'+name,{method:'POST',headers:{'Content-Type':'application/json',apikey:cfg.supabaseAnonKey,Authorization:'Bearer '+(session?session.access_token:'')},body:JSON.stringify(body)});
+  const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||('HTTP '+r.status));return j;
+}
+main.addEventListener('input',e=>{const t=e.target;
+  if(t.id==='lbCmp'||t.id==='lbSrc')lbUpdate();
+  if(t.dataset.act==='cq'){ui.cq=t.value;const pos=t.selectionStart;render();const n=main.querySelector('[data-act=cq]');n.focus();n.setSelectionRange(pos,pos)}
+  if(t.dataset.act==='base'){try{localStorage.setItem('jd_base',t.value)}catch(_){}}
+});
+main.addEventListener('change',async e=>{const t=e.target;
+  if(t.id==='lbSrc')lbUpdate();
+  if(t.dataset.act==='routeDay'){ui.routeDay=t.value||today();ui.zone='';render()}
+  if(t.dataset.act==='routeType'){ui.routeType=t.value;ui.zone='';render()}
+  if(t.dataset.act==='zone'){ui.zone=t.value;render()}
+  if(t.dataset.act==='logf'){ui.logf=t.value;render()}
+  if(t.dataset.act==='rep'){ui.rep=t.value||today().slice(0,7);render()}
+  if(t.dataset.act==='mk'){ui.mk=t.value||today().slice(0,7);render()}
+  if(t.dataset.act==='base')render();
+  if(t.dataset.f==='driver_id'&&t.closest('.stop')){const id=+t.closest('.stop').dataset.id,v=t.value||null;if(await act(()=>db.from('orders').update({driver_id:v}).eq('id',id))){D.orders.find(o=>o.id===id).driver_id=v;toast('Chauffør gemt');render()}}
+  if(t.dataset.act==='couponActive'){const code=t.closest('tr').dataset.code;if(await act(()=>db.from('coupons').update({active:t.checked}).eq('code',code))){D.coupons.find(c=>c.code===code).active=t.checked;render()}else t.checked=!t.checked}
+  if(t.dataset.act==='locActive'){const pc=t.closest('tr').dataset.pc;if(await act(()=>db.from('locations').update({active:t.checked}).eq('postcode',pc))){D.locations.find(l=>l.postcode===pc).active=t.checked;render()}else t.checked=!t.checked}
+  if(t.dataset.act==='locZone'){const pc=t.closest('tr').dataset.pc,z=t.value.trim();if(!z)return;if(await act(()=>db.from('locations').update({zone:z}).eq('postcode',pc))){D.locations.find(l=>l.postcode===pc).zone=z;toast('Zone gemt')}}
+});
+main.addEventListener('click',async e=>{if(!e.target.closest('form'))submitting=null;
+  const row=e.target.closest('[data-open]');if(row&&(row.tagName==='A'||!e.target.closest('a,button,input,select'))){e.preventDefault();sec='ordrer';ui.open=+row.dataset.open;render();window.scrollTo(0,0);return}
+  const cust=e.target.closest('[data-search]');if(cust&&!e.target.closest('a,button')){ui.q=cust.dataset.search;$('gsearch').value=ui.q;go('ordrer');ui.q=cust.dataset.search;render();return}
+  const b=e.target.closest('[data-act]');if(!b||b.tagName==='INPUT'||b.tagName==='SELECT')return;const a=b.dataset.act;
+  if(a==='lbCopy'){const t=$('lbOut').textContent;try{await navigator.clipboard.writeText(t);toast('Link kopieret')}catch(_){toast('Kopiér linket manuelt',true)}return}
+  if(a==='delClosed'){const day=b.dataset.day;if(await act(()=>db.from('closed_days').delete().eq('day',day))){D.closed=D.closed.filter(c=>c.day!==day);toast('Dagen er åben igen');render()}return}
+  if(a==='gift'){ui.gift=b.dataset.k;ui.giftDone=null;render();window.scrollTo(0,0);return}
+  if(a==='giftClose'){ui.gift=null;ui.giftDone=null;render();return}
+  if(a==='giftCopy'){const t=$('giftTxt').textContent;try{await navigator.clipboard.writeText(t);toast('Teksten er kopieret')}catch(_){toast('Kopiér teksten manuelt',true)}return}
+  if(a==='view'){ui.view=b.dataset.v;ui.q='';$('gsearch').value='';render()}
+  if(a==='gov'){ui.view=b.dataset.v;go('ordrer')}
+  if(a==='closeOrder'){ui.open=null;render()}
+  if(a==='mon'){const v=+b.dataset.v;if(!v){ui.month=today().slice(0,7);ui.day=today()}else{const [y,m]=ui.month.split('-').map(Number);ui.month=iso(new Date(y,m-1+v,15)).slice(0,7)}render()}
+  if(a==='day'){ui.day=b.dataset.v;render()}
+  if(a==='copyLink'){try{await navigator.clipboard.writeText(b.dataset.link);toast('Link kopieret')}catch(_){prompt('Kopiér linket:',b.dataset.link)}}
+  if(a==='saveOrder'){const art=b.closest('[data-id]'),id=+art.dataset.id,g=f=>art.querySelector(`[data-f="${f}"]`);
+    const gs=D.garments.filter(x=>x.order_id===id);
+    if(g('status').value==='klar'&&gs.length&&gs.some(x=>!['packed','out_for_delivery','delivered'].includes(x.status))&&!confirm('Ikke alle stykker er scannet som pakket. Sæt ordren til "klar" alligevel?'))return;
+    const fa=g('final_amount').value.trim();
+    if(fa!==''&&!(/^\d+$/.test(fa)&&+fa<=1000000)){art.querySelector('.saved').textContent='Fejl: beløbet skal være et helt tal i kroner.';return}
+    if(g('amount_confirmed').checked&&fa===''&&!(D.orders.find(o=>o.id===id).total>0)){art.querySelector('.saved').textContent='Fejl: skriv det endelige beløb, før du bekræfter.';return}
+    const p={status:g('status').value,driver_id:g('driver_id').value||null,delivery_date:g('delivery_date').value||null,delivery_slot:g('delivery_slot').value||null,final_amount:fa===''?null:+fa,amount_confirmed:g('amount_confirmed').checked,paid:g('paid').checked,payment_method:g('payment_method').value||null,staff_note:g('staff_note').value.trim()||null};
+    b.disabled=true;const r=await act(()=>db.from('orders').update(p).eq('id',id).select().single(),art.querySelector('.saved'));b.disabled=false;
+    if(r&&r!==true){const i=D.orders.findIndex(o=>o.id===id);D.orders[i]=r;setTimeout(render,600)}}
+  if(a==='payLink'){const id=+b.closest('[data-id]').dataset.id;b.disabled=true;try{const j=await fn('create-payment',{order_id:id});try{await navigator.clipboard.writeText(j.url)}catch(_){}toast('Betalingslink oprettet og kopieret – send det til kunden');prompt('Betalingslink:',j.url);await loadAll()}catch(err){toast('Kunne ikke lave link: '+err.message,true)}b.disabled=false}
+  if(a==='refund'){const id=+b.closest('[data-id]').dataset.id;const v=prompt('Beløb der skal refunderes i kr. (tomt = hele beløbet):','');if(v===null)return;if(v!==''&&!(+v>0)){toast('Ugyldigt beløb',true);return}if(!confirm('Refundér '+(v?v+' kr.':'hele beløbet')+' for ordre #'+id+'?'))return;b.disabled=true;try{await fn('refund-payment',v===''?{order_id:id}:{order_id:id,amount_kr:+v});toast('Refusion sendt');await loadAll()}catch(err){toast('Refusion fejlede: '+err.message,true)}b.disabled=false}
+  if(a==='showPhotos'){const art=b.closest('[data-id]'),id=+art.dataset.id,box=art.querySelector('.gimgs');b.disabled=true;
+    const ps=D.gphotos.filter(p=>D.garments.some(g=>g.id===p.garment_id&&g.order_id===id));box.textContent='';
+    for(const ph of ps){const {data,error}=await db.storage.from('garment-intake').createSignedUrl(ph.storage_path,600);
+      if(error||!data){toast('Foto kunne ikke hentes: '+(error?error.message:''),true);continue}
+      const a2=document.createElement('a');a2.href=data.signedUrl;a2.target='_blank';a2.rel='noopener';const im=document.createElement('img');im.src=data.signedUrl;im.alt='Tøjfoto';im.style.cssText='width:96px;height:96px;object-fit:cover;border-radius:8px';a2.append(im);box.append(a2)}
+    b.disabled=false}
+  if(a==='saveComplaint'){const c=b.closest('[data-cid]'),id=+c.dataset.cid,st=c.querySelector('[data-f=cstatus]').value,res=c.querySelector('[data-f=resolution]').value.trim()||null;
+    const p={status:st,resolution:res,handled_by:me.user_id,resolved_at:st==='resolved'?new Date().toISOString():null};
+    if(await act(()=>db.from('complaints').update(p).eq('id',id))){Object.assign(D.complaints.find(x=>x.id===id),p);toast('Gemt');render()}}
+  if(a==='markPaid'){const tr=b.closest('tr'),id=+tr.dataset.id,pm=tr.querySelector('[data-f=pm]').value||null;if(await act(()=>db.from('orders').update({paid:true,payment_method:pm}).eq('id',id))){Object.assign(D.orders.find(o=>o.id===id),{paid:true,payment_status:'paid',payment_method:pm});render()}}
+  if(a==='couponDel'){const code=b.closest('tr').dataset.code;if(!confirm('Slet koden '+code+'?'))return;if(await act(()=>db.from('coupons').delete().eq('code',code))){D.coupons=D.coupons.filter(c=>c.code!==code);render()}}
+  if(a==='saveService'){const tr=b.closest('tr'),id=+tr.dataset.sid,g=f=>tr.querySelector(`[data-f="${f}"]`),s=D.services.find(x=>x.id===id);const names=Object.assign({},s.names||{});['en','de','sv'].forEach(l=>{const v=g(l).value.trim();if(v)names[l]=v;else delete names[l]});const p={name:g('name').value.trim(),names,price:Math.max(0,parseInt(g('price').value,10)||0),popular:g('popular').checked,active:g('active').checked};if(!p.name)return;if(await act(()=>db.from('services').update(p).eq('id',id),tr.querySelector('.saved')))Object.assign(s,p)}
+  if(a==='revToggle'){const id=+b.closest('[data-rid]').dataset.rid,r=D.reviews.find(x=>x.id===id);if(await act(()=>db.from('reviews').update({visible:!r.visible}).eq('id',id))){r.visible=!r.visible;render()}}
+  if(a==='revDel'){const id=+b.closest('[data-rid]').dataset.rid;if(!confirm('Slet anmeldelsen?'))return;if(await act(()=>db.from('reviews').delete().eq('id',id))){D.reviews=D.reviews.filter(x=>x.id!==id);render()}}
+  if(a==='staffSave'){const tr=b.closest('tr'),uid=tr.dataset.uid;const role=tr.querySelector('[data-f=role]').value,active=tr.querySelector('[data-f=active]').checked;if(await act(()=>db.rpc('set_staff',{p_uid:uid,p_role:role,p_active:active}))){Object.assign(D.staff.find(s=>s.user_id===uid),{role,active});toast('Gemt');render()}}
+  if(a==='staffDel'){const uid=b.closest('tr').dataset.uid;if(!confirm('Fjern '+staffName(uid)+' som medarbejder?'))return;if(await act(()=>db.rpc('remove_staff',{p_uid:uid}))){D.staff=D.staff.filter(s=>s.user_id!==uid);render()}}
+});
+main.addEventListener('submit',async e=>{e.preventDefault();const f=e.target,k=f.dataset.form;submitting=k;const v=n=>(f.elements[n]?.value||'').trim(),btn=f.querySelector('button');
+  if(!f.checkValidity()){f.reportValidity();return}
+  btn.disabled=true;
+  try{
+  if(k==='gift'){const c=D.orders.filter(o=>String(o.phone||'').replace(/\s/g,'')===ui.gift).sort((x,y)=>(x.created_at||'')<(y.created_at||'')?1:-1)[0];if(!c)return;
+    const kind=v('kind'),value=parseInt(v('value'),10);if(!(value>0)){toast('Skriv en værdi',true);return}if(kind==='percent'&&value>100){toast('Procent kan højst være 100',true);return}
+    const A='ABCDEFGHJKMNPQRSTUVWXYZ23456789',rnd=crypto.getRandomValues(new Uint8Array(6)),code='JD-'+[...rnd].map(x=>A[x%A.length]).join('');
+    const row={code,kind,value,max_uses:1,expires:v('expires')||null,for_phone:c.phone,for_email:c.email||null,for_name:c.name,note:'Personlig'};
+    const r=await act(()=>db.from('coupons').insert(row).select().single());if(r){D.coupons.push(r);ui.giftDone={k:ui.gift,c:r};toast('Koden er lavet');render()}return}
+  if(k==='coupon'){const row={code:v('code').toUpperCase().replace(/\s/g,''),kind:v('kind'),value:parseInt(v('value'),10),expires:v('expires')||null,max_uses:v('max_uses')?parseInt(v('max_uses'),10):null};if(row.kind==='percent'&&row.value>100){toast('Procent kan højst være 100',true);return}const r=await act(()=>db.from('coupons').insert(row).select().single());if(r){D.coupons.push(r);render()}}
+  if(k==='service'){const cat=v('category'),mx=Math.max(0,...D.services.map(s=>s.sort||0)),names={};if(v('en'))names.en=v('en');if(v('de'))names.de=v('de');if(v('sv'))names.sv=v('sv');const r=await act(()=>db.from('services').insert({category:cat,name:v('name'),names,price:parseInt(v('price'),10)||0,sort:mx+10}).select().single());if(r){D.services.push(r);render()}}
+  if(k==='review'){const r=await act(()=>db.from('reviews').insert({name:v('name'),town:v('town')||null,rating:+v('rating'),source:v('source'),text:v('text'),visible:false}).select().single());if(r){D.reviews.unshift(r);render()}}
+  if(k==='spend'){const mo=ui.mk+'-01',rows=[];for(const el of f.querySelectorAll('input[name^=sp_]')){if(el.value!=='')rows.push({month:mo,source:el.name.slice(3),amount:Math.max(0,parseInt(el.value,10)||0)})}
+    const ns=f.elements.new_src.value,na=f.elements.new_amt.value;if(ns&&na!=='')rows.push({month:mo,source:ns,amount:Math.max(0,parseInt(na,10)||0)});
+    if(!rows.length){toast('Skriv et beløb',true);return}
+    const r=await act(()=>db.from('ad_spend').upsert(rows).select());if(r){rows.forEach(x=>{D.spend=D.spend.filter(s=>!(s.month.slice(0,7)===ui.mk&&s.source===x.source)).concat([x])});toast('Annoncekroner gemt');render()}return}
+  if(k==='closed'){const day=v('day'),note=v('note');if(!/^\d{4}-\d{2}-\d{2}$/.test(day)){toast('Vælg en dato',true);return}
+    const r=await act(()=>db.from('closed_days').upsert([{day,note:note||null}]).select());if(r){D.closed=D.closed.filter(c=>c.day!==day).concat(r).sort((x,y)=>x.day<y.day?-1:1);toast('Dagen er lukket');render()}return}
+  if(k==='capacity'){const n=parseInt(v('cap'),10),m=parseInt(v('mins'),10),st=parseInt(v('stopm'),10);if(!(n>=1&&n<=50)||!(m>=30&&m<=240)||!(st>=1&&st<=60)){toast('Tjek tallene: loft 1–50, minutter 30–240, stop 1–60',true);return}
+    const rows=[{key:'slot_capacity',value:String(n)},{key:'slot_minutes',value:String(m)},{key:'stop_minutes',value:String(st)}];
+    if(await act(()=>db.from('settings').upsert(rows))){rows.forEach(r=>{const x=D.settings.find(s=>s.key===r.key);if(x)x.value=r.value;else D.settings.push({...r})});toast('Kapacitet gemt');render()}return}
+  if(k==='location'){if(!/^\d{4}$/.test(v('postcode'))){toast('Postnummeret skal være 4 cifre',true);return}const r=await act(()=>db.from('locations').insert({postcode:v('postcode'),town:v('town'),zone:v('zone')}).select().single());if(r){D.locations.push(r);D.locations.sort((a,b)=>a.postcode.localeCompare(b.postcode));render()}}
+  if(k==='staff'){const r=await act(()=>db.rpc('add_staff',{p_email:v('email'),p_name:v('name'),p_role:v('role')}));if(r&&r!=='ok')toast(r,true);else if(r)await loadAll()}
+  }finally{btn.disabled=false}
+});
+start();
+})();
+</script>
+</body>
+</html>

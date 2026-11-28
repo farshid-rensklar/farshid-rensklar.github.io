@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin.html
+Disallow: /driver.html
+Disallow: /scan.html
+Disallow: /labels.html
+Disallow: /ordre.html
+Disallow: /en/ordre.html
+Disallow: /de/ordre.html
+Sitemap: https://justdry.dk/sitemap.xml

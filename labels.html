@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>JustDry – QR-mærker</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<style>
+/* Udskrift af QR-mærker: A4-etiketark (3 × 8, 70 × 37 mm) eller labelprinter (62 × 29 mm) */
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;font:15px/1.4 system-ui,-apple-system,"Segoe UI",Inter,sans-serif;background:#E9ECEF;color:#111}
+.tools{position:sticky;top:0;background:#071D32;color:#fff;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tools b{flex:1}.tools select,.tools button,.tools a{min-height:44px;border-radius:10px;border:1px solid #2C5070;background:#0C2A45;color:#fff;padding:0 12px;font:inherit;text-decoration:none;display:inline-flex;align-items:center}
+.tools button.pr{background:#087F73;border-color:#087F73;font-weight:700}
+.info{max-width:800px;margin:14px auto;padding:0 14px;color:#333}
+.sheet{background:#fff;margin:14px auto;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.a4{width:210mm;min-height:297mm;padding:13mm 0 0 0;display:grid;grid-template-columns:repeat(3,70mm);grid-auto-rows:37mm;align-content:start}
+.roll{width:62mm;display:grid;grid-auto-rows:29mm}
+.lab{display:grid;grid-template-columns:auto 1fr;gap:2.5mm;align-items:center;padding:2.5mm 3mm;overflow:hidden;border:1px dashed #ccc}
+.a4 .lab svg{width:30mm;height:30mm}.roll .lab svg{width:24mm;height:24mm}
+.lab .code{font:700 10.5pt ui-monospace,Menlo,monospace;letter-spacing:.02em}
+.lab .brand{font:italic 700 11pt Georgia,"Times New Roman",serif;letter-spacing:-.01em}
+.lab .meta{font-size:7.5pt;color:#333;line-height:1.25}
+.msg{max-width:800px;margin:20px auto;padding:14px;background:#fff;border-radius:10px}
+@media print{body{background:#fff}.tools,.info,.msg{display:none!important}.sheet{margin:0;box-shadow:none}.lab{border:0}
+  @page{margin:0}}
+</style>
+</head>
+<body>
+<div class="tools"><b>QR-mærker</b>
+  <select id="fmt" aria-label="Format"><option value="a4">A4-etiketark 3×8 (70×37 mm)</option><option value="roll">Labelprinter 62×29 mm</option></select>
+  <button class="pr" type="button" id="print">Udskriv</button><a href="admin.html">Tilbage til admin</a></div>
+<p class="info">Sæt mærket på bøjlen, i en lomme-sikkerhedsnål eller som hængemærke – ikke direkte på stoffet. Mærket følger stykket gennem rens, pres og pakning og scannes ved hvert trin i <b>scan.html</b>.</p>
+<div id="out"><p class="msg">Henter …</p></div>
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>window.supabase||document.write('<script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"><\/script>')/* reserve-CDN hvis jsDelivr er nede */</script>
+<script src="assets/js/qr.js"></script>
+<script>
+(()=>{
+const $=id=>document.getElementById(id),cfg=window.JUSTDRY||{};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const CAT={coat:'Frakke',suit:'Jakkesæt',shirt:'Skjorte',trousers:'Bukser',dress:'Kjole',knitwear:'Strik',bag:'Pose',home:'Bolig',other:'Andet'};
+const msg=t=>{$('out').innerHTML=`<p class="msg">${esc(t)}</p>`};
+if(!cfg.supabaseUrl||!cfg.supabaseAnonKey||!window.supabase){msg('Ikke forbundet – udfyld config.js.');return}
+const db=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
+const ids=(new URLSearchParams(location.search).get('order')||'').split(',').map(Number).filter(n=>Number.isInteger(n)&&n>0).slice(0,50);
+let rows=[];
+function draw(){
+  const f=$('fmt').value;
+  if(!rows.length){msg('Ingen registrerede stykker på denne ordre endnu. Chaufføren registrerer tøjet ved afhentning.');return}
+  const per=f==='a4'?24:rows.length,pages=[];for(let i=0;i<rows.length;i+=per)pages.push(rows.slice(i,i+per));
+  $('out').innerHTML=pages.map(p=>`<div class="sheet ${f}">${p.map(g=>`<div class="lab">${JDQR.svg(g.garment_code,120)}<div><div class="brand">JustDry</div><div class="code">${esc(g.garment_code)}</div><div class="meta">${esc(g.tracking)} · ${esc(CAT[g.category]||g.category)}${g.color?' · '+esc(g.color):''}<br>${esc(g.first)}</div></div></div>`).join('')}</div>`).join('');
+}
+async function start(){
+  const {data:{session}}=await db.auth.getSession();
+  if(!session){msg('Log ind i admin først.');return}
+  if(!ids.length){msg('Ingen ordre valgt. Åbn siden fra en ordre i admin.');return}
+  const [{data:g,error},{data:o}]=await Promise.all([db.from('garments').select('garment_code,category,color,order_id').in('order_id',ids).order('order_id').order('id'),db.from('orders').select('id,tracking_code,name').in('id',ids)]);
+  if(error){msg('Kunne ikke hente: '+error.message);return}
+  /* only the customer's first name on the label (privacy) */
+  rows=(g||[]).map(x=>{const or=(o||[]).find(y=>y.id===x.order_id)||{};return {...x,tracking:or.tracking_code||'#'+x.order_id,first:String(or.name||'').split(' ')[0]}});
+  draw();
+}
+$('fmt').addEventListener('change',draw);$('print').addEventListener('click',()=>window.print());
+start();
+})();
+</script>
+</body>
+</html>

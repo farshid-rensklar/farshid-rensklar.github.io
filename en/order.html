@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book dry cleaning – JustDry</title>
+<meta name="description" content="Dry cleaning with pickup and delivery across North Zealand. Book in one minute – free pickup and delivery over DKK 500.">
+<link rel="canonical" href="https://justdry.dk/en/order.html">
+<link rel="alternate" hreflang="da" href="https://justdry.dk/bestil.html">
+<link rel="alternate" hreflang="en" href="https://justdry.dk/en/order.html">
+<link rel="alternate" hreflang="de" href="https://justdry.dk/de/bestellen.html">
+<link rel="alternate" hreflang="sv" href="https://justdry.dk/sv/bestall.html">
+<link rel="alternate" hreflang="x-default" href="https://justdry.dk/bestil.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JustDry">
+<meta property="og:title" content="Book dry cleaning – JustDry">
+<meta property="og:description" content="Dry cleaning with pickup and delivery across North Zealand. Book in one minute – free pickup and delivery over DKK 500.">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://justdry.dk/en/order.html">
+<meta name="theme-color" content="#0F2A44">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,700&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<script>
+document.documentElement.classList.add('js');
+/* Keep the visitor's chosen language: if they picked another language earlier and arrive here from outside the site, send them to the same page in that language. */
+(function(){try{var p=localStorage.getItem('jd_lang'),a={"da": "../bestil.html", "de": "../de/bestellen.html", "en": "order.html", "sv": "../sv/bestall.html"};var same=document.referrer&&new URL(document.referrer).origin===location.origin;if(p&&p!=='en'&&a[p]&&!same&&!/[?&]lang=/.test(location.search))location.replace(a[p]+location.search+location.hash)}catch(e){}})();
+</script>
+
+<style>
+/* VOICE: kort, tryg, handlingsorienteret – én opgave: bestil afhentning
+   IDEA: en skrædders bestillingsseddel – vælg stykker, se prisen, send
+   PICTURE: selve kurven med live-total er billedet
+   COLOUR and TYPE: dyb navy, elfenben, petrol; Cormorant Garamond + Inter
+   LAYOUT: kort navy-top; katalog + formular til venstre, kurv i fast sidekolonne (under hinanden på mobil) */
+.top{background:radial-gradient(120% 100% at 85% 0%,#0F3550 0%,#0A2540 50%,#071D32 100%);color:#fff;padding:clamp(28px,5vw,56px) max(5vw,18px) 64px}
+.top .in{max-width:1200px;margin:0 auto}
+.top .eyebrow{color:var(--mint)}
+.top h1{font-size:clamp(36px,5.4vw,62px);font-weight:500;margin-top:14px}
+.top h1 em{display:block;color:var(--mint)}
+.top p{color:#C9D4DF;font-size:18px;margin-top:14px;max-width:58ch}
+.ticks{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:22px;color:#DCE4EC;font-size:15px}
+.ticks span{display:flex;gap:8px;align-items:center;white-space:nowrap}
+.page{max-width:1200px;margin:-36px auto 0;padding:0 max(5vw,18px) 70px;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start;position:relative}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(18px,3vw,32px);box-shadow:var(--shadow)}
+.panel h2{font-size:clamp(28px,3vw,34px)}
+.sub{color:var(--soft);margin-top:6px}
+.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--tealBtn);color:var(--onGold);font:700 14px Inter,sans-serif;margin-right:10px;vertical-align:4px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 8px} /* alle kategorier altid synlige som runde knapper – ingen sidelæns scroll */
+.tabs button{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid rgba(201,164,90,.45);background:transparent;color:#DCE5EE;font:500 15px/1.2 Inter,sans-serif;cursor:pointer;white-space:nowrap;transition:background .2s,border-color .2s}
+.tabs button:hover{border-color:#C9A45A}
+.tabs button[aria-pressed=true]{background:#C9A45A;border-color:#C9A45A;color:#071D32}
+.items{list-style:none;margin:0;padding:0}
+.items li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.items li.on .n{font-weight:600}
+.items .n{flex:1}
+.items .p{color:var(--soft);white-space:nowrap;font-variant-numeric:tabular-nums;font-size:15px}
+.q{display:flex;align-items:center;gap:4px}
+.q button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:20px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.q button.plus{border-color:var(--tealBtn);color:var(--tealInk)}
+.q button:disabled{opacity:.3;cursor:default}
+.q output{width:26px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+aside.cart{position:sticky;top:84px}
+.cart h2{font-size:28px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.cart h2 small{font:500 14px Inter,sans-serif;color:var(--soft)}
+.lines{list-style:none;margin:14px 0 0;padding:0;max-height:300px;overflow:auto}
+.lines li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.lines li .lp{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lines li .q{grid-column:1/-1}
+.lines li .q button{width:34px;height:34px;font-size:17px}
+.empty{color:var(--soft);font-size:15px;margin-top:12px}
+.sum{margin-top:14px;border-radius:var(--r-md);background:var(--tint);padding:16px 18px}
+.sum .row{display:flex;justify-content:space-between;gap:12px;padding:3px 0}
+.sum .row span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.sum .disc span:last-child{color:var(--tealInk);font-weight:600}
+.sum .tot{font-size:21px;font-weight:700;border-top:1px solid var(--line);margin-top:8px;padding-top:10px}
+.meter{height:7px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:12px}
+.meter i{display:block;height:100%;width:0;background:var(--teal);transition:width .4s ease}
+#left{margin-top:8px;font-size:14px;color:var(--tealInk);font-weight:500}
+#conf{margin-top:8px;font-size:13px;color:var(--soft);display:flex;gap:6px;align-items:center;min-height:18px}
+.cart .btn{width:100%;margin-top:16px}
+form{display:grid;gap:14px;margin-top:20px}
+.r2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.chk2{display:flex;gap:10px;align-items:flex-start;color:var(--ink);font-size:15px;cursor:pointer}
+.chk2 input{width:24px;height:24px;margin-top:2px;flex:none;accent-color:var(--tealBtn)}
+#codeMsg{font-size:14px;margin:0;color:#E9CC88}#codeMsg:empty{display:none}
+.alert{border-radius:12px;padding:12px 14px;font-size:15px}
+.alert.err{background:color-mix(in srgb,var(--err) 10%,transparent);color:var(--err);border:1px solid color-mix(in srgb,var(--err) 35%,transparent)}
+.alert:empty{display:none}
+.paynote{color:var(--soft);font-size:14px;display:flex;gap:8px;align-items:flex-start}
+#send{min-height:58px;font-size:17px}
+.ok{border:1px solid var(--teal);border-radius:var(--r-lg);padding:clamp(20px,3vw,32px);background:color-mix(in srgb,var(--teal) 8%,var(--card))}
+.ok h2{font-size:clamp(28px,3vw,36px)}
+.ok p{margin-top:10px}
+.ok .btn{margin-top:18px}
+.ok small{display:block;color:var(--soft);margin-top:10px}
+#done{border:1px solid var(--teal);border-radius:var(--r-md);padding:18px;margin-top:18px}
+#done pre{white-space:pre-wrap;font:14px/1.5 Inter,sans-serif;margin:10px 0 14px}
+.acts{display:flex;flex-wrap:wrap;gap:10px}
+.trust{max-width:1200px;margin:0 auto;padding:0 max(5vw,18px) 60px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.trust div{border-top:1px solid var(--line);padding-top:14px}
+.trust b{display:block;margin-bottom:4px}.trust p{color:var(--soft);font-size:15px}
+.mbar{display:none}
+.hint.good{color:var(--tealInk);font-weight:500}
+.saved-note{font-size:13px;color:var(--soft);margin-top:10px}
+.linkbtn{background:none;border:0;padding:0;color:var(--tealInk);text-decoration:underline;cursor:pointer;font:inherit}
+.rvh{font:600 26px/1.1 "Cormorant Garamond",Georgia,serif;margin-top:20px}
+.rv{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr);gap:10px 16px;margin:16px 0 0;padding:16px;border-radius:var(--r-md);background:var(--tint)}
+.rv dt{color:var(--soft);font-size:14px}.rv dd{margin:0}
+.rv dd.tot{font-weight:700;font-size:19px}
+.items.loading{opacity:.6}
+@media(max-width:560px){.rv{grid-template-columns:1fr;gap:2px}.rv dd{margin-bottom:10px}}
+@media(max-width:980px){.page{grid-template-columns:1fr}aside.cart{position:static;order:2}#formPanel{order:3}
+ .mbar{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--navy2);color:#fff;padding:10px max(4vw,14px) calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;box-shadow:0 -10px 30px -10px rgba(4,16,28,.5)}
+ .mbar[hidden]{display:none}
+ .mbar div{flex:1;line-height:1.25}.mbar b{display:block;font-size:18px;font-variant-numeric:tabular-nums}.mbar small{color:#AFBCC9}
+ .mbar .btn{min-height:48px}
+ body.cart-on{padding-bottom:80px}}
+@media(max-width:640px){.r2,.trust{grid-template-columns:1fr}.items .p{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.meter i{transition:none}}
+.termsnote{font-size:14px;color:var(--soft);margin-top:8px}.termsnote a{color:inherit}
+.where .pcheck{display:grid;gap:10px}
+.where label{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:clamp(24px,3.4vw,30px)}
+.where .row{display:flex;gap:8px;max-width:460px}
+.where input{flex:1;min-width:0;min-height:50px;border-radius:3px;border:1px solid var(--field);background:var(--bg);color:var(--ink);font:16px Inter,sans-serif;padding:0 18px}
+.where input:focus{outline:none;border-color:#C9A45A;box-shadow:0 0 0 3px rgba(201,164,90,.22)}
+.where .btn{min-height:50px}
+.where p{margin:0;font-size:15.5px}.where p:empty{display:none}.where p.yes{color:#9FE0D6}
+</style>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="hanger" viewBox="0 0 72 56"><path d="M30 12a6 6 0 1 1 6 6v6" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 24L6 46h60L36 24z" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="jdmark" viewBox="0 0 128 128"><circle cx="64" cy="64" r="64" fill="#0C2A45"/><circle cx="64" cy="64" r="56" fill="none" stroke="#C9A45A" stroke-width="5"/><path d="M56 39a8 8 0 1 1 8 8v8" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M64 55 L34 78 h60 z" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round"/></symbol>
+  <symbol id="fl-da" viewBox="0 0 37 28"><rect width="37" height="28" fill="#C8102E"/><path d="M12 0h4v28h-4zM0 12h37v4H0z" fill="#fff"/></symbol>
+  <symbol id="fl-de" viewBox="0 0 5 3"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#DD0000" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></symbol>
+  <symbol id="fl-sv" viewBox="0 0 16 10"><rect width="16" height="10" fill="#006AA7"/><path d="M5 0h2v10H5zM0 4h16v2H0z" fill="#FECC02"/></symbol>
+  <symbol id="fl-en" viewBox="0 0 60 30"><clipPath id="flc"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="flt"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#flc)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#flt)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></symbol>
+  <symbol id="check" viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="arrow" viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+
+<header class="site-h">
+  <div class="in">
+    <a class="logo" href="index.html" aria-label="JustDry home"><svg class="lm" viewBox="0 0 128 128" aria-hidden="true"><use href="#jdmark"/></svg>JustDry</a>
+    
+    <nav class="main" aria-label="Main menu">
+      <a href="index.html#saadan">How it works</a>
+      <a href="index.html#priser">Prices</a>
+      <a href="index.html#omraade">Area</a>
+      <a href="index.html#faq">FAQ</a>
+      <a class="acc" href="account.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>My account</a>
+    </nav>
+    <div class="acts">
+      <div class="lpick">
+  <button class="lp-btn" type="button" aria-expanded="false" aria-controls="lpm" aria-label="Language: English"><svg class="flag" aria-hidden="true"><use href="#fl-en"/></svg><span>EN</span><svg class="car" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button>
+  <div class="lp-menu langs" id="lpm" hidden><a href="../bestil.html" hreflang="da" lang="da" data-lang="da" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-da"/></svg><span>Dansk</span></a><a href="order.html" hreflang="en" lang="en" data-lang="en" aria-current="true"><svg class="flag" aria-hidden="true"><use href="#fl-en"/></svg><span>English</span><svg class="ok" aria-hidden="true"><use href="#check"/></svg></a><a href="../de/bestellen.html" hreflang="de" lang="de" data-lang="de" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-de"/></svg><span>Deutsch</span></a><a href="../sv/bestall.html" hreflang="sv" lang="sv" data-lang="sv" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-sv"/></svg><span>Svenska</span></a></div>
+</div>
+      
+      <a class="acc-ico" href="account.html" aria-label="My account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h12"/></svg></button>
+    </div>
+  </div>
+</header>
+  <div class="mnav-bg" hidden></div>
+  <nav class="mnav" id="mnav" hidden aria-label="Main menu">
+    <button class="mclose" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
+    <div class="mmain">
+      <a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-5h4v5"/></svg>Home</a>
+      <a href="index.html#saadan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a2.2 2.2 0 1 1 2.2 2.2c-1 0-2.2.6-2.2 1.8v1"/><path d="M12 8 3 15h18z"/><path d="M6 19h12"/></svg>How it works</a>
+      <a href="index.html#priser"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg>Prices</a>
+      <a href="index.html#omraade"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.6"/></svg>Area</a>
+      <a href="account.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14"/><path d="M4 12h11"/><path d="m11 8 4 4-4 4"/></svg>My account</a>
+    </div>
+    
+    <div class="msec">
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#garanti">Satisfaction guarantee</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <div class="msec">
+      <span class="mh">Contact</span>
+      <a href="tel:+4553256770">Tel. +45 53 25 67 70</a>
+      <a href="mailto:info@justdry.dk">info@justdry.dk</a>
+    </div>
+  </nav>
+
+<main id="main">
+
+<div class="top">
+  <div class="in">
+    <span class="eyebrow">JustDry</span>
+    <h1>Dry cleaning without leaving home. <em>We collect – you relax.</em></h1>
+    <p>Dry cleaning with pickup and delivery across North Zealand. Choose your clothes, see the price right away and book in a minute.</p>
+    <div class="ticks"><span><svg width="18" height="18" style="color:#E9CC88" aria-hidden="true"><use href="#check"/></svg>Free pickup over DKK 500</span><span><svg width="18" height="18" style="color:#E9CC88" aria-hidden="true"><use href="#check"/></svg>Fixed price per piece</span><span><svg width="18" height="18" style="color:#E9CC88" aria-hidden="true"><use href="#check"/></svg>Over 10 years of experience</span></div>
+  </div>
+</div>
+
+<div class="page">
+  <section class="panel where" aria-labelledby="wh">
+    <form class="pcheck" id="pcheck" novalidate>
+      <label id="wh" for="pc">Do we come to you?</label>
+      <div class="row"><input id="pc" inputmode="numeric" autocomplete="postal-code" maxlength="4" pattern="[0-9]{4}" placeholder="Your postcode"><button class="btn main" type="submit">Check</button></div>
+      <p id="pcOut" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+  <section class="panel" id="catalog" aria-labelledby="ch">
+    <h2 id="ch"><span class="num">1</span>What should we clean?</h2>
+    <div class="tabs" role="group" aria-label="Categories" id="tabs"></div>
+    <ul class="items" id="items"></ul>
+  </section>
+
+  <aside class="panel cart" id="cart" aria-labelledby="bh">
+    <h2 id="bh">Your basket <small id="pcs"></small></h2>
+    <ul class="lines" id="lines"></ul>
+    <p class="empty" id="empty">Your basket is empty – we can also count your clothes when we collect.</p>
+    <p class="saved-note" id="savedNote" hidden>Your basket is saved on this device, so you can continue later. <button type="button" class="linkbtn" id="clearCart">Empty basket</button></p>
+    <div class="sum" aria-live="polite">
+      <div class="row"><span>Clothes</span><span id="sub">–</span></div>
+      <div class="row disc" id="discRow" hidden><span id="discLbl">Discount</span><span id="disc"></span></div>
+      <div class="row"><span>Pickup and delivery</span><span id="fee">–</span></div>
+      <div class="row tot"><span>Total (estimated)</span><span id="tot">–</span></div>
+      <div class="meter" aria-hidden="true"><i id="bar"></i></div>
+      <p id="left"></p>
+      <p id="conf"></p>
+    </div>
+    <a class="btn main" href="#formPanel" id="toForm">Where and when?<svg class="arr" width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></a>
+  </aside>
+
+  <section class="panel" id="formPanel" aria-labelledby="fh">
+    <h2 id="fh"><span class="num">2</span>Where and when?</h2>
+    <form id="f" novalidate>
+      <div class="r2">
+        <label class="field" for="navn">Name<input id="navn" autocomplete="name" maxlength="120" required><span class="msg" id="navn-m"></span></label>
+        <label class="field" for="tlf">Phone<input id="tlf" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" required aria-describedby="tlf-h"><span class="hint" id="tlf-h">8 digits, or with country code (e.g. +44 …)</span><span class="msg" id="tlf-m"></span></label>
+      </div>
+      <div class="r2">
+        <label class="field" for="adr">Street and number<input id="adr" autocomplete="street-address" maxlength="300" required list="adrList"><datalist id="adrList"></datalist><span class="msg" id="adr-m"></span></label>
+        <label class="field" for="post">Postcode<input id="post" inputmode="numeric" maxlength="4" autocomplete="postal-code" pattern="[0-9]{4}" required><span class="hint good" id="post-ok" aria-live="polite"></span><span class="msg" id="post-m"></span></label>
+      </div>
+      <label class="field" for="email">Email (optional – for your receipt)<input id="email" type="email" autocomplete="email" maxlength="200"><span class="msg" id="email-m"></span></label>
+      <div class="r2">
+        <label class="field" for="dato">Pickup day<input id="dato" type="date" required aria-describedby="dato-h"><span class="hint" id="dato-h">We collect and deliver Monday to Friday, 10:00–18:00.</span><span class="msg" id="dato-m"></span></label>
+        <label class="field" for="tid">Time slot<select id="tid"><option value="10.00–12.00">10:00–12:00</option><option value="12.00–14.00">12:00–14:00</option><option value="14.00–16.00">14:00–16:00</option><option value="16.00–18.00">16:00–18:00</option></select><span class="msg" id="tid-m"></span></label>
+      </div>
+      <input id="kode" type="hidden"><!-- rabatkode kommer kun via link (?kode=…) eller kundens egen konto -->
+      <p id="codeMsg" aria-live="polite"></p>
+      <label class="chk2" for="wantbag" id="wantbagRow"><input id="wantbag" type="checkbox"> <span><b>Free JustDry bag</b> – the driver brings one. Next time you can order "Fill the bag" (wash & fold, up to 6 kg). Email required.</span></label>
+      <p class="hint" id="bagHave" hidden>✓ You have a JustDry bag – &#34;Fill the bag&#34; is under Home textiles.</p>
+      <label class="field" for="besk">Message (optional)<textarea id="besk" maxlength="1000" placeholder="E.g. stains, door code or where we can collect"></textarea></label>
+      <label class="chk2" for="remember"><input id="remember" type="checkbox"> <span>Remember my details on this device</span></label>
+      <label class="chk2" for="offers"><input id="offers" type="checkbox"> <span>Yes please to personal offers from JustDry by email and text message. You can say no thanks at any time.</span></label>
+      <p class="paynote"><svg width="18" height="18" style="color:var(--tealInk);flex:none;margin-top:3px" aria-hidden="true"><use href="#check"/></svg>You only pay after we have counted and checked your clothes – with MobilePay or card.</p>
+      <p class="termsnote">By ordering, you accept our <a href="terms.html">Terms and conditions</a> and ask us to start right away. See also our <a href="privacy.html">Privacy policy</a>.</p>
+      <p class="alert err" id="err" role="alert"></p>
+      <button class="btn main" id="send" type="submit">Continue to summary<svg class="arr" width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></button>
+    </form>
+
+    <div id="review" hidden tabindex="-1" aria-labelledby="rvh">
+      <h3 id="rvh" class="rvh">Check your order</h3>
+      <dl class="rv" id="rvList"></dl>
+      <p class="paynote" style="margin-top:14px"><svg width="18" height="18" style="color:var(--tealInk);flex:none;margin-top:3px" aria-hidden="true"><use href="#check"/></svg>You pay nothing now. Once we have counted your clothes, you get the final price and pay with MobilePay or card.</p>
+      <p class="alert err" id="err2" role="alert"></p>
+      <div class="acts" style="margin-top:16px"><button class="btn line" id="back" type="button">Edit</button><button class="btn main" id="confirm" type="button">Confirm order</button></div>
+    </div>
+
+    <div class="ok" id="ok" hidden tabindex="-1">
+      <h2>Thank you – we have received your order</h2>
+      <p id="okTxt"></p>
+      <a class="btn main" id="okLink" href="#">Track your order<svg class="arr" width="18" height="18" aria-hidden="true"><use href="#arrow"/></svg></a>
+      <small>Save this link – here you can follow your order and pay once we have counted your clothes.</small>
+    </div>
+    <div id="done" hidden>
+      <b>Almost done – send your order to us</b>
+      <pre id="out"></pre>
+      <div class="acts"><a class="btn main" id="mail" href="#">Open email</a><button class="btn line" id="copy" type="button">Copy text</button></div>
+      <p class="sub" style="font-size:14px;margin-top:10px">If your email does not open, send the text to info@justdry.dk.</p>
+    </div>
+  </section>
+</div>
+
+<section class="trust" aria-label="JustDry">
+  <div><b>We come to you</b><p>At home or at work – across North Zealand.</p></div><div><b>Pay after counting</b><p>You get an overview and only pay once we have checked your clothes.</p></div><div><b>JustDry guarantee</b><p>Not happy? We clean the piece again – free, within 7 days.</p></div>
+</section>
+
+<div class="mbar" id="mbar" hidden><div><small id="mbPcs"></small><b id="mbTot"></b></div><a class="btn main" href="#formPanel">Where and when?</a></div>
+
+</main>
+
+
+<footer class="site-f">
+  <div class="wrap">
+    <a class="logo" href="index.html"><svg class="lm" viewBox="0 0 128 128" aria-hidden="true"><use href="#jdmark"/></svg>JustDry</a>
+    <span>Dry cleaning with pickup and delivery · North Zealand, Denmark</span>
+    <address class="co">Run by Stjerne Skrædderi · Stjernegade 16F, 3000 Helsingør, Denmark · CVR 46637771<br>
+      <a href="tel:+4553256770">Tel. +45 53 25 67 70</a> · <a href="mailto:info@justdry.dk">info@justdry.dk</a><br>
+      <a href="terms.html">Terms and conditions</a> · <a href="privacy.html">Privacy policy</a></address>
+    <div class="langs" role="group" aria-label="Language"><a href="../bestil.html" hreflang="da" lang="da" data-lang="da" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-da"/></svg>Dansk</a><a href="order.html" hreflang="en" lang="en" data-lang="en" aria-current="true"><svg class="flag" aria-hidden="true"><use href="#fl-en"/></svg>English</a><a href="../de/bestellen.html" hreflang="de" lang="de" data-lang="de" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-de"/></svg>Deutsch</a><a href="../sv/bestall.html" hreflang="sv" lang="sv" data-lang="sv" aria-current="false"><svg class="flag" aria-hidden="true"><use href="#fl-sv"/></svg>Svenska</a></div>
+  </div>
+</footer>
+<script src="../config.js"></script>
+<script src="../assets/js/dkdays.js"></script>
+<script>
+{
+  /* Hvor kom kunden fra? Læses fra linket (utm_*, gclid, fbclid) eller den henvisende side – og føres videre i
+     sidens egne links (?jd_src=…), så den kan gemmes med bestillingen. Ingen cookies, intet gemt på enheden. */
+  (()=>{const q=new URLSearchParams(location.search);let a=null;const ok=s=>String(s||'').toLowerCase().replace(/[^a-z0-9._-]/g,'').slice(0,60);
+    const jd=q.get('jd_src');
+    if(jd){const [s,m,c,r]=jd.split('~');a={source:ok(s),medium:ok(m),campaign:(c||'').slice(0,80),ref:(r||'').slice(0,120)}}
+    else if(q.get('utm_source'))a={source:ok(q.get('utm_source')),medium:ok(q.get('utm_medium')),campaign:(q.get('utm_campaign')||'').slice(0,80)};
+    else if(q.get('gclid'))a={source:'google',medium:'cpc'};
+    else if(q.get('fbclid'))a={source:'facebook',medium:'social'};
+    if(document.referrer&&!jd){try{const h=new URL(document.referrer).hostname.replace(/^www\./,'');if(h&&h!==location.hostname){
+      const m=[[/(^|\.)google\./,'google','organic'],[/(^|\.)bing\.com$/,'bing','organic'],[/duckduckgo\.com$/,'duckduckgo','organic'],[/(^|\.)facebook\.com$|^fb\.me$/,'facebook','social'],[/(^|\.)instagram\.com$/,'instagram','social'],[/^(t\.co|x\.com|twitter\.com)$/,'x','social'],[/linkedin\.com$/,'linkedin','social'],[/tiktok\.com$/,'tiktok','social']].find(([r])=>r.test(h));
+      if(!a)a=m?{source:m[1],medium:m[2]}:{source:ok(h.replace(/\./g,'-')),medium:'referral'};a.ref=h.slice(0,120)}}catch(_){}}
+    if(!a||!a.source)return;window.JD_ATTR=a;
+    const enc=encodeURIComponent([a.source,a.medium,a.campaign,a.ref].map(x=>String(x||'').replace(/~/g,'')).join('~'));
+    window.JD_SRC_PARAM='jd_src='+enc;
+    const tag=h=>{if(!h||/^(#|tel:|mailto:|[a-z]+:)/i.test(h)||h.includes('jd_src='))return h;const [p,hash]=h.split('#');return p+(p.includes('?')?'&':'?')+'jd_src='+enc+(hash!==undefined?'#'+hash:'')};
+    window.JD_TAG=tag;document.querySelectorAll('a[href]').forEach(el=>{const h=el.getAttribute('href');if(h&&!h.startsWith('#'))el.setAttribute('href',tag(h))});
+  })();
+  const b=document.querySelector('.menu-btn'),m=document.getElementById('mnav'),bg=document.querySelector('.mnav-bg');
+  const open=()=>{m.hidden=false;bg.hidden=false;document.documentElement.classList.add('mopen');requestAnimationFrame(()=>requestAnimationFrame(()=>{m.classList.add('on');bg.classList.add('on')}));b.setAttribute('aria-expanded','true');m.querySelector('.mclose').focus()};
+  const close=(back)=>{if(m.hidden)return;m.classList.remove('on');bg.classList.remove('on');document.documentElement.classList.remove('mopen');b.setAttribute('aria-expanded','false');
+    const done=()=>{m.hidden=true;bg.hidden=true};matchMedia('(prefers-reduced-motion: reduce)').matches?done():setTimeout(done,260);if(back)b.focus()};
+  b.addEventListener('click',()=>m.hidden?open():close(true));
+  m.querySelector('.mclose').addEventListener('click',()=>close(true));bg.addEventListener('click',()=>close(true));
+  m.addEventListener('click',e=>{if(e.target.closest('a'))close(false)});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close(true)});
+  /* Fast "Bestil"-knap på mobil: vises kun, når sidens egen bestil-knap er ude af syne, og skjules ved footeren og når menuen er åben */
+  const sc=document.getElementById('scta');
+  if(sc&&'IntersectionObserver' in window){
+    const a=sc.querySelector('a'),hero=document.querySelector('#heroCta, main .btn.main.big'),foot=document.querySelector('.site-f');
+    let heroOut=!hero,footIn=false,typing=false;
+    const upd=()=>{const on=heroOut&&!footIn&&!typing&&!document.documentElement.classList.contains('mopen');sc.classList.toggle('on',on);sc.setAttribute('aria-hidden',String(!on));a.tabIndex=on?0:-1};
+    if(hero)new IntersectionObserver(es=>{heroOut=!es[0].isIntersecting&&es[0].boundingClientRect.top<0;upd()}).observe(hero);
+    else addEventListener('scroll',()=>{heroOut=scrollY>500;upd()},{passive:true});
+    if(foot)new IntersectionObserver(es=>{footIn=es[0].isIntersecting;upd()}).observe(foot);
+    addEventListener('focusin',e=>{typing=/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);upd()});addEventListener('focusout',()=>{typing=false;upd()});
+    new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+  }
+  /* Indhold i den faste knap: næste mulige afhentning + kundens by */
+  if(sc){
+    const ST={"aria": "Book a collection", "pickup": "Collection", "today": "Today", "tomorrow": "Tomorrow", "where": "Where", "your_pc": "Your postcode"},DAYS=[1, 2, 3, 4, 5],SL=["10.00\u201312.00", "12.00\u201314.00", "14.00\u201316.00", "16.00\u201318.00"],LOC=Object.fromEntries(["2765", "2800", "2820", "2830", "2840", "2850", "2870", "2900", "2920", "2930", "2942", "2950", "2960", "2970", "2980", "2990", "3000", "3050", "3060", "3070", "3080", "3100", "3120", "3140", "3150", "3200", "3210", "3220", "3230", "3250", "3300", "3310", "3320", "3330", "3360", "3370", "3390", "3400", "3450", "3460", "3480", "3490", "3500", "3520", "3540", "3550", "3600", "3630", "3650", "3660", "3670", "4050"].map((p,i)=>[p,["Sm\u00f8rum", "Kongens Lyngby", "Gentofte", "Virum", "Holte", "N\u00e6rum", "Dysseg\u00e5rd", "Hellerup", "Charlottenlund", "Klampenborg", "Skodsborg", "Vedb\u00e6k", "Rungsted Kyst", "H\u00f8rsholm", "Kokkedal", "Niv\u00e5", "Helsing\u00f8r", "Humleb\u00e6k", "Esperg\u00e6rde", "Snekkersten", "Tik\u00f8b", "Hornb\u00e6k", "Dronningm\u00f8lle", "\u00c5lsg\u00e5rde", "Helleb\u00e6k", "Helsinge", "Vejby", "Tisvildeleje", "Gr\u00e6sted", "Gilleleje", "Frederiksv\u00e6rk", "\u00d8lsted", "Sk\u00e6vinge", "G\u00f8rl\u00f8se", "Liseleje", "Melby", "Hundested", "Hiller\u00f8d", "Aller\u00f8d", "Birker\u00f8d", "Fredensborg", "Kvistg\u00e5rd", "V\u00e6rl\u00f8se", "Farum", "Lynge", "Slangerup", "Frederikssund", "J\u00e6gerspris", "\u00d8lstykke", "Stenl\u00f8se", "Veks\u00f8 Sj\u00e6lland", "Skibby"][i]])),LOCALE="en-GB",ORDER="order.html";
+    const fillSticky=()=>{
+      JDDays.setOpenDays(DAYS);const n=JDDays.now();let day=null,slot=null,k=0;
+      for(;k<30;k++){const d=JDDays.addDays(n.iso,k);if(JDDays.isClosed(d))continue;
+        if(k===0){const s=SL.find(x=>n.hour<parseInt(x,10)-1);if(!s)continue;slot=s}else slot=SL[0];day=d;break}
+      let pc=null;try{pc=localStorage.getItem('jd_post')||(JSON.parse(localStorage.getItem('jd_account')||'null')||{}).post||null}catch(_){}
+      if(!pc&&document.body.dataset.pc)pc=document.body.dataset.pc; /* byside: brug byens postnummer */
+      if(pc&&!LOC[pc])pc=null;
+      if(day){const iso=day,dd=new Date(day+'T12:00:00Z'),lbl=k===0?ST.today:k===1?ST.tomorrow:k<7?dd.toLocaleDateString(LOCALE,{weekday:'long',timeZone:'UTC'}):dd.toLocaleDateString(LOCALE,{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'});
+        document.getElementById('spDay').textContent=lbl.charAt(0).toUpperCase()+lbl.slice(1)+' '+slot.replace(/\.00/g,'');
+        sc.querySelector('a').href=ORDER+'?dato='+iso+(pc?'&post='+pc:'')+(window.JD_SRC_PARAM?'&'+window.JD_SRC_PARAM:'')}
+      document.getElementById('spWhere').textContent=pc?LOC[pc]+' '+pc:ST.your_pc};
+    fillSticky();addEventListener('storage',fillSticky);addEventListener('pageshow',fillSticky);
+  }
+  { const lb=document.querySelector('.lp-btn'),lm=document.getElementById('lpm');
+    if(lb&&lm){const set=o=>{lm.hidden=!o;lb.setAttribute('aria-expanded',String(o))};
+      lb.addEventListener('click',e=>{e.stopPropagation();const o=lm.hidden;set(o);if(o){const c=lm.querySelector('[aria-current=true]')||lm.querySelector('a');c&&c.focus()}});
+      document.addEventListener('click',e=>{if(!lm.hidden&&!e.target.closest('.lpick'))set(false)});
+      document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lm.hidden){set(false);lb.focus()}});
+      lm.addEventListener('keydown',e=>{if(e.key!=='ArrowDown'&&e.key!=='ArrowUp')return;e.preventDefault();const L=[...lm.querySelectorAll('a')],i=L.indexOf(document.activeElement);L[(i+(e.key==='ArrowDown'?1:L.length-1))%L.length].focus()});
+      lm.addEventListener('focusout',e=>{if(!e.relatedTarget||!e.relatedTarget.closest('.lpick'))set(false)});}}
+  /* Logget ind? Supabase gemmer sessionen i browseren (sb-…-auth-token). Så bliver ikonet udfyldt. */
+  try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^sb-.*-auth-token$/.test(k)){const v=JSON.parse(localStorage.getItem(k)||'null');if(v&&(v.refresh_token||(v.currentSession&&v.currentSession.refresh_token))){document.documentElement.classList.add('jd-in');break}}}}catch(e){}
+  document.querySelectorAll('.langs a').forEach(a=>a.addEventListener('click',()=>{try{localStorage.setItem('jd_lang',a.dataset.lang)}catch(e){}}));
+  const io='IntersectionObserver' in window?new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}},{threshold:.08}):null;
+  document.querySelectorAll('.reveal').forEach(el=>io?io.observe(el):el.classList.add('in'));
+}
+</script>
+
+<script src="../assets/js/dkdays.js"></script>
+<script src="../config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>window.supabase||document.write('<script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"><\/script>')/* reserve-CDN hvis jsDelivr er nede */</script>
+<script>
+{
+const T={"add": "Add {name}", "address": "Street and number", "bag_have": "You have a JustDry bag \u2013 \"Fill the bag\" is under Home textiles.", "basket": "Your basket", "basket_empty": "Your basket is empty \u2013 we can also count your clothes when we collect.", "cart_saved": "Your basket is saved on this device, so you can continue later.", "catNames": {"Bolig": "Home textiles", "Frakker \u0026 kjoler": "Coats \u0026 dresses", "L\u00e6der": "Leather", "T\u00f8j": "Clothing"}, "categories": [{"key": "T\u00f8j", "name": "Clothing"}, {"key": "Frakker \u0026 kjoler", "name": "Coats \u0026 dresses"}, {"key": "Bolig", "name": "Home textiles"}, {"key": "L\u00e6der", "name": "Leather"}], "clear": "Empty basket", "clothes": "Clothes", "clothes_total": "Clothes total", "code": "Discount code (optional)", "code_bad": "The code does not work or has expired.", "code_nodb": "Write the code in the message and we will deduct the discount.", "code_ok": "The code {code} gives {value} off.", "code_pending": "The code is saved and deducted when we have counted your clothes.", "code_personal": "Your personal discount of {value} has been deducted.", "confirm": "Confirm order", "confirmed": "Price confirmed by JustDry", "copied": "Copied", "copy": "Copy text", "copy_manual": "Select the text and copy it", "counted_later": "The price is calculated when we have counted your clothes.", "date": "Pickup day", "days_hint": "We collect and deliver Monday to Friday, 10:00\u201318:00.", "delivery": "Pickup and delivery", "discount": "Discount", "donate": "\u003cb\u003ePass clothes on\u003c/b\u003e \u2013 I am adding a separate bag of clothes for charity.", "donate_plain": "Pass clothes on", "edit": "Edit", "email": "Email (optional \u2013 for your receipt)", "err": {"address": "Please write your street and house number.", "area": "Unfortunately we do not cover {postcode} yet. Write to info@justdry.dk and we will find a solution.", "bag": "\"Fill the bag\" needs a JustDry bag. Choose \"Free JustDry bag\" and we bring one the first time.", "bag_email": "Please enter your email so we can link the bag to you.", "busy": "We are very busy right now. Please try again shortly.", "closed": "We don\u0027t collect that day. Choose a weekday \u2013 we are closed at weekends and on public holidays.", "coupon": "The discount code no longer works. Remove it and try again.", "coupon_owner": "This discount code is personal and does not match your phone number or e-mail.", "date": "Choose a day from today and up to 60 days ahead.", "email": "The email address looks wrong.", "full": "That time slot is fully booked. Please choose another slot or day.", "input": "Something in the form is not right. Check the fields and try again.", "items": "Your basket could not be read. Reload the page and try again.", "locked": "This order can no longer be changed online. Write to info@justdry.dk.", "name": "Please write your full name.", "network": "We could not reach the server. Check your connection and try again \u2013 or send your order by email.", "notfound": "No order matches. Check the number and the phone.", "phone": "The phone number looks wrong. Write 8 digits, or start with your country code, e.g. +44.", "postcode": "The postcode must be 4 digits.", "rate": "You have just placed an order. Wait a few minutes, or call us.", "required": "Please fill in the highlighted fields.", "service": "One of the items no longer exists. Reload the page and try again.", "slot": "That time slot is no longer available. Choose a later slot or another day."}, "expert": "\u003cb\u003eExpert order\u003c/b\u003e \u2013 Not sure? We choose the right treatment for each piece.", "expert_plain": "Expert order", "fallback_h": "Almost done \u2013 send your order to us", "fallback_note": "If your email does not open, send the text to info@justdry.dk.", "free": "Free", "h1a": "Dry cleaning without leaving home.", "h1b": "We collect \u2013 you relax.", "h2": "What should we clean?", "heard": "How did you hear about us? (optional)", "heard_none": "Choose \u2026", "heard_opts": {"facebook": "Facebook", "flyer": "Leaflet, poster or QR code", "friend": "A friend or family", "google": "Google", "instagram": "Instagram", "other": "Other"}, "lead": "Dry cleaning with pickup and delivery across North Zealand. Choose your clothes, see the price right away and book in a minute.", "left": "{amount} more for free pickup and delivery", "loading": "Loading prices \u2026", "locations": [{"postcode": "2765", "town": "Sm\u00f8rum"}, {"postcode": "2800", "town": "Kongens Lyngby"}, {"postcode": "2820", "town": "Gentofte"}, {"postcode": "2830", "town": "Virum"}, {"postcode": "2840", "town": "Holte"}, {"postcode": "2850", "town": "N\u00e6rum"}, {"postcode": "2870", "town": "Dysseg\u00e5rd"}, {"postcode": "2900", "town": "Hellerup"}, {"postcode": "2920", "town": "Charlottenlund"}, {"postcode": "2930", "town": "Klampenborg"}, {"postcode": "2942", "town": "Skodsborg"}, {"postcode": "2950", "town": "Vedb\u00e6k"}, {"postcode": "2960", "town": "Rungsted Kyst"}, {"postcode": "2970", "town": "H\u00f8rsholm"}, {"postcode": "2980", "town": "Kokkedal"}, {"postcode": "2990", "town": "Niv\u00e5"}, {"postcode": "3000", "town": "Helsing\u00f8r"}, {"postcode": "3050", "town": "Humleb\u00e6k"}, {"postcode": "3060", "town": "Esperg\u00e6rde"}, {"postcode": "3070", "town": "Snekkersten"}, {"postcode": "3080", "town": "Tik\u00f8b"}, {"postcode": "3100", "town": "Hornb\u00e6k"}, {"postcode": "3120", "town": "Dronningm\u00f8lle"}, {"postcode": "3140", "town": "\u00c5lsg\u00e5rde"}, {"postcode": "3150", "town": "Helleb\u00e6k"}, {"postcode": "3200", "town": "Helsinge"}, {"postcode": "3210", "town": "Vejby"}, {"postcode": "3220", "town": "Tisvildeleje"}, {"postcode": "3230", "town": "Gr\u00e6sted"}, {"postcode": "3250", "town": "Gilleleje"}, {"postcode": "3300", "town": "Frederiksv\u00e6rk"}, {"postcode": "3310", "town": "\u00d8lsted"}, {"postcode": "3320", "town": "Sk\u00e6vinge"}, {"postcode": "3330", "town": "G\u00f8rl\u00f8se"}, {"postcode": "3360", "town": "Liseleje"}, {"postcode": "3370", "town": "Melby"}, {"postcode": "3390", "town": "Hundested"}, {"postcode": "3400", "town": "Hiller\u00f8d"}, {"postcode": "3450", "town": "Aller\u00f8d"}, {"postcode": "3460", "town": "Birker\u00f8d"}, {"postcode": "3480", "town": "Fredensborg"}, {"postcode": "3490", "town": "Kvistg\u00e5rd"}, {"postcode": "3500", "town": "V\u00e6rl\u00f8se"}, {"postcode": "3520", "town": "Farum"}, {"postcode": "3540", "town": "Lynge"}, {"postcode": "3550", "town": "Slangerup"}, {"postcode": "3600", "town": "Frederikssund"}, {"postcode": "3630", "town": "J\u00e6gerspris"}, {"postcode": "3650", "town": "\u00d8lstykke"}, {"postcode": "3660", "town": "Stenl\u00f8se"}, {"postcode": "3670", "town": "Veks\u00f8 Sj\u00e6lland"}, {"postcode": "4050", "town": "Skibby"}], "mail_count": "We count when we collect", "mail_subject": "Pickup booking", "mail_title": "Order \u2013 JustDry", "more": "More options (optional) \u2013 discount code, expert order etc.", "name": "Name", "note": "Message (optional)", "note_ph": "E.g. stains, door code or where we can collect", "now": "Book now", "offers": "Yes please to personal offers from JustDry by email and text message. You can say no thanks at any time.", "ok_h": "Thank you \u2013 we have received your order", "ok_link": "Track your order", "ok_save": "Save this link \u2013 here you can follow your order and pay once we have counted your clothes.", "ok_track": "Your tracking number is {code}.", "ok_txt": "Order no. {id}. We will collect on {date} between {slot}. We will call or text {phone} if we have questions.", "open_mail": "Open email", "pay_note": "You only pay after we have counted and checked your clothes \u2013 with MobilePay or card.", "phone": "Phone", "phone_hint": "8 digits, or with country code (e.g. +44 \u2026)", "pieces": "{n} pcs", "popular": "Popular", "post_ok": "We come to {town}", "postcode": "Postcode", "r_contact": "Contact", "r_extra": "Requests", "r_items": "Clothes", "r_pay": "You pay nothing now. Once we have counted your clothes, you get the final price and pay with MobilePay or card.", "r_when": "Pickup", "r_where": "Address", "reached": "Free pickup and delivery included", "ref": "Referred by (optional) \u2013 name or phone", "remember": "Remember my details on this device", "remove": "Remove {name}", "review_btn": "Continue to summary", "review_h": "Check your order", "sending": "Sending \u2026", "services": [{"cat": "T\u00f8j", "code": "shirt", "name": "Shirt", "popular": true, "price": 39}, {"cat": "T\u00f8j", "code": "tux-shirt", "name": "Dress shirt (tuxedo)", "popular": false, "price": 69}, {"cat": "T\u00f8j", "code": "tshirt", "name": "T-shirt / polo", "popular": false, "price": 39}, {"cat": "T\u00f8j", "code": "sweater", "name": "Sweater / cardigan", "popular": false, "price": 99}, {"cat": "T\u00f8j", "code": "blouse", "name": "Blouse", "popular": false, "price": 129}, {"cat": "T\u00f8j", "code": "trousers", "name": "Trousers", "popular": true, "price": 102}, {"cat": "T\u00f8j", "code": "blazer", "name": "Blazer", "popular": true, "price": 145}, {"cat": "T\u00f8j", "code": "suit", "name": "Suit (2 pieces)", "popular": true, "price": 245}, {"cat": "T\u00f8j", "code": "tux-trousers", "name": "Tuxedo trousers", "popular": false, "price": 119}, {"cat": "T\u00f8j", "code": "tux-jacket", "name": "Tuxedo jacket", "popular": false, "price": 179}, {"cat": "T\u00f8j", "code": "waistcoat", "name": "Waistcoat", "popular": false, "price": 118}, {"cat": "T\u00f8j", "code": "tie", "name": "Tie / bow tie", "popular": false, "price": 89}, {"cat": "T\u00f8j", "code": "scarf", "name": "Scarf", "popular": false, "price": 89}, {"cat": "T\u00f8j", "code": "pocket-square", "name": "Pocket square", "popular": false, "price": 35}, {"cat": "Frakker \u0026 kjoler", "code": "coat-short", "name": "Coat, short", "popular": true, "price": 279}, {"cat": "Frakker \u0026 kjoler", "code": "coat-long", "name": "Coat, long", "popular": false, "price": 305}, {"cat": "Frakker \u0026 kjoler", "code": "down-jacket", "name": "Winter / down jacket", "popular": false, "price": 269}, {"cat": "Frakker \u0026 kjoler", "code": "down-coat", "name": "Winter / down coat", "popular": false, "price": 319}, {"cat": "Frakker \u0026 kjoler", "code": "heavy-coat", "name": "Heavy winter coat", "popular": false, "price": 379}, {"cat": "Frakker \u0026 kjoler", "code": "down-vest", "name": "Down vest", "popular": false, "price": 219}, {"cat": "Frakker \u0026 kjoler", "code": "ski-trousers", "name": "Ski trousers", "popular": false, "price": 189}, {"cat": "Frakker \u0026 kjoler", "code": "windbreaker", "name": "Windbreaker", "popular": false, "price": 189}, {"cat": "Frakker \u0026 kjoler", "code": "dress", "name": "Dress", "popular": true, "price": 179}, {"cat": "Frakker \u0026 kjoler", "code": "dress-long", "name": "Dress, long", "popular": false, "price": 219}, {"cat": "Frakker \u0026 kjoler", "code": "evening-dress", "name": "Evening dress (from)", "popular": false, "price": 269}, {"cat": "Frakker \u0026 kjoler", "code": "wedding-dress", "name": "Wedding dress (from)", "popular": false, "price": 970}, {"cat": "Frakker \u0026 kjoler", "code": "wedding-dress-xl", "name": "Wedding dress, large (from)", "popular": false, "price": 1200}, {"cat": "Frakker \u0026 kjoler", "code": "christening", "name": "Christening gown", "popular": false, "price": 179}, {"cat": "Frakker \u0026 kjoler", "code": "jumpsuit", "name": "Jumpsuit", "popular": false, "price": 199}, {"cat": "Frakker \u0026 kjoler", "code": "skirt", "name": "Skirt", "popular": false, "price": 129}, {"cat": "Frakker \u0026 kjoler", "code": "skirt-silk", "name": "Skirt, silk / pleated", "popular": false, "price": 189}, {"cat": "Bolig", "code": "fill-bag", "name": "Fill the bag \u2013 wash \u0026 fold, up to 6 kg", "popular": true, "price": 449}, {"cat": "Bolig", "code": "duvet-single", "name": "Duvet, single", "popular": true, "price": 269}, {"cat": "Bolig", "code": "duvet-double", "name": "Duvet, double", "popular": true, "price": 419}, {"cat": "Bolig", "code": "pillow", "name": "Pillow", "popular": false, "price": 129}, {"cat": "Bolig", "code": "throw", "name": "Throw", "popular": false, "price": 269}, {"cat": "Bolig", "code": "sleeping-bag", "name": "Sleeping bag", "popular": false, "price": 319}, {"cat": "Bolig", "code": "bedspread", "name": "Bedspread / quilt", "popular": false, "price": 319}, {"cat": "Bolig", "code": "topper-single", "name": "Mattress topper cover, single", "popular": false, "price": 449}, {"cat": "Bolig", "code": "topper-double", "name": "Mattress topper cover, double", "popular": false, "price": 649}, {"cat": "Bolig", "code": "cloth-3", "name": "Tablecloth up to 3 m", "popular": false, "price": 179}, {"cat": "Bolig", "code": "cloth-3plus", "name": "Tablecloth over 3 m", "popular": false, "price": 239}, {"cat": "Bolig", "code": "cloth-6plus", "name": "Tablecloth over 6 m", "popular": false, "price": 349}, {"cat": "Bolig", "code": "napkin", "name": "Napkin", "popular": false, "price": 45}, {"cat": "L\u00e6der", "code": "leather-trousers", "name": "Leather trousers", "popular": false, "price": 469}, {"cat": "L\u00e6der", "code": "leather-jacket", "name": "Leather jacket", "popular": false, "price": 719}, {"cat": "L\u00e6der", "code": "leather-coat", "name": "Leather coat", "popular": false, "price": 919}, {"cat": "L\u00e6der", "code": "leather-vest", "name": "Leather vest", "popular": false, "price": 449}, {"cat": "L\u00e6der", "code": "leather-dress", "name": "Leather dress", "popular": false, "price": 519}, {"cat": "L\u00e6der", "code": "leather-blouse", "name": "Leather blouse", "popular": false, "price": 419}, {"cat": "L\u00e6der", "code": "leather-skirt", "name": "Leather skirt", "popular": false, "price": 409}, {"cat": "L\u00e6der", "code": "leather-gloves", "name": "Leather gloves", "popular": false, "price": 269}], "slot": "Time slot", "slot_full": "fully booked", "slot_left": "{n} left", "slot_left1": "1 left", "step2": "Where and when?", "submit": "Book pickup", "terms_note": "By ordering, you accept our {terms} and ask us to start right away. See also our {privacy}.", "ticks": ["Free pickup over {free}", "Fixed price per piece", "Over 10 years of experience"], "total": "Total", "total_est": "Total (estimated)", "trust": [["We come to you", "At home or at work \u2013 across North Zealand."], ["Pay after counting", "You get an overview and only pay once we have checked your clothes."], ["JustDry guarantee", "Not happy? We clean the piece again \u2013 free, within 7 days."]], "use_code": "Apply code", "want_bag": "\u003cb\u003eFree JustDry bag\u003c/b\u003e \u2013 the driver brings one. Next time you can order \"Fill the bag\" (wash \u0026 fold, up to 6 kg). Email required.", "want_bag_plain": "Free JustDry bag", "yes": "yes"};
+const LANG='en',LOCALE='en-GB',STATUS_URL="ordre.html";
+let FREE=500,FEE=129;
+const DAYS=[1,2,3,4,5],SLOT_START={'10.00–12.00':10,'12.00–14.00':12,'14.00–16.00':14,'16.00–18.00':16};
+const $=id=>document.getElementById(id);
+const money=v=>new Intl.NumberFormat(LOCALE,{style:'currency',currency:'DKK',currencyDisplay:LOCALE.startsWith('sv')?'code':'symbol',maximumFractionDigits:0}).format(v);
+const fill=(s,o)=>s.replace(/\{(\w+)\}/g,(m,k)=>k in o?o[k]:m);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uuid=()=>(crypto.randomUUID?crypto.randomUUID():'10000000-1000-4000-8000-100000000000'.replace(/[018]/g,c=>(+c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>+c/4).toString(16)));
+
+/* Catalogue: fallback from the build (same prices as the database seed); replaced by live data when Supabase answers */
+let SERVICES=T.services;
+/* JustDry-pose: "Fyld posen" vises kun for kunder med pose (logget ind via Min konto) */
+let HAS_BAG=(()=>{try{return !!(JSON.parse(localStorage.getItem('jd_account')||'null')||{}).has_bag}catch(_){return false}})();
+const bagOk=s=>s.code!=='fill-bag'||HAS_BAG;               // [{id?,code,cat,name,price,popular}]
+let CATS=T.categories;                 // [{key,name}]
+const cart=new Map();                  // key -> qty   (key = id when live, code in fallback)
+const keyOf=s=>s.id!=null?'i'+s.id:'c'+s.code;
+let cur='popular',coupon=null,quote=null,places=null,live=false;
+
+function cats(){return [{key:'popular',name:T.popular}].concat(CATS)}
+function list(){return (cur==='popular'?SERVICES.filter(s=>s.popular):SERVICES.filter(s=>s.cat===cur)).filter(bagOk)}
+function qtyBtns(s,q){const n=esc(s.name);return `<span class="q"><button type="button" data-k="${keyOf(s)}" data-d="-1" aria-label="${esc(fill(T.remove,{name:s.name}))}" ${q?'':'disabled'}>−</button><output aria-live="polite">${q}</output><button type="button" class="plus" data-k="${keyOf(s)}" data-d="1" aria-label="${esc(fill(T.add,{name:s.name}))}" ${q>=50?'disabled':''}>+</button></span>`}
+function drawTabs(){$('tabs').innerHTML=cats().map(c=>`<button type="button" data-c="${esc(c.key)}" aria-pressed="${c.key===cur}">${esc(c.name)}</button>`).join('')}
+function drawItems(){$('items').innerHTML=list().map(s=>{const q=cart.get(keyOf(s))||0;return `<li class="${q?'on':''}"><span class="n">${esc(s.name)}</span><span class="p">${money(s.price)}</span>${qtyBtns(s,q)}</li>`}).join('')}
+function lines(){return [...cart].map(([k,q])=>({s:SERVICES.find(x=>keyOf(x)===k),q})).filter(x=>x.s)}
+function local(){
+  const L=lines(),sub=L.reduce((a,x)=>a+x.q*x.s.price,0);
+  const disc=!coupon||!sub?0:Math.min(sub,coupon.kind==='percent'?Math.round(sub*coupon.value/100):coupon.value);
+  const fee=sub>0&&sub<FREE?FEE:0;
+  return {sub,disc,fee,total:sub-disc+fee,count:L.reduce((a,x)=>a+x.q,0)};
+}
+function drawCart(){
+  const L=lines(),v=quote||local();
+  $('lines').innerHTML=L.map(({s,q})=>`<li><span>${esc(s.name)}</span><span class="lp">${money(q*s.price)}</span>${qtyBtns(s,q)}</li>`).join('');
+  $('empty').hidden=!!L.length;
+  const n=L.reduce((a,x)=>a+x.q,0);
+  $('pcs').textContent=n?fill(T.pieces,{n}):'';
+  $('sub').textContent=v.sub?money(v.sub):'–';
+  $('discRow').hidden=!v.disc;$('discLbl').textContent=coupon?T.discount+' ('+coupon.code+')':T.discount;$('disc').textContent='−'+money(v.disc||0);
+  $('fee').textContent=v.sub?(v.fee?money(v.fee):T.free):'–';
+  $('tot').textContent=v.sub?money(v.total):'–';
+  $('bar').style.width=Math.min(100,v.sub/FREE*100)+'%';
+  $('left').textContent=!v.sub?T.counted_later:(v.sub>=FREE?T.reached:fill(T.left,{amount:money(FREE-v.sub)}));
+  $('conf').textContent=quote&&v.sub?'✓ '+T.confirmed:'';
+  $('mbar').hidden=!n;document.body.classList.toggle('cart-on',!!n);
+  $('mbPcs').textContent=fill(T.pieces,{n});$('mbTot').textContent=money(v.total);
+}
+function save(){try{const it={};for(const [k,q] of cart){const s=SERVICES.find(x=>keyOf(x)===k);if(s)it[s.code]=q}
+  if(Object.keys(it).length||coupon)localStorage.setItem('jd_cart',JSON.stringify({v:1,items:it,coupon:coupon?coupon.code:null,at:Date.now()}));else localStorage.removeItem('jd_cart');
+  $('savedNote').hidden=!cart.size}catch(_){}}
+function restore(){try{const c=JSON.parse(localStorage.getItem('jd_cart')||'null');if(!c||!c.items||Date.now()-(c.at||0)>30*864e5)return;
+  for(const [code,q] of Object.entries(c.items)){const s=SERVICES.find(x=>x.code===code);if(s&&bagOk(s)&&q>0&&q<=50)cart.set(keyOf(s),q|0)}
+  if(c.coupon)$('kode').value=c.coupon;$('savedNote').hidden=!cart.size}catch(_){}}
+function change(k,d){const q=Math.max(0,Math.min(50,(cart.get(k)||0)+d));if(q)cart.set(k,q);else cart.delete(k);quote=null;drawItems();drawCart();requote();save()}
+$('tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cur=b.dataset.c;drawTabs();drawItems()});
+document.addEventListener('click',e=>{const b=e.target.closest('.q button');if(b)change(b.dataset.k,+b.dataset.d)});
+
+/* Supabase */
+const cfg=window.JUSTDRY||{};
+const db=(cfg.supabaseUrl&&cfg.supabaseAnonKey&&window.supabase)?window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey):null;
+let qt=0;
+function requote(){
+  if(!db||!live)return;clearTimeout(qt);
+  const items=lines().map(({s,q})=>({id:s.id,qty:q}));
+  qt=setTimeout(async()=>{
+    const {data,error}=await db.rpc('price_quote',{p_items:items,p_code:coupon?coupon.code:null});
+    if(!error&&data){quote={sub:data.subtotal,disc:data.discount,fee:data.delivery_fee,total:data.total};drawCart()}
+  },300);
+}
+if(db){
+  Promise.all([
+    db.from('services').select('id,code,category,name,names,price,popular,sort').eq('active',true).order('sort'),
+    db.from('locations').select('postcode,town').eq('active',true),
+    db.from('settings').select('key,value')
+  ]).then(([s,l,st])=>{
+    if(l.data&&l.data.length)places=l.data;
+    if(st.data){const g=k=>{const r=st.data.find(x=>x.key===k);return r?+r.value:null};FREE=g('free_delivery_from')??FREE;FEE=g('delivery_fee')??FEE}
+    if(s.data&&s.data.length){
+      const old=new Map([...cart].map(([k,q])=>[SERVICES.find(x=>keyOf(x)===k)?.code,q]));
+      SERVICES=s.data.map(x=>({id:x.id,code:x.code,cat:x.category,name:(x.names&&x.names[LANG])||x.name,price:x.price,popular:x.popular}));
+      const seen=[];SERVICES.forEach(x=>{if(!seen.includes(x.cat))seen.push(x.cat)});
+      CATS=seen.map(c=>({key:c,name:(T.catNames[c]||c)}));
+      cart.clear();for(const [code,q] of old){const hit=SERVICES.find(x=>x.code===code);if(hit)cart.set(keyOf(hit),q)}
+      live=true;$('catalog').dataset.live='1';restore();
+    }
+    $('items').classList.remove('loading');postInfo();drawTabs();drawItems();drawCart();requote();
+  }).catch(()=>{$('items').classList.remove('loading')});
+  $('items').classList.add('loading');
+}
+restore();drawTabs();drawItems();drawCart();
+$('clearCart').addEventListener('click',()=>{cart.clear();coupon=null;quote=null;$('kode').value='';$('codeMsg').textContent='';save();drawItems();drawCart()});
+
+/* Coupon */
+async function applyCode(personal){
+  const c=$('kode').value.trim().toUpperCase(),m=$('codeMsg');
+  if(!c){coupon=null;m.textContent='';quote=null;drawCart();requote();return}
+  if(!db)return;
+  const {data,error}=await db.rpc('check_coupon',{p_code:c});
+  if(error||!data||!data.length){coupon=null;$('kode').value='';m.textContent=T.code_bad;quote=null;drawCart();requote();save();return}
+  coupon=data[0];save();
+  const val=coupon.kind==='percent'?coupon.value+' %':money(coupon.value);
+  m.textContent=(personal?fill(T.code_personal,{value:val}):fill(T.code_ok,{code:coupon.code,value:val}))+(local().sub?'':' '+T.code_pending);
+  quote=null;drawCart();requote();
+}
+/* Rabatkode fra et link (?kode=…), ellers en kode gemt i kurven */
+{const qk=(new URLSearchParams(location.search).get('kode')||'').trim().toUpperCase().replace(/[^A-Z0-9ÆØÅ_-]/g,'').slice(0,40);if(qk)$('kode').value=qk;if($('kode').value)applyCode()}
+
+/* Dates: local date, only open days, max 60 days ahead */
+const iso=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const today=new Date(),max=new Date();max.setDate(max.getDate()+60);
+$('dato').min=iso(today);$('dato').max=iso(max);
+function firstOpen(){let d=JDDays.addDays(JDDays.now().iso,1);for(let i=0;i<60&&JDDays.isClosed(d);i++)d=JDDays.addDays(d,1);return d}
+$('dato').value=firstOpen();
+/* Ledige pladser pr. tidsrum: regnes ud fra ruten (køretid mellem postnumre + tid ved døren) for kundens postnummer */
+const SLOT_TXT=[...$('tid').options].map(o=>o.text);const slotTxt=()=>SLOT_TXT[$('tid').selectedIndex]||'';let slotPc=null;
+async function slots(){if(!db)return;const d=$('dato').value;if(!d)return;
+  let r;try{const pv=$('post').value;r=await db.rpc('slot_availability',{d,pc:/^\d{4}$/.test(pv)?pv:null})}catch(_){return}
+  if(r.error||!r.data||$('dato').value!==d)return;
+  [...$('tid').options].forEach((o,i)=>{const full=r.data[o.value]===0;o.disabled=full;const n=r.data[o.value];o.text=SLOT_TXT[i]+(full?' – '+T.slot_full:(typeof n==='number'?' · '+(n===1?T.slot_left1:fill(T.slot_left,{n})):''))});
+  if($('tid').selectedOptions[0]&&$('tid').selectedOptions[0].disabled){const f=[...$('tid').options].find(o=>!o.disabled);if(f)$('tid').value=f.value}}
+$('dato').addEventListener('change',slots);slots();
+/* Ekstra lukkedage fra kontoret (helligdage kender JDDays selv) */
+if(db)db.rpc('closed_dates',{p_from:$('dato').min,p_to:$('dato').max}).then(r=>{if(r&&r.data){JDDays.addClosed(r.data);if(JDDays.isClosed($('dato').value)){$('dato').value=firstOpen();slots()}}}).catch(()=>{});
+const CONTACT=['navn','tlf','email','adr','post'];
+try{const c=JSON.parse(localStorage.getItem('jd_contact')||'null');if(c){CONTACT.forEach(id=>{if(c[id])$(id).value=c[id]});$('remember').checked=true}}catch(_){}
+function bagUi(){$('wantbagRow').hidden=HAS_BAG;$('bagHave').hidden=!HAS_BAG}
+bagUi();
+if(db&&db.auth)db.auth.getSession().then(async r=>{if(!r||!r.data||!r.data.session)return;const a=await db.rpc('my_account');const pr=a&&a.data&&a.data.profile;if(!pr)return;
+  HAS_BAG=!!pr.has_bag;try{const c=JSON.parse(localStorage.getItem('jd_account')||'{}');c.has_bag=HAS_BAG;localStorage.setItem('jd_account',JSON.stringify(c))}catch(_){}
+  bagUi();drawItems();
+  if(pr.offers_ok)$('offers').checked=true;
+  /* Kundens egen personlige rabat bruges automatisk – intet at skrive */
+  const mine=a.data.offers||[];if(mine.length&&!$('kode').value){$('kode').value=mine[0].code;applyCode(true)}
+}).catch(()=>{});
+/* Logget ind (Min konto): udfyld tomme felter med de gemte oplysninger */
+try{const a=JSON.parse(localStorage.getItem('jd_account')||'null');if(a)CONTACT.forEach(id=>{if(a[id]&&!$(id).value)$(id).value=a[id]})}catch(_){}
+const qp=new URLSearchParams(location.search).get('post')||(()=>{try{return localStorage.getItem('jd_post')}catch(_){return null}})();
+if(qp&&/^\d{4}$/.test(qp)&&!$('post').value)$('post').value=qp;
+const qd=new URLSearchParams(location.search).get('dato');if(qd&&/^\d{4}-\d{2}-\d{2}$/.test(qd)&&qd>=$('dato').min&&qd<=$('dato').max&&!JDDays.isClosed(qd)){$('dato').value=qd;setTimeout(()=>$('dato').dispatchEvent(new Event('change',{bubbles:true})),0)}
+function postInfo(){const v=$('post').value,o=$('post-ok');const hit=/^\d{4}$/.test(v)&&(places||T.locations).find(p=>p.postcode===v);o.textContent=hit?'✓ '+fill(T.post_ok,{town:hit.town}):'';const k=/^\d{4}$/.test(v)?v:null;if(k!==slotPc){slotPc=k;slots()}}
+$('post').addEventListener('input',postInfo);postInfo();
+/* "Kommer vi til dig?" øverst: svar med det samme og udfyld postnummeret i formularen */
+{const PC={"bad": "Enter 4 digits, e.g. 3000.", "btn": "Check", "go": "Start your order", "label": "Do we come to you?", "next": "Choose your clothes below.", "no": "We do not cover {postcode} yet. Write to info@justdry.dk and we will find a solution.", "ph": "Your postcode", "yes": "Yes \u2013 we collect and deliver in {town}."},pcf=$('pcheck'),pci=$('pc'),pco=$('pcOut');
+ function check(v,quiet){pco.textContent='';pco.className='';
+  if(!/^\d{4}$/.test(v)){if(!quiet){pco.textContent=PC.bad;pci.focus()}return}
+  const hit=(places||T.locations).find(p=>p.postcode===v);
+  if(!hit){pco.textContent=PC.no.replace('{postcode}',v);return}
+  pco.textContent='✓ '+PC.yes.replace('{town}',hit.town)+' '+PC.next;pco.className='yes';
+  if(!$('post').value||$('post').value!==v){$('post').value=v;postInfo()}
+  try{localStorage.setItem('jd_post',v)}catch(_){}}
+ pci.addEventListener('input',()=>{pci.value=pci.value.replace(/\D/g,'').slice(0,4)});
+ pcf.addEventListener('submit',e=>{e.preventDefault();check(pci.value.trim())});
+ if($('post').value){pci.value=$('post').value;check(pci.value,true)}}
+/* Address suggestions – only when an address service is configured (config.js → addressSuggest) */
+let at=0;
+if(cfg.addressSuggest&&cfg.supabaseUrl){$('adr').addEventListener('input',e=>{clearTimeout(at);const v=e.target.value.trim();if(v.length<3)return;
+  at=setTimeout(async()=>{try{const r=await fetch(cfg.supabaseUrl.replace(/\/$/,'')+'/functions/v1/address-suggest?q='+encodeURIComponent(v)+($('post').value?'&postnr='+$('post').value:''),{headers:{apikey:cfg.supabaseAnonKey}});
+    if(!r.ok)return;const j=await r.json();$('adrList').replaceChildren(...(j.suggestions||[]).slice(0,8).map(x=>{const o=document.createElement('option');o.value=x.street;o.label=x.text;return o}));
+    const one=(j.suggestions||[]).find(x=>x.street===v);if(one&&one.postcode&&!$('post').value){$('post').value=one.postcode;postInfo()}}catch(_){}} ,250)})}
+
+/* Validation (the database checks everything again) */
+const normPhone=v=>{let s=v.replace(/[\s\-().]/g,'');if(/^00[1-9]/.test(s))s='+'+s.slice(2);if(/^\+45[2-9]\d{7}$/.test(s))return s;if(/^[2-9]\d{7}$/.test(s))return '+45'+s;if(/^\+[1-9]\d{6,14}$/.test(s)&&!/^\+45/.test(s))return s;return null};
+function setErr(id,msg){const el=$(id),m=$(id+'-m');el.setAttribute('aria-invalid',msg?'true':'false');if(m)m.textContent=msg||''}
+function validate(){
+  const v=id=>$(id).value.trim(),errs={};
+  if(v('navn').length<2)errs.navn=T.err.name;
+  if(!normPhone(v('tlf')))errs.tlf=T.err.phone;
+  if(v('adr').length<4)errs.adr=T.err.address;
+  if(!/^\d{4}$/.test(v('post')))errs.post=T.err.postcode;
+  else if(places&&!places.some(p=>p.postcode===v('post')))errs.post=fill(T.err.area,{postcode:v('post')});
+  if(v('email')&&!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v('email')))errs.email=T.err.email;
+  else if($('wantbag').checked&&!HAS_BAG&&!v('email'))errs.email=T.err.bag_email;
+  const d=v('dato');
+  if(!d||d<$('dato').min||d>$('dato').max)errs.dato=T.err.date;
+  else{if(JDDays.isClosed(d))errs.dato=T.err.closed;
+    else if(d===iso(new Date())&&new Date().getHours()>=SLOT_START[$('tid').value]-1)errs.tid=T.err.slot}
+  ['navn','tlf','adr','post','email','dato','tid'].forEach(id=>setErr(id,errs[id]));
+  return errs;
+}
+['navn','tlf','adr','post','email','dato','tid'].forEach(id=>$(id).addEventListener('change',()=>{if($(id).getAttribute('aria-invalid')==='true')validate()}));
+$('post').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,4)});
+
+/* Submit – one request at a time, same client_ref on retry = no duplicate orders */
+let ref=uuid(),busy=false,text='';
+const f=$('f'),err=$('err'),send=$('send');
+function mailText(){
+  const v=id=>$(id).value.trim(),L=lines(),x=quote||local();
+  const ls=L.map(({s,q})=>`${q} × ${s.name} – ${money(q*s.price)}`).join('\n')||T.mail_count;
+  return `${T.mail_title}\n\n${T.name}: ${v('navn')}\n${T.phone}: ${v('tlf')}\n${T.address}: ${v('adr')}, ${v('post')}\n${T.date}: ${v('dato')}, ${slotTxt()}\n\n${ls}\n\n${T.clothes}: ${money(x.sub)}${x.disc?`\n${T.discount} (${coupon.code}): −${money(x.disc)}`:''}\n${T.delivery}: ${x.sub?(x.fee?money(x.fee):T.free):'–'}\n${T.total_est}: ${money(x.total)}${v('kode')?`\n${T.code}: ${v('kode').toUpperCase()}`:''}\n\n${T.note}: ${v('besk')||'–'}`;
+}
+function fallback(){
+  text=mailText();$('out').textContent=text;
+  $('mail').href='mailto:info@justdry.dk?subject='+encodeURIComponent(T.mail_subject)+'&body='+encodeURIComponent(text);
+  $('done').hidden=false;$('done').scrollIntoView({block:'center'});
+}
+const esc2=s=>esc(s==null?'':s);
+f.addEventListener('submit',async e=>{
+  e.preventDefault();if(busy)return;
+  err.textContent='';
+  const errs=validate();const first=Object.keys(errs)[0];
+  if(first){err.textContent=T.err.required;$(first).focus();return}
+  rememberContact();
+  if(db&&live&&lines().length&&!quote){clearTimeout(qt);try{const {data}=await db.rpc('price_quote',{p_items:lines().map(({s,q})=>({id:s.id,qty:q})),p_code:coupon?coupon.code:null});if(data)quote={sub:data.subtotal,disc:data.discount,fee:data.delivery_fee,total:data.total}}catch(_){}drawCart()}
+  const v=id=>$(id).value.trim(),x=quote||local(),L=lines();
+  const extra=[!HAS_BAG&&$('wantbag').checked?T.want_bag_plain:'',v('besk')].filter(Boolean);
+  const dateTxt=new Date(v('dato')+'T12:00:00').toLocaleDateString(LOCALE,{weekday:'long',day:'numeric',month:'long'});
+  const town=((places||T.locations).find(p=>p.postcode===v('post'))||{}).town||'';
+  $('rvList').innerHTML=`<dt>${esc(T.r_items)}</dt><dd>${L.length?L.map(({s,q})=>`${q} × ${esc(s.name)} – ${money(q*s.price)}`).join('<br>'):esc(T.mail_count)}</dd>
+    ${x.sub?`<dt>${esc(T.clothes_total)}</dt><dd>${money(x.sub)}</dd>`:''}
+    ${x.disc?`<dt>${esc(T.discount)}${coupon?' ('+esc(coupon.code)+')':''}</dt><dd>−${money(x.disc)}</dd>`:''}
+    <dt>${esc(T.delivery)}</dt><dd>${x.sub?(x.fee?money(x.fee):esc(T.free)):'–'}</dd>
+    <dt>${esc(T.total_est)}</dt><dd class="tot">${x.sub?money(x.total):'–'}</dd>
+    <dt>${esc(T.r_when)}</dt><dd>${esc(dateTxt)}, ${esc(slotTxt())}</dd>
+    <dt>${esc(T.r_where)}</dt><dd>${esc2(v('adr'))}, ${esc2(v('post'))} ${esc(town)}</dd>
+    <dt>${esc(T.r_contact)}</dt><dd>${esc2(v('navn'))} · ${esc2(v('tlf'))}${v('email')?' · '+esc2(v('email')):''}</dd>
+    ${extra.length?`<dt>${esc(T.r_extra)}</dt><dd>${extra.map(esc).join('<br>')}</dd>`:''}`;
+  f.hidden=true;$('review').hidden=false;mbarMode(true);$('err2').textContent='';$('review').focus();$('review').scrollIntoView({block:'start'});
+});
+/* I oversigten bliver knappen i bunden til "Bekræft bestilling" – én tydelig handling */
+const mbA=$('mbar').querySelector('a'),mbTxt=mbA.textContent;
+function mbarMode(rv){mbA.textContent=rv?T.confirm:mbTxt;mbA.dataset.rv=rv?'1':''}
+mbA.addEventListener('click',e=>{if(mbA.dataset.rv){e.preventDefault();$('confirm').click()}});
+$('back').addEventListener('click',()=>{$('review').hidden=true;f.hidden=false;mbarMode(false);$('send').focus()});
+function rememberContact(){try{if($('remember').checked){const c={};CONTACT.forEach(id=>c[id]=$(id).value.trim());localStorage.setItem('jd_contact',JSON.stringify(c))}else localStorage.removeItem('jd_contact')}catch(_){}}
+const confirmBtn=$('confirm'),err2=$('err2');
+confirmBtn.addEventListener('click',async()=>{
+  if(busy)return;
+  if(!db||!live){fallback();return}
+  busy=true;confirmBtn.disabled=true;confirmBtn.textContent=T.sending;err2.textContent='';
+  const v=id=>$(id).value.trim();
+  const payload={client_ref:ref,name:v('navn'),phone:v('tlf'),email:v('email')||null,address:v('adr'),postcode:v('post'),
+    pickup_date:v('dato'),pickup_slot:$('tid').value,items:lines().map(({s,q})=>({id:s.id,qty:q})),
+    coupon:coupon?coupon.code:(v('kode')?v('kode').toUpperCase():null),note:v('besk')||null,
+    want_bag:!HAS_BAG&&$('wantbag').checked,attr:window.JD_ATTR||null,offers:$('offers').checked,lang:LANG};
+  let res;
+  try{res=await db.rpc('place_order',{p:payload})}catch(_){res={error:{message:'network'}}}
+  busy=false;confirmBtn.disabled=false;confirmBtn.textContent=T.confirm;
+  if(res.error){
+    const m=/JD:(\w+)/.exec(res.error.message||''),code=m?m[1]:'network';
+    const msg=fill(T.err[code]||T.err.input,{postcode:v('post')});
+    const map={name:'navn',phone:'tlf',address:'adr',postcode:'post',area:'post',email:'email',bag_email:'email',date:'dato',closed:'dato',slot:'tid',full:'tid'};
+    if(code==='coupon'||code==='coupon_owner'){coupon=null;quote=null;$('kode').value='';$('codeMsg').textContent='';drawCart();save()}
+    if(code==='full')slots();
+    if(map[code]){$('review').hidden=true;f.hidden=false;mbarMode(false);err.textContent=msg;setErr(map[code],msg);$(map[code]).focus();return}
+    err2.textContent=msg;
+    if(code==='network'){const b=document.createElement('button');b.type='button';b.className='btn line';b.style.marginTop='10px';b.textContent=T.open_mail;b.onclick=fallback;err2.append(document.createElement('br'),b)}
+    return;
+  }
+  const o=res.data;
+  const link=STATUS_URL+'?t='+encodeURIComponent(o.token);
+  try{const k='jd_orders',a=JSON.parse(localStorage.getItem(k)||'[]').filter(x=>x.token!==o.token);a.unshift({id:o.id,token:o.token,code:o.tracking,date:v('dato')});localStorage.setItem(k,JSON.stringify(a.slice(0,10)));localStorage.removeItem('jd_cart')}catch(_){}
+  const dateTxt=new Date(v('dato')+'T12:00:00').toLocaleDateString(LOCALE,{weekday:'long',day:'numeric',month:'long'});
+  $('okTxt').textContent=fill(T.ok_txt,{id:o.tracking||o.id,date:dateTxt,slot:slotTxt(),phone:v('tlf')})+(o.tracking?' '+fill(T.ok_track,{code:o.tracking}):'');
+  $('okLink').href=link;
+  $('review').hidden=true;$('ok').hidden=false;$('mbar').hidden=true;document.body.classList.remove('cart-on');$('ok').focus();$('ok').scrollIntoView({block:'center'});
+  cart.clear();coupon=null;quote=null;ref=uuid();drawItems();drawCart();$('savedNote').hidden=true;
+});
+$('copy').addEventListener('click',async()=>{const c=$('copy');try{await navigator.clipboard.writeText(text);c.textContent=T.copied}catch(_){c.textContent=T.copy_manual}});
+}
+</script>
+
+</body>
+</html>
